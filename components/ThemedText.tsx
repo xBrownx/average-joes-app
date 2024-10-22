@@ -1,6 +1,7 @@
 import { Text, type TextProps, StyleSheet } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import colors from "@/components/colors";
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -43,23 +44,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     fontWeight: '600',
-    fontFamily: 'PoppinsSemiBold'
+    fontFamily: 'PoppinsSemiBold',
+    color: colors.primary
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     lineHeight: 40,
-    fontFamily: 'PoppinsBold'
+    fontFamily: 'PoppinsBold',
+    color: colors.primary
   },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    fontFamily: 'PoppinsBold'
+    fontFamily: 'PoppinsBold',
+    color: colors.tertiary
   },
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: '#0a7ea4',
+    color: colors.primary,
     fontFamily: 'Poppins'
   },
 });

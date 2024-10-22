@@ -6,18 +6,14 @@ import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React from "react";
 
-export default function Learn() {
+export default function More() {
     return (
         <ParallaxScrollView
-            headerBackgroundColor={{ light: '#F0E8E2', dark: '#353636' }}
-            headerImage={<Image
-                source={require('@/assets/images/avatar.png')}
-                style={styles.headerImage}
-            />}>
+            headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+            headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
             <ThemedView style={styles.titleContainer}>
-                <ThemedText type="title">Joe's Learning Centre</ThemedText>
+                <ThemedText type="title">Average Joe's Learning Centre</ThemedText>
             </ThemedView>
             <ThemedText></ThemedText>
             <Collapsible title="File-based routing">
@@ -94,13 +90,10 @@ export default function Learn() {
 
 const styles = StyleSheet.create({
     headerImage: {
-        height: "70%",
-        width: "60%",
-        bottom: 0,
-        marginBottom: '5%',
+        color: '#808080',
+        bottom: -90,
+        left: -35,
         position: 'absolute',
-        objectFit: "contain",
-        alignSelf: 'center',
     },
     titleContainer: {
         flexDirection: 'row',

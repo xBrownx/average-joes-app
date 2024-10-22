@@ -4,12 +4,10 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import Footer from "@/components/Footer";
 import React from "react";
 import TypeWriter from "@/components/TypeWriter";
-import colors from "@/components/colors";
 
-export default function HomeScreen() {
+export default function DialIn() {
     const [wave, setWave] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
     function fadeInWave() {
@@ -23,10 +21,10 @@ export default function HomeScreen() {
 
     return (
         <ParallaxScrollView
-            headerBackgroundColor={{light: colors.background, dark: '#ce2127'}}
+            headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
             headerImage={
                 <Image
-                    source={require('@/assets/images/small-logo.png')}
+                    source={require('@/assets/images/dial-in-2.png')}
                     style={styles.reactLogo}
                 />
             } >
@@ -40,32 +38,30 @@ export default function HomeScreen() {
 
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 1: Dial in</ThemedText >
+                <ThemedText type="subtitle" >Step 1: Try it</ThemedText >
                 <ThemedText >
-                    Follow the prompts to dial in your perfect cup of{' '}
+                    Edit <ThemedText type="defaultSemiBold" >app/(tabs)/index.tsx</ThemedText > to see changes.
+                    Press{' '}
                     <ThemedText type="defaultSemiBold" >
-                        Joe.
+                        {Platform.select({ios: 'cmd + d', android: 'cmd + m'})}
                     </ThemedText >{' '}
-                    Save your settings for different setups and beans and view them in the{' '}
-                    <ThemedText type="defaultSemiBold" >
-                        recipe book.
-                    </ThemedText >{' '}
+                    to open developer tools.
                 </ThemedText >
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 2: Learn</ThemedText >
+                <ThemedText type="subtitle" >Step 2: Explore</ThemedText >
                 <ThemedText >
-                    Visit{' '}
-                    <ThemedText type="defaultSemiBold" >
-                        Joe's Learning Center
-                    </ThemedText >{' '}
-                    and see what else it takes to make that perfect cup through video tutorials.
+                    Tap the Explore tab to learn more about what's included in this starter app.
                 </ThemedText >
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 3: Shop</ThemedText >
+                <ThemedText type="subtitle" >Step 3: Get a fresh start</ThemedText >
                 <ThemedText >
-                    Checkout our online store for some delicious beans and find all the tools you need to become a master barista.
+                    When you're ready, run{' '}
+                    <ThemedText type="defaultSemiBold"  >npm run reset-project</ThemedText > to get a fresh{' '}
+                    <ThemedText type="defaultSemiBold" >app</ThemedText > directory. This will move the current{' '}
+                    <ThemedText type="defaultSemiBold" >app</ThemedText > to{' '}
+                    <ThemedText type="defaultSemiBold" >app-example</ThemedText >.
                 </ThemedText >
             </ThemedView >
 
@@ -85,7 +81,7 @@ const styles = StyleSheet.create({
     },
     reactLogo: {
         height: "70%",
-        width: "60%",
+        width: "100%",
         bottom: 0,
         marginBottom: '5%',
         position: 'absolute',

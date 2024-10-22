@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    // position: 'relative', // Allows the image to be positioned
+    position: 'relative', // Allows the image to be positioned
   },
   view1: {
     flex: 1, // Takes up all remaining space
@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
   logoImage: {
     // height: 'auto', // Adjust height as needed
 
-    // position: 'absolute',
+    position: 'absolute',
     // top: 0,
     // right: 0,
-    // bottom: 0,
+     bottom: -85,
     // left: 0,
-
+    transform: 'translateY(0px)',
     width: '100%',
     height: undefined,
     aspectRatio: '225/131',
