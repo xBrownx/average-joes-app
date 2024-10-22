@@ -1,11 +1,25 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, View, Animated } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import Footer from "@/components/Footer";
+import React from "react";
+import TypeWriter from "@/components/TypeWriter";
 
 export default function HomeScreen() {
+    const [wave, setWave] = React.useState(false);
+    const opacity = React.useState(new Animated.Value(0))[0];
+    function fadeInWave() {
+        setWave(true);
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+        }).start()
+    }
+
     return (
         <ParallaxScrollView
             headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
@@ -15,9 +29,14 @@ export default function HomeScreen() {
                     style={styles.reactLogo}
                 />
             } >
+
             <ThemedView style={styles.titleContainer} >
-                <ThemedText type="title" style={{color: '#ce2127'}}>WELCOME!</ThemedText >
-                <HelloWave />
+                <TypeWriter textArr={["WELCOME!"]} onComplete={() => fadeInWave()}/>
+                {/*<ThemedText type="title" style={{color: '#ce2127'}}>WELCOME!</ThemedText >*/}
+                <Animated.View style={[{opacity}]}>
+                    {wave && <HelloWave />}
+                </Animated.View>
+
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
                 <ThemedText type="subtitle" >Step 1: Try it</ThemedText >
@@ -46,6 +65,7 @@ export default function HomeScreen() {
                     <ThemedText type="defaultSemiBold" >app-example</ThemedText >.
                 </ThemedText >
             </ThemedView >
+
         </ParallaxScrollView >
     );
 }
