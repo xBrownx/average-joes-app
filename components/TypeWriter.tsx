@@ -62,10 +62,7 @@ export default function TypeWriter({textArr, onComplete}: TypeWriterProps) {
         } else {
             clearInterval(timeoutsRef.current.cursorTimeout);
             setCursorColor("transparent");
-
-            if (onComplete) {
-                onComplete();
-            }
+            onComplete();
         }
     };
 

@@ -6,70 +6,45 @@ import { ThemedView } from '@/components/ThemedView';
 import React from "react";
 import TypeWriter from "@/components/TypeWriter";
 import colors from "@/components/colors";
+import { Modal } from "@/app/dial-in/modal";
 
-function DialInStepOne() {
+function DialInStepOne({setModalOpen}: { setModalOpen: (open: boolean) => void }) {
     return (
         <>
-            <ThemedView style={styles.titleContainer} >
+            <ThemedView style={styles.titleContainer}>
                 <TypeWriter textArr={["WELCOME xxx"]} onComplete={() => {
                 }} />
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText >
+            </ThemedView>
+            <ThemedView style={styles.stepContainer}>
+                <ThemedText>
                     I am{' '}
-                    <ThemedText type={"defaultSemiBold"} >
+                    <ThemedText type={"defaultSemiBold"}>
                         Joe. {' '}
-                    </ThemedText >
+                    </ThemedText>
                     I am here to help you dial in those beans on this machine.
-                </ThemedText >
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText >
+                </ThemedText>
+            </ThemedView>
+            <ThemedView style={styles.stepContainer}>
+                <ThemedText>
                     Dialing in coffee can be tough, but not when I am here to help! The goal is that by the time we are
                     done your coffee tastes delicious and you have an understanding of how to dial in espresso.
-                </ThemedText >
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'Let\'s go'} color={colors.primary} onPress={() => navigation.navigate('StepTwo')} />
-            </ThemedView >
-        </>
-    );
-}
-
-function DialInStepTwo() {
-
-    return (
-        <>
-            <ThemedText type={'subtitle'}>
-                Before we start you'll need the following to dial in coffee.
-            </ThemedText >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText style={{fontSize: 12}}>
-                    1. The coffee you are using needs to be fresh, roasted less than 40 days ago. If its older than that chances are its going off, which makes dialing it in super hard. You can still try but im telling you now that it will be tough.{'\n'}
-                </ThemedText >
-                <ThemedText style={{fontSize: 12}}>
-                    2. Freshly ground - If you are buying pre ground coffee, this is the reason your coffee isnt great.{'\n'}
-                </ThemedText >
-                <ThemedText style={{fontSize: 12}}>
-                    3. Scales - Even kitchen scales will do for now but you should invest in some coffee scales.{'\n'}
-                </ThemedText >
-                <ThemedText style={{fontSize: 12}}>
-                    4. a timer - Can use your phone (coffee scales will have then inbuilt).{'\n'}
-                </ThemedText >
-                <ThemedText style={{fontSize: 12}}>
-                    5. We are going to use a double shot basket. 18g to 22g depending on your machine.{'\n'}
-                </ThemedText >
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'Let\'s go'} color={colors.primary} onPress={() => {
-                }} />
-            </ThemedView >
+                </ThemedText>
+            </ThemedView>
+            <ThemedView style={styles.stepContainer}>
+                <Button title={'Let\'s go'} color={colors.primary} onPress={() => setModalOpen(true)} />
+            </ThemedView>
         </>
     );
 }
 
 
 export default function DialIn() {
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const [step, setStep] = React.useState('0');
+    const closeModal = () => {
+        setModalOpen(false);
+        setStep('1');
+    }
     return (
         <ParallaxScrollView
             headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
@@ -78,11 +53,50 @@ export default function DialIn() {
                     source={require('@/assets/images/dial-in-2.png')}
                     style={styles.reactLogo}
                 />
-            } >
-            <DialInStepTwo />
-        </ParallaxScrollView >
+            }>
+            <Modal isOpen={modalOpen} onClose={closeModal} />
+            {
+                {
+                    '0': <DialInStepOne setModalOpen={setModalOpen} />,
+                    '1': <StepOne setStep={setStep} />,
+                    '2': <StepTwo setStep={setStep} />,
+                }[step]
+            }
+
+
+        </ParallaxScrollView>
     );
 }
+
+const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
+    return (
+        <>
+            <TypeWriter
+                textArr={["Firstly, I need to know what coffee you are using. You can type below or take a photo and upload the bag."]}
+                onComplete={() => {}}
+            />
+            <ThemedView style={styles.stepContainer}>
+                <Button title={'Next'} color={colors.primary} onPress={() => setStep('2')} />
+            </ThemedView>
+        </>
+    );
+}
+
+const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
+    return (
+        <>
+            <TypeWriter
+                textArr={["Okay great. Next, what type portafilter does your machine have?"]}
+                onComplete={() => {}}
+            />
+            <ThemedView style={styles.stepContainer}>
+                <Button title={'Next'} color={colors.primary} onPress={() => setStep('2')} />
+            </ThemedView>
+        </>
+    );
+}
+
+
 
 
 const styles = StyleSheet.create({
