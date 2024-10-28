@@ -1,11 +1,12 @@
-import { Image, StyleSheet, Platform, View, Animated } from 'react-native';
-
+import { Image, StyleSheet, Platform, View, Animated, Button } from 'react-native';
+import 'react-native-gesture-handler';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React from "react";
 import TypeWriter from "@/components/TypeWriter";
+import colors from "@/components/colors";
 
 export default function DialIn() {
     const [wave, setWave] = React.useState(false);
@@ -28,43 +29,26 @@ export default function DialIn() {
                     style={styles.reactLogo}
                 />
             } >
-
             <ThemedView style={styles.titleContainer} >
-                <TypeWriter textArr={["WELCOME!"]} onComplete={() => fadeInWave()}/>
-                {/*<ThemedText type="title" style={{color: '#ce2127'}}>WELCOME!</ThemedText >*/}
-                <Animated.View style={[{opacity}]}>
-                    {wave && <HelloWave />}
-                </Animated.View>
-
+                <TypeWriter textArr={["WELCOME xxx"]} onComplete={() => fadeInWave()}/>
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 1: Try it</ThemedText >
                 <ThemedText >
-                    Edit <ThemedText type="defaultSemiBold" >app/(tabs)/index.tsx</ThemedText > to see changes.
-                    Press{' '}
-                    <ThemedText type="defaultSemiBold" >
-                        {Platform.select({ios: 'cmd + d', android: 'cmd + m'})}
-                    </ThemedText >{' '}
-                    to open developer tools.
+                    I am{' '}
+                    <ThemedText type={"defaultSemiBold"}>
+                        Joe. {' '}
+                    </ThemedText >
+                    I am here to help you dial in those beans on this machine.
                 </ThemedText >
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 2: Explore</ThemedText >
                 <ThemedText >
-                    Tap the Explore tab to learn more about what's included in this starter app.
+                    Dialing in coffee can be tough, but not when I am here to help! The goal is that by the time we are done your coffee tastes delicious and you have an understanding of how to dial in espresso.
                 </ThemedText >
             </ThemedView >
             <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 3: Get a fresh start</ThemedText >
-                <ThemedText >
-                    When you're ready, run{' '}
-                    <ThemedText type="defaultSemiBold"  >npm run reset-project</ThemedText > to get a fresh{' '}
-                    <ThemedText type="defaultSemiBold" >app</ThemedText > directory. This will move the current{' '}
-                    <ThemedText type="defaultSemiBold" >app</ThemedText > to{' '}
-                    <ThemedText type="defaultSemiBold" >app-example</ThemedText >.
-                </ThemedText >
+                <Button title={'Let\'s go'} color={colors.primary} onPress={() => {}} />
             </ThemedView >
-
         </ParallaxScrollView >
     );
 }

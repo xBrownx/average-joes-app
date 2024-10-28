@@ -20,7 +20,7 @@ export default function Learn() {
                 <ThemedText type="title">Joe's Learning Centre</ThemedText>
             </ThemedView>
             <ThemedText></ThemedText>
-            <Collapsible title="File-based routing">
+            <Collapsible title="1: WHAT'S TO COME">
                 <ThemedText>
                     This app has two screens:{' '}
                     <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
@@ -34,13 +34,13 @@ export default function Learn() {
                     <ThemedText type="link">Learn more</ThemedText>
                 </ExternalLink>
             </Collapsible>
-            <Collapsible title="Android, iOS, and web support">
+            <Collapsible title="2: THE GEAR YOU NEED">
                 <ThemedText>
                     You can open this project on Android, iOS, and the web. To open the web version, press{' '}
                     <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
                 </ThemedText>
             </Collapsible>
-            <Collapsible title="Images">
+            <Collapsible title="3: THE PERFECT SHOT - DIALING IN">
                 <ThemedText>
                     For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
                     <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
@@ -51,7 +51,7 @@ export default function Learn() {
                     <ThemedText type="link">Learn more</ThemedText>
                 </ExternalLink>
             </Collapsible>
-            <Collapsible title="Custom fonts">
+            <Collapsible title="4: THE 'RIP, DIP 'N' WHIP TECHNIQUE">
                 <ThemedText>
                     Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
                     <ThemedText style={{ fontFamily: 'Poppins' }}>
@@ -62,7 +62,7 @@ export default function Learn() {
                     <ThemedText type="link">Learn more</ThemedText>
                 </ExternalLink>
             </Collapsible>
-            <Collapsible title="Light and dark mode components">
+            <Collapsible title="5: MAKE IT PRETTY, LATTE ART - THE HEART">
                 <ThemedText>
                     This template has light and dark mode support. The{' '}
                     <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
@@ -72,7 +72,7 @@ export default function Learn() {
                     <ThemedText type="link">Learn more</ThemedText>
                 </ExternalLink>
             </Collapsible>
-            <Collapsible title="Animations">
+            <Collapsible title="6: UPKEEP - IT’S NO JOKE!">
                 <ThemedText>
                     This template includes an example of an animated component. The{' '}
                     <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses

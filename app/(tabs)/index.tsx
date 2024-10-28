@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, Animated } from 'react-native';
+import { Image, StyleSheet, Platform, View, Animated, Button } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -33,41 +33,29 @@ export default function HomeScreen() {
 
             <ThemedView style={styles.titleContainer} >
                 <TypeWriter textArr={["WELCOME!"]} onComplete={() => fadeInWave()}/>
-                {/*<ThemedText type="title" style={{color: '#ce2127'}}>WELCOME!</ThemedText >*/}
                 <Animated.View style={[{opacity}]}>
                     {wave && <HelloWave />}
                 </Animated.View>
+            </ThemedView >
+            <ThemedView style={styles.stepContainer} >
+                <ThemedText type="subtitle" >Average Joe's Barista Bonanza</ThemedText >
+                <ThemedText >
+                    Let us help you dial in, save your setups and teach you some other handy skills.{' '}
+                </ThemedText >
+                <ThemedText >
+                    Check out more here:{' '}
+                </ThemedText >
+            </ThemedView >
+            <ThemedView style={styles.stepContainer} >
+                <Button title={'ABOUT'} color={colors.primary} onPress={() => {}} />
+            </ThemedView >
+            <ThemedView style={styles.stepContainer} >
+                <Button title={'SHOP'} color={colors.primary} onPress={() => {}} />
+            </ThemedView >
+            <ThemedView style={styles.stepContainer} >
+                <Button title={'CONTACT'} color={colors.primary} onPress={() => {}} />
+            </ThemedView >
 
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 1: Dial in</ThemedText >
-                <ThemedText >
-                    Follow the prompts to dial in your perfect cup of{' '}
-                    <ThemedText type="defaultSemiBold" >
-                        Joe.
-                    </ThemedText >{' '}
-                    Save your settings for different setups and beans and view them in the{' '}
-                    <ThemedText type="defaultSemiBold" >
-                        recipe book.
-                    </ThemedText >{' '}
-                </ThemedText >
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 2: Learn</ThemedText >
-                <ThemedText >
-                    Visit{' '}
-                    <ThemedText type="defaultSemiBold" >
-                        Joe's Learning Center
-                    </ThemedText >{' '}
-                    and see what else it takes to make that perfect cup through video tutorials.
-                </ThemedText >
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Step 3: Shop</ThemedText >
-                <ThemedText >
-                    Checkout our online store for some delicious beans and find all the tools you need to become a master barista.
-                </ThemedText >
-            </ThemedView >
 
         </ParallaxScrollView >
     );
