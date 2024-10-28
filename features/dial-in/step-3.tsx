@@ -1,4 +1,3 @@
-import TypeWriter from "@/components/TypeWriter";
 import { ThemedView } from "@/components/ThemedView";
 import { Button, StyleSheet } from "react-native";
 import colors from "@/components/colors";
@@ -8,11 +7,11 @@ import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
 const StepThree = ({setStep}: { setStep: (step: string) => void }) => {
     return (
         <CustomTypeWriter
-            text={"Okay great. Next, what type of portafilter does your machine have?"}
+            text={"Cool lets begin. Step 1 - Prepare your machine"}
             speed={20}
         >
             <ThemedView style={styles.stepContainer} >
-                <Button title={'Next'} color={colors.primary} onPress={() => setStep('3')} />
+                <Button title={'Next'} color={colors.primary} onPress={() => setStep('4')} />
             </ThemedView >
         </CustomTypeWriter >
     );

@@ -1,23 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@/store";
 
-const initialState = {
+export type DialInState = {
+    beans: string;
+    portafilter: string;
+}
 
+export const initialState: DialInState = {
+    beans: '',
+    portafilter: '',
 }
 
 export const dialInSlice = createSlice({
     name: 'dial-in',
     initialState,
     reducers: {
-        setCoffeeBeans: () => {},
-        setPortafilter: () => {}
+        setCoffeeBeans: (state, action: PayloadAction<string>) => {
+            state.beans = action.payload;
+        },
+        setPortafilter: (state, action: PayloadAction<string>) => {
+            state.portafilter = action.payload;
+        },
     }
 });
 
-const { setCoffeeBeans, setPortafilter } = dialInSlice.actions;
+export const { setCoffeeBeans, setPortafilter } = dialInSlice.actions;
 
-export const DialInActions = {
-    setCoffeeBeans,
-    setPortafilter,
-}
+export const selectBeans= (state: RootState) => state.dialIn.beans;
+
+export const selectPortafilter= (state: RootState) => state.dialIn.portafilter;
 
 export default dialInSlice.reducer;

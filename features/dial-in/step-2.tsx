@@ -1,4 +1,3 @@
-import TypeWriter from "@/components/TypeWriter";
 import { ThemedView } from "@/components/ThemedView";
 import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
 import colors from "@/components/colors";
@@ -42,7 +41,8 @@ const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
 const styles = StyleSheet.create({
     stepContainer: {
         gap: 0,
-        marginBottom: 2,
+        marginBottom: 16,
+        marginTop: 16,
     },
     container: {
         width: '100%',
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         width: 22,
         height: 22,
         borderRadius: 11,
-        backgroundColor: 'blue',
+        backgroundColor: colors.primary,
     },
 });
 

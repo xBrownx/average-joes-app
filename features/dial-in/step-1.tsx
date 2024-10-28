@@ -3,9 +3,18 @@ import { Button, StyleSheet, TextInput } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
 import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { selectBeans, setCoffeeBeans } from '@/store/dial-in-slice'
+import { useSelector } from "react-redux";
 
 const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
-    const [text, onChangeText] = React.useState('');
+    const beans = useAppSelector(selectBeans);
+    // const dispatch = useAppDispatch();
+
+    const onTextChange = (text: string) => {
+        // dispatch(setCoffeeBeans(text));
+    }
+
     return (
         <CustomTypeWriter
             text={"Firstly, I need to know what coffee you are using. You can type below or take a photo and upload the bag."}
@@ -14,9 +23,9 @@ const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
             <ThemedView style={styles.stepContainer}>
                 <TextInput
                     style={styles.input}
-                    onChangeText={onChangeText}
+                    onChangeText={onTextChange}
                     placeholder="Enter Me"
-                    value={text}
+                    value={"beans"}
                 />
                 <Button title={'Next'} color={colors.primary} onPress={() => setStep('2')} />
             </ThemedView>
