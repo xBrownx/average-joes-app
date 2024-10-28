@@ -5,7 +5,6 @@ import React from "react";
 import { Modal } from "@/features/dial-in/modal";
 import { DialInLanding, StepOne, StepTwo } from "../../features/dial-in";
 
-
 export default function DialIn() {
     const [modalOpen, setModalOpen] = React.useState(false);
     const [step, setStep] = React.useState('0');
@@ -14,25 +13,25 @@ export default function DialIn() {
         setStep('1');
     }
     return (
-        <ParallaxScrollView
-            headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
-            headerImage={
-                <Image
-                    source={require('@/assets/images/dial-in-2.png')}
-                    style={styles.reactLogo}
-                />
-            }>
-            <Modal isOpen={modalOpen} onClose={closeModal} />
-            {
+            <ParallaxScrollView
+                headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
+                headerImage={
+                    <Image
+                        source={require('@/assets/images/dial-in-2.png')}
+                        style={styles.reactLogo}
+                    />
+                }>
+                <Modal isOpen={modalOpen} onClose={closeModal} />
                 {
-                    '0': <DialInLanding setModalOpen={setModalOpen} />,
-                    '1': <StepOne setStep={setStep} />,
-                    '2': <StepTwo setStep={setStep} />,
-                }[step]
-            }
+                    {
+                        '0': <DialInLanding setModalOpen={setModalOpen} />,
+                        '1': <StepOne setStep={setStep} />,
+                        '2': <StepTwo setStep={setStep} />,
+                    }[step]
+                }
 
 
-        </ParallaxScrollView>
+            </ParallaxScrollView>
     );
 }
 
