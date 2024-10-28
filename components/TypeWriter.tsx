@@ -3,6 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 
 type TypeWriterProps = {
     textArr: string[];
+    speed? : number;
     onComplete: () => void;
 }
 
@@ -20,7 +21,7 @@ const initTimeouts: Timeouts = {
     secondNewLineTimeout: undefined,
 }
 
-export default function TypeWriter({textArr, onComplete}: TypeWriterProps) {
+export default function TypeWriter({textArr, speed, onComplete}: TypeWriterProps) {
     let [text, setText] = useState("");
     let [cursorColor, setCursorColor] = useState("transparent");
     let [messageIndex, setMessageIndex] = useState(0);
@@ -48,7 +49,7 @@ export default function TypeWriter({textArr, onComplete}: TypeWriterProps) {
             setTextIndex(textIndexRef.current + 1);
 
             let updatedTimeouts = {...timeoutsRef.current};
-            updatedTimeouts.typingTimeout = setTimeout(typingAnimation, 50);
+            updatedTimeouts.typingTimeout = setTimeout(typingAnimation, speed?? 50);
             setTimeouts(updatedTimeouts);
         } else if (messageIndexRef.current + 1 < textArr.length) {
             setMessageIndex(messageIndexRef.current + 1);

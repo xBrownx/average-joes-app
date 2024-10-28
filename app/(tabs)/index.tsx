@@ -32,7 +32,7 @@ export default function HomeScreen() {
             } >
 
             <ThemedView style={styles.titleContainer} >
-                <TypeWriter textArr={["WELCOME!"]} onComplete={() => fadeInWave()}/>
+                <TypeWriter textArr={["HELLO!"]} onComplete={() => fadeInWave()}/>
                 <Animated.View style={[{opacity}]}>
                     {wave && <HelloWave />}
                 </Animated.View>
