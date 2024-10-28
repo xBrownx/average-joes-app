@@ -11,7 +11,7 @@ import store from "@/store";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-function RootLayout() {
+export default function RootLayout() {
     const colorScheme = useColorScheme();
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -46,7 +46,7 @@ function RootLayoutNav() {
     );
 }
 
-export function App() {
+function App() {
     return (
         <Stack >
             <Stack.Screen name="(tabs)" options={{headerShown: false}} />

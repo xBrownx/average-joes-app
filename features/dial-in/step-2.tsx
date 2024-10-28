@@ -4,18 +4,27 @@ import colors from "@/components/colors";
 import React from "react";
 import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
 import { ThemedText } from "@/components/ThemedText";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { selectPortafilter, setPortafilter } from "@/features/dial-in/store/dial-in-slice";
+import { CONSTANTS } from "@/features/dial-in/constants";
 
 const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
+    const portafilter = useAppSelector(selectPortafilter);
+    const dispatch = useAppDispatch();
     const [selected, setSelected] = React.useState('')
-    const options: string[] = ['51mm', '54mm', '58mm']
+
+    const onSelect = () => {
+        dispatch(setPortafilter(selected));
+        setStep('3')
+    }
 
     return (
         <CustomTypeWriter
-            text={"Okay great. Next, what type of portafilter does your machine have?"}
+            text={CONSTANTS.qTwo}
             speed={20}
         >
             <ThemedView style={styles.stepContainer} >
-                {options.map(option => {
+                {CONSTANTS.portafilterOptions.map(option => {
                     return (
                         <TouchableOpacity
                             key={option}
@@ -32,7 +41,7 @@ const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
                 })}
             </ThemedView>
             <ThemedView style={styles.stepContainer} >
-                <Button title={'Next'} color={colors.primary} onPress={() => setStep('3')} />
+                <Button title={'Next'} color={colors.primary} onPress={onSelect} />
             </ThemedView >
         </CustomTypeWriter >
     );

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dialInReducer from './store/dial-in-slice';
+import dialInReducer from './features/dial-in/store/dial-in-slice';
 import { type TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 const store = configureStore({

@@ -4,20 +4,21 @@ import colors from "@/components/colors";
 import React from "react";
 import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { selectBeans, setCoffeeBeans } from '@/store/dial-in-slice'
+import { selectBeans, setCoffeeBeans } from '@/features/dial-in/store/dial-in-slice'
 import { useSelector } from "react-redux";
+import { CONSTANTS } from "@/features/dial-in/constants";
 
 const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
     const beans = useAppSelector(selectBeans);
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const onTextChange = (text: string) => {
-        // dispatch(setCoffeeBeans(text));
+        dispatch(setCoffeeBeans(text));
     }
 
     return (
         <CustomTypeWriter
-            text={"Firstly, I need to know what coffee you are using. You can type below or take a photo and upload the bag."}
+            text={CONSTANTS.qOne}
             speed={20}
         >
             <ThemedView style={styles.stepContainer}>
@@ -25,7 +26,7 @@ const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
                     style={styles.input}
                     onChangeText={onTextChange}
                     placeholder="Enter Me"
-                    value={"beans"}
+                    value={beans}
                 />
                 <Button title={'Next'} color={colors.primary} onPress={() => setStep('2')} />
             </ThemedView>

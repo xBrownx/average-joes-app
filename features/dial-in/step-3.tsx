@@ -6,14 +6,24 @@ import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
 
 const StepThree = ({setStep}: { setStep: (step: string) => void }) => {
     return (
-        <CustomTypeWriter
-            text={"Cool lets begin. Step 1 - Prepare your machine"}
-            speed={20}
-        >
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'Next'} color={colors.primary} onPress={() => setStep('4')} />
-            </ThemedView >
-        </CustomTypeWriter >
+        <>
+            <CustomTypeWriter
+                text={"Cool lets begin."}
+                speed={20}
+            >
+                <ThemedView style={styles.stepContainer}>
+                    <Button title={'Next'} color={colors.primary} onPress={() => setStep('4')} />
+                </ThemedView>
+            </CustomTypeWriter>
+            <CustomTypeWriter
+                text={"Step 1 - Prepare your machine"}
+                speed={20}
+            >
+                <ThemedView style={styles.stepContainer}>
+                    <Button title={'Next'} color={colors.primary} onPress={() => setStep('4')} />
+                </ThemedView>
+            </CustomTypeWriter>
+        </>
     );
 }
 
