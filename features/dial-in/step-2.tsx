@@ -3,10 +3,12 @@ import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
 import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
-import { ThemedText } from "@/components/ThemedText";
+import { ThemedText } from "@/components/text/themed-text";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { selectPortafilter, setPortafilter } from "@/features/dial-in/store/dial-in-slice";
 import { CONSTANTS } from "@/features/dial-in/constants";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
     const portafilter = useAppSelector(selectPortafilter);
@@ -18,32 +20,45 @@ const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
         setStep('3')
     }
 
+    const navigateBack = () => {
+        setStep('1')
+    }
+
     return (
-        <CustomTypeWriter
-            text={CONSTANTS.qTwo}
-            speed={20}
-        >
-            <ThemedView style={styles.stepContainer} >
-                {CONSTANTS.portafilterOptions.map(option => {
-                    return (
-                        <TouchableOpacity
-                            key={option}
-                            style={styles.singleOptionContainer}
-                            onPress={() => setSelected(option)}>
-                            <View style={styles.outerCircle}>
-                                {selected === option ? (
-                                    <View style={styles.innerCircle} />
-                                ) : null}
-                            </View>
-                            <ThemedText>{option}</ThemedText>
-                        </TouchableOpacity>
-                    );
-                })}
-            </ThemedView>
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'Next'} color={colors.primary} onPress={onSelect} />
-            </ThemedView >
-        </CustomTypeWriter >
+        <View >
+            <View style={styles.iconWrapper}>
+                <Ionicons.Button name="arrow-back" size={32} backgroundColor={'transparent'} color={colors.primary} onPress={navigateBack} />
+            </View>
+
+            <View style={styles.content}>
+                <CustomTypeWriter
+                    text={CONSTANTS.qTwo}
+                    textStyle={'title'}
+                    speed={20}
+                >
+                    <ThemedView style={styles.stepContainer} >
+                        {CONSTANTS.portafilterOptions.map(option => {
+                            return (
+                                <TouchableOpacity
+                                    key={option}
+                                    style={styles.singleOptionContainer}
+                                    onPress={() => setSelected(option)} >
+                                    <View style={styles.outerCircle} >
+                                        {selected === option ? (
+                                            <View style={styles.innerCircle} />
+                                        ) : null}
+                                    </View >
+                                    <ThemedText >{option}</ThemedText >
+                                </TouchableOpacity >
+                            );
+                        })}
+                    </ThemedView >
+                    <ThemedView style={styles.stepContainer} >
+                        <Button title={'Next'} color={colors.primary} onPress={onSelect} />
+                    </ThemedView >
+                </CustomTypeWriter >
+            </View >
+        </View >
     );
 }
 
@@ -80,6 +95,17 @@ const styles = StyleSheet.create({
         height: 22,
         borderRadius: 11,
         backgroundColor: colors.primary,
+    },
+    iconWrapper: {
+        alignSelf: 'flex-start',
+        marginLeft: 8,
+        marginTop: 8
+    },
+    content: {
+        flex: 1,
+        padding: 32,
+        gap: 16,
+        overflow: 'hidden',
     },
 });
 

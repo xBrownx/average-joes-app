@@ -1,5 +1,5 @@
 import { Button, Modal as RNModal, ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
-import { ThemedText } from "@/components/ThemedText";
+import { ThemedText } from "@/components/text/themed-text";
 import { ThemedView } from "@/components/ThemedView";
 import colors from "@/components/colors";
 import React from "react";

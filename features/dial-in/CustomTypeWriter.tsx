@@ -1,16 +1,18 @@
 import React from "react";
 import { Animated, StyleSheet } from "react-native";
-import TypeWriter from "@/components/TypeWriter";
-import { HelloWave } from "@/components/HelloWave";
+import TypeWriter from "@/components/text/typewriter-text";
 import { ThemedView } from "@/components/ThemedView";
+import colors from "@/components/colors";
+import { StyleProps } from "react-native-reanimated";
 
 type CustomTypeWriterProps = {
-    text: string;
+    text: string[];
+    textStyle?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
     speed?: number;
     children: React.ReactNode;
 }
 
-export function CustomTypeWriter({text, speed, children}: CustomTypeWriterProps) {
+export function CustomTypeWriter({text, textStyle, speed, children}: CustomTypeWriterProps) {
     const [childrenVisible, setChildrenVisible] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
 
@@ -25,7 +27,7 @@ export function CustomTypeWriter({text, speed, children}: CustomTypeWriterProps)
 
     return (
         <ThemedView style={styles.stepContainer} >
-            <TypeWriter textArr={[text]} speed={speed} onComplete={fadeInChildren}/>
+            <TypeWriter textArr={text} speed={speed} onComplete={fadeInChildren} textStyle={textStyle}/>
             <Animated.View style={[{opacity}]}>
                 {childrenVisible && children}
             </Animated.View>
@@ -52,4 +54,5 @@ const styles = StyleSheet.create({
         objectFit: "contain",
         alignSelf: 'center',
     },
+
 });

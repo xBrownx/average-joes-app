@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, TextProps } from 'react-native';
+import { StyleProps } from "react-native-reanimated";
+import colors from "@/components/colors";
 
 type TypeWriterProps = {
     textArr: string[];
+    textStyle?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
     speed? : number;
     onComplete: () => void;
 }
@@ -21,7 +24,7 @@ const initTimeouts: Timeouts = {
     secondNewLineTimeout: undefined,
 }
 
-export default function TypeWriter({textArr, speed, onComplete}: TypeWriterProps) {
+export default function TypeWriter({textArr, textStyle, speed, onComplete}: TypeWriterProps) {
     let [text, setText] = useState("");
     let [cursorColor, setCursorColor] = useState("transparent");
     let [messageIndex, setMessageIndex] = useState(0);
@@ -94,7 +97,13 @@ export default function TypeWriter({textArr, speed, onComplete}: TypeWriterProps
     }, []);
 
     return (
-        <Text style={styles.text}>
+        <Text style={[
+            textStyle === 'default' ? styles.default : undefined,
+            textStyle === 'title' ? styles.title : undefined,
+            textStyle === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
+            textStyle === 'subtitle' ? styles.subtitle : undefined,
+            textStyle === 'link' ? styles.link : undefined,
+        ]}>
             {text}
             <Text style={{color: cursorColor, fontSize: 35}}>|</Text>
         </Text>
@@ -102,11 +111,35 @@ export default function TypeWriter({textArr, speed, onComplete}: TypeWriterProps
 };
 
 let styles = StyleSheet.create({
-    text: {
+    default: {
+        fontSize: 16,
+        lineHeight: 24,
+        fontFamily: 'Poppins'
+    },
+    defaultSemiBold: {
+        fontSize: 16,
+        lineHeight: 24,
+        fontWeight: '600',
+        fontFamily: 'PoppinsSemiBold',
+        color: colors.primary
+    },
+    title: {
         fontSize: 32,
         fontWeight: 'bold',
         lineHeight: 40,
         fontFamily: 'PoppinsBold',
-        color: '#ce2127',
-    }
+        color: colors.primary
+    },
+    subtitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily: 'PoppinsBold',
+        color: colors.tertiary
+    },
+    link: {
+        lineHeight: 30,
+        fontSize: 16,
+        color: colors.primary,
+        fontFamily: 'Poppins'
+    },
 })

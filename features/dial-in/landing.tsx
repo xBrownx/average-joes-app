@@ -1,13 +1,13 @@
 import { ThemedView } from "@/components/ThemedView";
-import TypeWriter from "@/components/TypeWriter";
-import { ThemedText } from "@/components/ThemedText";
-import { Button, StyleSheet } from "react-native";
+import TypeWriter from "@/components/text/typewriter-text";
+import { ThemedText } from "@/components/text/themed-text";
+import { Button, StyleSheet, View } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
 
 export default function DialInLanding({setModalOpen}: { setModalOpen: (open: boolean) => void }) {
     return (
-        <>
+        <View style={styles.content}>
             <ThemedView style={styles.titleContainer}>
                 <TypeWriter textArr={["WELCOME ANDY"]} onComplete={() => {
                 }} />
@@ -30,7 +30,7 @@ export default function DialInLanding({setModalOpen}: { setModalOpen: (open: boo
             <ThemedView style={styles.stepContainer}>
                 <Button title={'Let\'s go'} color={colors.primary} onPress={() => setModalOpen(true)} />
             </ThemedView>
-        </>
+        </View>
     );
 }
 
@@ -52,5 +52,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         objectFit: "contain",
         alignSelf: 'center',
+    },
+    content: {
+        flex: 1,
+        padding: 32,
+        gap: 16,
+        overflow: 'hidden',
     },
 });

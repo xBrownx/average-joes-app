@@ -2,16 +2,17 @@ import { Image, StyleSheet, Platform, View, Animated, Button } from 'react-nativ
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
 import Footer from "@/components/Footer";
 import React from "react";
-import TypeWriter from "@/components/TypeWriter";
+import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
 
 export default function HomeScreen() {
     const [wave, setWave] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
+
     function fadeInWave() {
         setWave(true);
         Animated.timing(opacity, {
@@ -30,33 +31,36 @@ export default function HomeScreen() {
                     style={styles.reactLogo}
                 />
             } >
+            <View style={styles.content} >
+                <ThemedView style={styles.titleContainer} >
+                    <TypeWriter textArr={["HELLO!"]} onComplete={() => fadeInWave()} />
+                    <Animated.View style={[{opacity}]} >
+                        {wave && <HelloWave />}
+                    </Animated.View >
+                </ThemedView >
+                <ThemedView style={styles.stepContainer} >
+                    <ThemedText type="subtitle" >Average Joe's Barista Bonanza</ThemedText >
+                    <ThemedText >
+                        Let us help you dial in, save your setups and teach you some other handy skills.{' '}
+                    </ThemedText >
+                    <ThemedText >
+                        Check out more here:{' '}
+                    </ThemedText >
+                </ThemedView >
+                <ThemedView style={styles.stepContainer} >
+                    <Button title={'ABOUT'} color={colors.primary} onPress={() => {
+                    }} />
+                </ThemedView >
+                <ThemedView style={styles.stepContainer} >
+                    <Button title={'SHOP'} color={colors.primary} onPress={() => {
+                    }} />
+                </ThemedView >
+                <ThemedView style={styles.stepContainer} >
+                    <Button title={'CONTACT'} color={colors.primary} onPress={() => {
+                    }} />
+                </ThemedView >
 
-            <ThemedView style={styles.titleContainer} >
-                <TypeWriter textArr={["HELLO!"]} onComplete={() => fadeInWave()}/>
-                <Animated.View style={[{opacity}]}>
-                    {wave && <HelloWave />}
-                </Animated.View>
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <ThemedText type="subtitle" >Average Joe's Barista Bonanza</ThemedText >
-                <ThemedText >
-                    Let us help you dial in, save your setups and teach you some other handy skills.{' '}
-                </ThemedText >
-                <ThemedText >
-                    Check out more here:{' '}
-                </ThemedText >
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'ABOUT'} color={colors.primary} onPress={() => {}} />
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'SHOP'} color={colors.primary} onPress={() => {}} />
-            </ThemedView >
-            <ThemedView style={styles.stepContainer} >
-                <Button title={'CONTACT'} color={colors.primary} onPress={() => {}} />
-            </ThemedView >
-
-
+            </View >
         </ParallaxScrollView >
     );
 }
@@ -79,5 +83,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         objectFit: "contain",
         alignSelf: 'center',
+    },
+    content: {
+        flex: 1,
+        padding: 32,
+        gap: 16,
+        overflow: 'hidden',
     },
 });
