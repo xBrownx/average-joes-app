@@ -7,7 +7,7 @@ import { DialInLanding, StepOne, StepThree, StepTwo } from "../../features/dial-
 
 export default function DialIn() {
     const [modalOpen, setModalOpen] = React.useState(false);
-    const [step, setStep] = React.useState('3');
+    const [step, setStep] = React.useState('0');
     const closeModal = () => {
         setModalOpen(false);
         setStep('1');
