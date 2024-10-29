@@ -2,7 +2,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
-import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
+import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
 import { ThemedText } from "@/components/text/themed-text";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { selectPortafilter, setPortafilter } from "@/features/dial-in/store/dial-in-slice";

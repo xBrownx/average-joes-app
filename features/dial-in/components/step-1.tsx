@@ -2,7 +2,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { Button, StyleSheet, TextInput, View } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
-import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
+import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { selectBeans, setCoffeeBeans } from '@/features/dial-in/store/dial-in-slice'
 import { useSelector } from "react-redux";

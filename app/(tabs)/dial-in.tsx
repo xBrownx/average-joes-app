@@ -2,8 +2,8 @@ import { Image, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import React from "react";
-import { Modal } from "@/features/dial-in/modal";
-import { DialInLanding, StepOne, StepThree, StepTwo } from "../../features/dial-in";
+import { Modal } from "@/features/dial-in/components/modal";
+import { DialInLanding, StepOne, StepThree, StepTwo } from "../../features/dial-in/components";
 
 export default function DialIn() {
     const [modalOpen, setModalOpen] = React.useState(false);

@@ -2,7 +2,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { Button, StyleSheet, View } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
-import { CustomTypeWriter } from "@/features/dial-in/CustomTypeWriter";
+import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
 import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";

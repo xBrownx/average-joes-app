@@ -6,27 +6,32 @@ import { ThemedView } from '@/components/ThemedView';
 import CardView from "@/components/card/card-view";
 import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
+import { getAppData } from "@/util/local-storage";
 
-const data = [
-    {
-        id: "add-new",
-        title: "ADD",
-    },
-    {
-        id: "more-machines",
-        title: "MORE MACHINES",
-    },
-];
+
 
 type RecipeMachinesProps = {
     navBack: () => void;
 }
 
 export default function RecipeMachines({navBack}: RecipeMachinesProps) {
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const closeModal = () => {
+        setModalOpen(false);
+    }
+
+    const [machines, setMachines] = useState<string[]>([]);
+
+    useLayoutEffect(() => {
+        getAppData().then((data) => setMachines(data.machines));
+    },[])
+
     return (
         <SlideForwardView >
+            <AddMachineModal isOpen={modalOpen} onClose={closeModal} />
             <FlatList
                 ListHeaderComponent={
                     <ThemedView >
@@ -49,11 +54,10 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                 }
                 columnWrapperStyle={{gap: 16}}
                 contentContainerStyle={{gap: 8}}
-                data={data}
+                data={machines}
                 renderItem={({item}) => (
-                    <CardView id={""} onPress={() => {
-                    }} >
-                        <ThemedText >{item.title}</ThemedText >
+                    <CardView id={""} onPress={() => setModalOpen(true)} >
+                        <ThemedText >{item}</ThemedText >
                     </CardView >
                 )}
                 numColumns={2}

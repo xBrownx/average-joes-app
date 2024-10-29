@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import React from "react";
 import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
+import { appDataTemplate, getAppData, storeAppData } from "@/util/local-storage";
 
 export default function HomeScreen() {
     const [wave, setWave] = React.useState(false);
@@ -21,6 +22,21 @@ export default function HomeScreen() {
             useNativeDriver: true,
         }).start()
     }
+
+    const createAppData = () => {
+        storeAppData(appDataTemplate);
+    }
+
+    React.useEffect(() => {
+        getAppData().then((data) => {
+            if(data === null) {
+                console.log("No data");
+                createAppData();
+            } else {
+                console.log(data);
+            }
+        })
+    }, [])
 
     return (
         <ParallaxScrollView

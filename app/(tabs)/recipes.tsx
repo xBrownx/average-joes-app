@@ -1,9 +1,9 @@
 
 import { Image, StyleSheet } from 'react-native';
-import RecipeLanding from "@/features/recipes/landing-screen";
+import RecipeLanding from "@/features/recipes/components/landing-screen";
 import React from "react";
-import RecipeMachines from "@/features/recipes/machine-screen";
-import RecipeBeans from "@/features/recipes/beans-screen";
+import RecipeMachines from "@/features/recipes/components/machine-screen";
+import RecipeBeans from "@/features/recipes/components/beans-screen";
 import { ThemedView } from "@/components/ThemedView";
 import Footer from "@/components/Footer";
 import Animated from "react-native-reanimated";
