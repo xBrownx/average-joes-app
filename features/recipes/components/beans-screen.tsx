@@ -5,9 +5,7 @@ import CardView from "@/components/card/card-view";
 import React, { useLayoutEffect, useState } from "react";
 import colors from "@/components/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import SlideForwardView from "@/components/anim/slide-forward";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { getAppData, getDataString } from "@/util/local-storage";
+import { getDataString } from "@/util/local-storage";
 
 type RecipeBeansProps = {
     navBack: () => void;
@@ -15,10 +13,6 @@ type RecipeBeansProps = {
 
 export default function RecipeBeans({navBack}: RecipeBeansProps) {
     const [beans, setBeans] = useState<string[]>([]);
-
-    useLayoutEffect(() => {
-        getAppData().then((data) => setBeans(data.beans));
-    },[])
 
 
     const onLoadMachineName = () => {
@@ -29,34 +23,32 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
 
     return (
 
-        <SlideForwardView >
-            <FlatList
-                ListHeaderComponent={
-                    <ThemedView style={styles.titleContainer} >
-                        <Ionicons.Button
-                            name="arrow-back"
-                            size={24}
-                            backgroundColor={'transparent'}
-                            color={colors.primary}
-                            onPress={navBack}
-                        />
-                        <ThemedText type="title" >
-                            BEANS
-                        </ThemedText >
-                    </ThemedView >
-                }
-                columnWrapperStyle={{gap: 16}}
-                contentContainerStyle={{gap: 8}}
-                data={beans}
-                renderItem={({item}) => (
-                    <CardView id={""} onPress={onLoadMachineName} >
-                        <ThemedText >{item}</ThemedText >
-                    </CardView >
-                )}
-                numColumns={2}
-                keyExtractor={(item, index) => index.toString()}
-            />
-        </SlideForwardView >
+        <FlatList
+            ListHeaderComponent={
+                <ThemedView style={styles.titleContainer} >
+                    <Ionicons.Button
+                        name="arrow-back"
+                        size={24}
+                        backgroundColor={'transparent'}
+                        color={colors.primary}
+                        onPress={navBack}
+                    />
+                    <ThemedText type="title" >
+                        BEANS
+                    </ThemedText >
+                </ThemedView >
+            }
+            columnWrapperStyle={{gap: 16}}
+            contentContainerStyle={{gap: 8}}
+            data={beans}
+            renderItem={({item}) => (
+                <CardView id={""} onPress={onLoadMachineName} >
+                    <ThemedText >{item}</ThemedText >
+                </CardView >
+            )}
+            numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
+        />
     );
 }
 

@@ -1,23 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppData } from "@/types";
 
-export const storeAppData = async (value: AppData | undefined) => {
-    try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem("app-data", jsonValue);
-    } catch (e) {
-        // saving error
-    }
-}
-
-export const getAppData = async (): Promise<AppData | undefined> => {
-    try {
-        const jsonValue = await AsyncStorage.getItem("app-data");
-        return jsonValue != null ? JSON.parse(jsonValue.toString()) : null;
-    } catch (e) {
-        console.log('error fetching app data');
-    }
-};
 
 export const storeDataString = async (key: string, value: string) => {
     try {

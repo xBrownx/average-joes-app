@@ -1,15 +1,12 @@
-import { Image, StyleSheet, Platform, View, Animated, Button } from 'react-native';
+import { Image, StyleSheet, Platform, View, Animated, Button, Linking } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
-import Footer from "@/components/Footer";
 import React from "react";
 import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
-import { getAppData } from "@/util/local-storage";
-import { initialLoad } from "@/util/init-load";
 
 export default function HomeScreen() {
     const [wave, setWave] = React.useState(false);
@@ -24,21 +21,15 @@ export default function HomeScreen() {
         }).start()
     }
 
-    // const createAppData = () => {
-    //     storeAppData(appDataTemplate);
-    // }
-
-    React.useEffect(() => {
-        getAppData().then((data) => {
-            if(data === null) {
-                console.log("No data");
-                // createAppData();
+    const openExternalUrl = (url: string) => {
+        Linking.canOpenURL(url).then(supported => {
+            if (supported) {
+                Linking.openURL(url);
             } else {
-                console.log("Existing data");
+                console.log("Don't know how to open URI: " + url);
             }
-            initialLoad()
-        })
-    }, [])
+        });
+    };
 
     return (
         <ParallaxScrollView
@@ -66,12 +57,10 @@ export default function HomeScreen() {
                     </ThemedText >
                 </ThemedView >
                 <ThemedView style={styles.stepContainer} >
-                    <Button title={'ABOUT'} color={colors.primary} onPress={() => {
-                    }} />
+                    <Button title={'ABOUT'} color={colors.primary} onPress={() =>  {}} />
                 </ThemedView >
                 <ThemedView style={styles.stepContainer} >
-                    <Button title={'SHOP'} color={colors.primary} onPress={() => {
-                    }} />
+                    <Button title={'SHOP'} color={colors.primary} onPress={() => openExternalUrl('https://averagejoescoffee.com.au/') } />
                 </ThemedView >
                 <ThemedView style={styles.stepContainer} >
                     <Button title={'CONTACT'} color={colors.primary} onPress={() => {

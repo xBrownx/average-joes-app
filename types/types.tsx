@@ -14,8 +14,19 @@ export interface Machine {
     dosingRingSize: string;
 }
 
+export interface Bean {
+
+}
+
 export interface AppData {
-    'user-name': string;
-    'user-machines': [];
-    'db-machines': Machine[]
+    'user': {
+        'name': string,
+        'email': string,
+        'machines': Machine[],
+        'beans': Bean[],
+    },
+    server: {
+        'machines': Machine[],
+        'beans': Bean[],
+    }
 }

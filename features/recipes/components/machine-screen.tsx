@@ -1,14 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, FlatList } from 'react-native';
-
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
 import CardView from "@/components/card/card-view";
 import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
-import { getAppData } from "@/util/local-storage";
 
 type RecipeMachinesProps = {
     navBack: () => void;
@@ -16,22 +14,14 @@ type RecipeMachinesProps = {
 
 export default function RecipeMachines({navBack}: RecipeMachinesProps) {
     const [modalOpen, setModalOpen] = React.useState(false);
+    const [machines, setMachines] = useState<string[]>([]);
+
     const closeModal = () => {
         setModalOpen(false);
     }
 
-    const addMachine = () => {
-        setModalOpen(true);
-    }
-
-    const [machines, setMachines] = useState<string[]>([]);
-
-    useLayoutEffect(() => {
-        getAppData().then((data) => setMachines(data.machines));
-    },[])
-
     return (
-        <SlideForwardView >
+        <>
             <AddMachineModal isOpen={modalOpen} onClose={closeModal} />
             <FlatList
                 ListHeaderComponent={
@@ -52,7 +42,7 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                                 size={24}
                                 backgroundColor={'transparent'}
                                 color={colors.primary}
-                                onPress={() => addMachine()}
+                                onPress={() => setModalOpen(true)}
                             />
                         </ThemedView >
                         <ThemedView >
@@ -64,14 +54,15 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                 contentContainerStyle={{gap: 8}}
                 data={machines}
                 renderItem={({item}) => (
-                    <CardView id={""} onPress={()=>{}} >
+                    <CardView id={""} onPress={() => {
+                    }} >
                         <ThemedText >{item}</ThemedText >
                     </CardView >
                 )}
                 numColumns={2}
                 keyExtractor={(item, index) => index.toString()}
             />
-        </SlideForwardView >
+        </>
     );
 }
 

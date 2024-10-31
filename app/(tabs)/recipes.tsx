@@ -1,16 +1,20 @@
-
 import { Image, StyleSheet } from 'react-native';
 import RecipeLanding from "@/features/recipes/components/landing-screen";
-import React from "react";
+import React, { useEffect } from "react";
 import RecipeMachines from "@/features/recipes/components/machine-screen";
 import RecipeBeans from "@/features/recipes/components/beans-screen";
 import { ThemedView } from "@/components/ThemedView";
 import Footer from "@/components/Footer";
-import Animated from "react-native-reanimated";
+import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated";
 import colors from "@/components/colors";
+import { SlideView } from "@/components/anim/slide-forward";
 
 export default function Recipes() {
     const [screenNav, setScreenNav] = React.useState('landing');
+
+    useEffect(() => {
+        setScreenNav('landing')
+    }, [])
 
     return (
         <Footer >
@@ -29,12 +33,20 @@ export default function Recipes() {
 
                     <ThemedView >
                         <ThemedView style={styles.content} >
-                            {
-                                {
-                                    'landing': <RecipeLanding navForward={(screen: string) => setScreenNav(screen)} />,
-                                    'beans': <RecipeBeans navBack={() => setScreenNav('landing')} />,
-                                    'machines': <RecipeMachines navBack={() => setScreenNav('landing')} />,
-                                }[screenNav]
+                            {screenNav === 'landing' &&
+                                <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft} >
+                                    <RecipeLanding navForward={(screen: string) => setScreenNav(screen)} />
+                                </Animated.View >
+                            }
+                            {screenNav === 'beans' &&
+                                <Animated.View id={'2'} entering={SlideInRight} exiting={SlideOutRight} >
+                                    <RecipeBeans navBack={() => setScreenNav('landing')} />
+                                </Animated.View >
+                            }
+                            {screenNav === 'machines' &&
+                                <Animated.View id={'3'} entering={SlideInRight} exiting={SlideOutRight} >
+                                    <RecipeMachines navBack={() => setScreenNav('landing')} />
+                                </Animated.View >
                             }
                         </ThemedView >
                     </ThemedView >
