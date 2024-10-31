@@ -7,11 +7,8 @@ import CardView from "@/components/card/card-view";
 import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
 import React, { useLayoutEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
 import { getAppData } from "@/util/local-storage";
-
-
 
 type RecipeMachinesProps = {
     navBack: () => void;
@@ -21,6 +18,10 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
     const [modalOpen, setModalOpen] = React.useState(false);
     const closeModal = () => {
         setModalOpen(false);
+    }
+
+    const addMachine = () => {
+        setModalOpen(true);
     }
 
     const [machines, setMachines] = useState<string[]>([]);
@@ -46,6 +47,13 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                             <ThemedText type="title" >
                                 MACHINES
                             </ThemedText >
+                            <Ionicons.Button
+                                name="add"
+                                size={24}
+                                backgroundColor={'transparent'}
+                                color={colors.primary}
+                                onPress={() => addMachine()}
+                            />
                         </ThemedView >
                         <ThemedView >
                             <ThemedText type="default" >Add, edit or delete your machines here.</ThemedText >
@@ -56,7 +64,7 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                 contentContainerStyle={{gap: 8}}
                 data={machines}
                 renderItem={({item}) => (
-                    <CardView id={""} onPress={() => setModalOpen(true)} >
+                    <CardView id={""} onPress={()=>{}} >
                         <ThemedText >{item}</ThemedText >
                     </CardView >
                 )}

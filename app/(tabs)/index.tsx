@@ -8,7 +8,8 @@ import Footer from "@/components/Footer";
 import React from "react";
 import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
-import { appDataTemplate, getAppData, storeAppData } from "@/util/local-storage";
+import { getAppData } from "@/util/local-storage";
+import { initialLoad } from "@/util/init-load";
 
 export default function HomeScreen() {
     const [wave, setWave] = React.useState(false);
@@ -23,18 +24,19 @@ export default function HomeScreen() {
         }).start()
     }
 
-    const createAppData = () => {
-        storeAppData(appDataTemplate);
-    }
+    // const createAppData = () => {
+    //     storeAppData(appDataTemplate);
+    // }
 
     React.useEffect(() => {
         getAppData().then((data) => {
             if(data === null) {
                 console.log("No data");
-                createAppData();
+                // createAppData();
             } else {
-                console.log(data);
+                console.log("Existing data");
             }
+            initialLoad()
         })
     }, [])
 
