@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { DropdownData } from "@/types";
 
-
+export interface DropdownData {
+    label: string;
+    value: string;
+}
 
 const DropdownComponent = ({placeholder, data, onChange}: {placeholder: string, data: DropdownData[] | undefined, onChange: (value: string) => void}) => {
     const [value, setValue] = useState<string | null>(null);

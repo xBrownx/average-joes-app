@@ -46,25 +46,6 @@ export default function TabLayout() {
                 }}
             />
 
-            {/*<Tabs.Screen*/}
-            {/*    name="shop"*/}
-            {/*    options={{*/}
-            {/*        title: 'Shop',*/}
-            {/*        tabBarIcon: ({color, focused}) => (*/}
-            {/*            <TabBarIcon name={focused ? 'gift' : 'gift-outline'} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
-
-            {/*<Tabs.Screen*/}
-            {/*    name="chat"*/}
-            {/*    options={{*/}
-            {/*        title: 'Chat',*/}
-            {/*        tabBarIcon: ({color, focused}) => (*/}
-            {/*            <TabBarIcon name={focused ? 'chatbox' : 'chatbox-outline'} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
 
             <Tabs.Screen
                 name="learn"
@@ -75,26 +56,6 @@ export default function TabLayout() {
                     ),
                 }}
             />
-
-            <Tabs.Screen
-                name="more"
-                options={{
-                    title: 'More',
-                    tabBarIcon: ({color, focused}) => (
-                        <TabBarIcon name={focused ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'} color={colors.primary} />
-                    ),
-                }}
-            />
-
-            {/*<Tabs.Screen*/}
-            {/*    name="profile"*/}
-            {/*    options={{*/}
-            {/*        title: 'Profile',*/}
-            {/*        tabBarIcon: ({color, focused}) => (*/}
-            {/*            <TabBarIcon name={focused ? 'man' : 'man-outline'} color={color} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
         </Tabs >
     );
 }

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@/store/store";
-import { AppData, Machine, UserMachine } from "@/types";
-import { APP_DATA } from "@/constants/constants";
-const initialState: AppData = APP_DATA;
+import { RootState } from "@/app-data/store/store";
+import { useInitEmptyAppData } from "@/app-data/util/use-init-empty-app-data";
+import { AppData, Machine, UserMachine } from "@/app-data/domain";
+
+const initialState: AppData = useInitEmptyAppData()
 
 export const appDataSlice = createSlice({
     name: 'app-data',
@@ -19,8 +20,8 @@ export const appDataSlice = createSlice({
             state.server.machines = action.payload;
         },
         addUserMachine: (state, action: PayloadAction<UserMachine>) => {
-            state.user.machines.push(action.payload);
-
+            console.log('userMachineAdded == ', [...state.user.machines, action.payload])
+            state.user.machines = [...state.user.machines, action.payload]
         },
     }
 });

@@ -6,8 +6,10 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from "react-redux";
-import store from "@/store/store";
-import useInitialLoad from "@/app-data/data/local/use-app-data";
+import store, { useAppSelector } from "@/app-data/store/store";
+import { selectAppData } from "@/app-data/store";
+import { useInitialLoad, useSaveAppData } from "@/app-data/data/local/use-app-data";
+import app from "react-native/template/App";
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -31,7 +33,7 @@ function RootLayoutNav() {
 }
 
 function App() {
-    const appDataLoaded = useInitialLoad();
+
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
@@ -40,7 +42,8 @@ function App() {
     });
 
     useEffect(() => {
-        if (loaded && appDataLoaded) {
+        console.log('App() useEffect()')
+        if (loaded) {
             SplashScreen.hideAsync();
         }
     }, [loaded]);

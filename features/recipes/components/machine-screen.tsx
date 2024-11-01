@@ -7,8 +7,8 @@ import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
 import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
-import { useAppSelector } from "@/store/store";
-import { selectAppData, selectUserMachines } from "@/store/app-data-slice";
+import { useAppSelector } from "@/app-data/store/store";
+import { selectAppData, selectUserMachines } from "@/app-data/store/app-data-slice";
 
 interface UserMachine {
     id: string;

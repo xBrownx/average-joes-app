@@ -19,3 +19,4 @@ export async function storeLocalAppDataAsync(value: AppData) {
         console.error('error fetching app data', e);
     }
 }
+

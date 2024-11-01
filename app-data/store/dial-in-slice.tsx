@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@/store/store";
+import { RootState } from "@/app-data/store/store";
 
 export type DialInState = {
     beans: string;

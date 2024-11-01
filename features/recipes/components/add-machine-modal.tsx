@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
-import DropdownComponent from "@/components/dropdown/dropdown";
-import { DropdownData, Machine, MachineModel, UserMachine } from "@/types";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectAppData, addUserMachine, selectServerMachines } from "@/store/app-data-slice";
+import DropdownComponent, { DropdownData } from "@/components/dropdown/dropdown";
+import { useAppDispatch, useAppSelector } from "@/app-data/store/store";
+import { selectAppData, addUserMachine, selectServerMachines } from "@/app-data/store/app-data-slice";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { UserMachine } from "@/app-data/domain";
 
 type AddMachineModalProps = RNModalProps & {
     isOpen: boolean;
@@ -38,7 +38,6 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
             setMakeSelected(false);
             return;
         }
-        console.log('onMakeSelect() ------------------------- ', machine)
         setModelsDropdown(
             machine.models.map(model => (
                 {label: model.name, value: model.name}
@@ -50,11 +49,8 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
 
     const onModelSelect = (text: string) => {
         if(!text) return
-        console.log('onModelSelect-------------------', text);
         const make = machines.find(machine => machine.make === selectedMake);
-        console.log(' onModelSelect make', make);
         const model = make ? make.models.find(model => model.name === text) : null;
-        console.log(' onModelSelect model', model);
 
         if(!model) {
             setMakeSelected(false);
@@ -66,15 +62,9 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
     }
 
     const onSave = () => {
-        console.log('onSave()')
         if(!modelSelected) return;
-        console.log('modelSelected == true')
         const make = machines.find(machine => machine.make === selectedMake);
-        console.log('make ==', make);
         const model = make ? make.models.find(model => model.name === selectedModel) : null;
-
-        console.log('model ==', model);
-
         if(!model || !make) return;
 
         const userMachine: UserMachine = {
@@ -82,8 +72,6 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
             make: make.make,
             model: model
         }
-
-        console.log('userMachine ==', userMachine);
 
         dispatch(addUserMachine(userMachine))
         onClose()
