@@ -3,8 +3,8 @@ import { Button, StyleSheet, TextInput, View } from "react-native";
 import colors from "@/components/colors";
 import React from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { selectBeans, setCoffeeBeans } from '@/features/dial-in/store/dial-in-slice'
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { selectBeans, setCoffeeBeans } from '@/store/dial-in-slice'
 import { useSelector } from "react-redux";
 import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";

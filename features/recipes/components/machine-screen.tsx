@@ -1,23 +1,54 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, View, Image } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
 import CardView from "@/components/card/card-view";
 import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
+import { useAppSelector } from "@/store/store";
+import { selectAppData, selectUserMachines } from "@/store/app-data-slice";
+
+interface UserMachine {
+    id: string;
+    make: string;
+    image: any;
+}
 
 type RecipeMachinesProps = {
     navBack: () => void;
-}
+};
+
+const initialValue = {
+    id: 'add',
+    make: "ADD\nNEW",
+    image: "",
+};
 
 export default function RecipeMachines({navBack}: RecipeMachinesProps) {
     const [modalOpen, setModalOpen] = React.useState(false);
-    const [machines, setMachines] = useState<string[]>([]);
+    const userData = useAppSelector(selectAppData);
+    const [machinesList, setMachinesList] = useState<UserMachine[]>([]);
+
+    const userMachines = useAppSelector(selectUserMachines);
+
+    useEffect(() => {
+        setMachinesList(
+            [...userMachines.map((machine, idx) => {
+                return {id: idx + machine.make, make: machine.make, image: ""}
+            }), initialValue]
+        );
+    }, [userMachines])
 
     const closeModal = () => {
         setModalOpen(false);
+    }
+
+    const handleItemSelect = (id: string) => {
+        if(id === "add") {
+            setModalOpen(true)
+        }
     }
 
     return (
@@ -37,13 +68,7 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                             <ThemedText type="title" >
                                 MACHINES
                             </ThemedText >
-                            <Ionicons.Button
-                                name="add"
-                                size={24}
-                                backgroundColor={'transparent'}
-                                color={colors.primary}
-                                onPress={() => setModalOpen(true)}
-                            />
+
                         </ThemedView >
                         <ThemedView >
                             <ThemedText type="default" >Add, edit or delete your machines here.</ThemedText >
@@ -52,11 +77,16 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                 }
                 columnWrapperStyle={{gap: 16}}
                 contentContainerStyle={{gap: 8}}
-                data={machines}
+                data={machinesList}
                 renderItem={({item}) => (
-                    <CardView id={""} onPress={() => {
-                    }} >
-                        <ThemedText >{item}</ThemedText >
+                    <CardView id={item.id} onPress={() => handleItemSelect(item.id)} >
+
+                        {/*<Image*/}
+                        {/*    source={item.img}*/}
+                        {/*    style={styles.cardImage}*/}
+                        {/*/>*/}
+                        <ThemedText style={styles.cardText} type={'defaultSemiBold'}>{item.make}</ThemedText >
+
                     </CardView >
                 )}
                 numColumns={2}
@@ -86,5 +116,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'transparent',
+    },
+    cardImage: {
+        flex: 1,
+        width: 'auto',
+        objectFit: 'contain',
+    },
+    cardText: {
+        alignSelf: "center",
+        color: colors.tertiary
     },
 });

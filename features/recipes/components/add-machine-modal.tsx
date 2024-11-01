@@ -10,10 +10,11 @@ import {
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
 import DropdownComponent from "@/components/dropdown/dropdown";
-import { DropdownData, Machine } from "@/types";
-import { machinesMake, machinesMakeModel, stringArrayToDropdown } from "@/dto/machines/machines";
-import { useAppSelector } from "@/store";
-import { selectAppData } from "@/app-data/app-data-slice";
+import { DropdownData, Machine, MachineModel, UserMachine } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { selectAppData, addUserMachine, selectServerMachines } from "@/store/app-data-slice";
+import { ThemedText } from "@/components/text/themed-text";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 type AddMachineModalProps = RNModalProps & {
     isOpen: boolean;
@@ -22,33 +23,71 @@ type AddMachineModalProps = RNModalProps & {
 };
 
 export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}: AddMachineModalProps) => {
-    const [machines, setMachines] = useState<Machine[] | undefined>([])
-    const [modelList, setModelList] = React.useState<DropdownData[] | undefined>([]);
-    const [selectedMake, setSelectedMake] = React.useState('')
-    const [makeList, setMakeList] = useState<DropdownData[] | undefined>([])
+    const dispatch = useAppDispatch();
+    const [modelsDropdown, setModelsDropdown] = useState<DropdownData[]>([]);
+    const [makeSelected, setMakeSelected] = useState(false);
+    const [selectedMake, setSelectedMake] = useState('')
+    const [modelSelected, setModelSelected] = useState(false)
+    const [selectedModel, setSelectedModel] = useState('')
+    const machines = useAppSelector(selectServerMachines);
+    const machinesDropdown: DropdownData[] = machines.map(machine => ({label: machine.make, value: machine.make}))
 
-    const machineList = useAppSelector(selectAppData);
-
-    const showModels = () => {
-        setModelList(
-            stringArrayToDropdown(
-                machinesMakeModel(machines, selectedMake)
-            )
-        )
-    }
-
-    const onTextChange = (text: string) => {
-        setSelectedMake(text);
-        if (text !== "") {
-            showModels()
+    const onMakeSelect = (text: string) => {
+        const machine = machines.find(machine => machine.make === text);
+        if(!machine) {
+            setMakeSelected(false);
+            return;
         }
+        console.log('onMakeSelect() ------------------------- ', machine)
+        setModelsDropdown(
+            machine.models.map(model => (
+                {label: model.name, value: model.name}
+            ))
+        );
+        setSelectedMake(text);
+        setMakeSelected(true);
     }
 
-    useEffect(() => {
-        console.log(machineList.server.machines);
-        setMachines(machineList.server.machines)
-        setMakeList(stringArrayToDropdown(machinesMake(machineList.server.machines)));
-    }, [])
+    const onModelSelect = (text: string) => {
+        if(!text) return
+        console.log('onModelSelect-------------------', text);
+        const make = machines.find(machine => machine.make === selectedMake);
+        console.log(' onModelSelect make', make);
+        const model = make ? make.models.find(model => model.name === text) : null;
+        console.log(' onModelSelect model', model);
+
+        if(!model) {
+            setMakeSelected(false);
+            setModelSelected(false)
+            return;
+        }
+        setSelectedModel(text);
+        setModelSelected(true);
+    }
+
+    const onSave = () => {
+        console.log('onSave()')
+        if(!modelSelected) return;
+        console.log('modelSelected == true')
+        const make = machines.find(machine => machine.make === selectedMake);
+        console.log('make ==', make);
+        const model = make ? make.models.find(model => model.name === selectedModel) : null;
+
+        console.log('model ==', model);
+
+        if(!model || !make) return;
+
+        const userMachine: UserMachine = {
+            id: make.make,
+            make: make.make,
+            model: model
+        }
+
+        console.log('userMachine ==', userMachine);
+
+        dispatch(addUserMachine(userMachine))
+        onClose()
+    }
 
     return (
         <RNModal
@@ -62,9 +101,21 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
             <TouchableOpacity style={styles.modalOuter} onPress={onClose}>
                 <TouchableWithoutFeedback>
                 <View style={styles.modalInner}>
-                    <DropdownComponent placeholder={'Make'} data={makeList} onChange={onTextChange} />
-                    <DropdownComponent placeholder={'Model'} data={modelList} onChange={() => {}}/>
-                    <Button title={'SAVE'} color={colors.primary} onPress={() => {}} />
+                    <View style={styles.titleContainer}>
+                        <ThemedText type={'subtitle'}>Add Your Machine</ThemedText>
+                        <Ionicons.Button
+                            name="add"
+                            size={24}
+                            backgroundColor={'transparent'}
+                            color={colors.tertiary}
+                            onPress={() => {}}
+                        />
+                    </View>
+
+                    <ThemedText type={'default'} style={styles.titleContainer}>Search our database or add your own!</ThemedText>
+                    <DropdownComponent placeholder={'Make'} data={machinesDropdown} onChange={(text) => onMakeSelect(text)} />
+                    {makeSelected && <DropdownComponent placeholder={'Model'} data={modelsDropdown} onChange={(text) => onModelSelect(text)} />}
+                    <Button title={'SAVE'} color={colors.primary} onPress={onSave} />
                 </View>
                 </TouchableWithoutFeedback>
             </TouchableOpacity>
@@ -81,6 +132,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
+        justifyContent: "space-between",
     },
     stepContainer: {
         gap: 16,

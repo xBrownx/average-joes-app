@@ -5,24 +5,36 @@ export interface DropdownData {
     value: string;
 }
 
-export interface Machine {
-    make: string;
-    model: string;
+export interface MachineModel {
+    id: string;
+    name: string;
     size: string;
     portafilterSize: string;
     tamperSize: string;
     dosingRingSize: string;
 }
 
-export interface Bean {
+export interface Machine {
+    id: string;
+    make: string;
+    models: MachineModel[];
+}
 
+export interface Bean {
+    id: string;
+}
+
+export interface UserMachine {
+    id: string;
+    make: string;
+    model: MachineModel;
 }
 
 export interface AppData {
-    'user': {
+    user: {
         'name': string,
         'email': string,
-        'machines': Machine[],
+        'machines': UserMachine[],
         'beans': Bean[],
     },
     server: {

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@/store";
+import { RootState } from "@/store/store";
 
 export type DialInState = {
     beans: string;
     portafilter: string;
 }
 
-export const initialState: DialInState = {
+const initialState: DialInState = {
     beans: '',
     portafilter: '',
 }
