@@ -9,7 +9,7 @@ export default function DialInLanding({setModalOpen}: { setModalOpen: (open: boo
     return (
         <View style={styles.content}>
             <ThemedView style={styles.titleContainer}>
-                <TypeWriter textStyle={'title'} textArr={["WELCOME ANDY"]} onComplete={() => {
+                <TypeWriter textStyle={'title'} textArr={["WELCOME"]} onComplete={() => {
                 }} />
             </ThemedView>
             <ThemedView style={styles.stepContainer}>

@@ -16,6 +16,7 @@ type RecipeBeansProps = {
 type BeanCard = {
     id: string;
     blendName: string;
+    roaster: string;
     image: string;
 }
 
@@ -45,7 +46,7 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
 
     useEffect(() => {
         updateState('beanCards', userBeans.map((bean) => (
-            {id: bean.id, make: bean.blendName, image: ""})))
+            {id: bean.id, blendName: bean.blendName, roaster: bean.roasterName, image: ""})))
     }, [userBeans])
 
     return (
@@ -67,7 +68,10 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
                 <ThemedView style={styles.listContainer} >
                     {state.beanCards.map(card => (
                         <CardView key={card.id} id={card.id} onPress={() => {}} >
-                            <ThemedText >{card.blendName}</ThemedText >
+                            <View style={styles.cardContainer}>
+                                <ThemedText type={'title'}>{card.blendName}</ThemedText >
+                                <ThemedText type={'subtitle'}>{card.roaster}</ThemedText >
+                            </View>
                         </CardView >
                     ))}
                     <TouchableOpacity
@@ -97,12 +101,6 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
 
 const styles = StyleSheet.create({
 
-    headerImage: {
-        color: '#808080',
-        bottom: -90,
-        left: -35,
-        position: 'absolute',
-    },
     titleContainer: {
         flexDirection: 'row',
         gap: 1,

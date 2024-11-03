@@ -2,12 +2,14 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from "react-redux";
-import store, { useAppDispatch } from "@/store/store";
+import store, { useAppDispatch, useAppSelector } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
+import { selectUser } from "@/store";
+import { LoginModal } from "@/features/login";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -21,16 +23,18 @@ export default function RootLayout() {
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
     return (
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <Provider store={store}>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme} >
+            <Provider store={store} >
                 <App />
-            </Provider>
-        </ThemeProvider>
+            </Provider >
+        </ThemeProvider >
     );
 }
 
 function App() {
     const dispatch = useAppDispatch();
+    const username = useAppSelector(selectUser);
+    const [isLoginModal, setLoginModal] = useState(true);
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
@@ -50,10 +54,14 @@ function App() {
         return null;
     }
     return (
-        <Stack >
-            <Stack.Screen name="(tabs)" options={{headerShown: false}} />
-            <Stack.Screen name="+not-found" />
-        </Stack >
+        <>
+            {username === '' ? <LoginModal isOpen={isLoginModal} onClose={() => setLoginModal(false)} /> :
+                <Stack >
+                    <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+                    <Stack.Screen name="+not-found" />
+                </Stack >
+            }
+        </>
     );
 }
 

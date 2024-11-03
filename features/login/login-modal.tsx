@@ -1,8 +1,9 @@
-import { Button, Modal as RNModal, ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
+import { Button, Modal as RNModal, ModalProps as RNModalProps, StyleSheet, TextInput, View } from 'react-native';
 import { ThemedText } from "@/components/text/themed-text";
 import { ThemedView } from "@/components/ThemedView";
 import colors from "@/components/colors";
 import React from "react";
+import { setUserName, useAppDispatch } from "@/store";
 
 type LoginModalProps = RNModalProps & {
     isOpen: boolean;
@@ -11,6 +12,20 @@ type LoginModalProps = RNModalProps & {
 };
 
 export const LoginModal = ({isOpen, onClose, withInput, children, ...rest}: LoginModalProps) => {
+    const dispatch = useAppDispatch();
+    const [name, setName] = React.useState<string>("");
+
+    const handleOk = () => {
+        if(name !== '' && name !== null ) {
+            dispatch(setUserName(name));
+            onClose()
+        }
+    }
+
+    const onTextChange = (text: string) => {
+        setName(text);
+    }
+
     return (
         <RNModal
             visible={isOpen}
@@ -22,18 +37,23 @@ export const LoginModal = ({isOpen, onClose, withInput, children, ...rest}: Logi
             <View style={styles.modalOuter}>
                 <View style={styles.modalInner}>
                     <ThemedView style={styles.titleContainer}>
-                        <ThemedText type={'title'}>
+                        <ThemedText type={'subtitle'}>
                             WELCOME TO JOE'S!
                         </ThemedText>
                     </ThemedView>
                     <ThemedView style={styles.stepContainer}>
-                       <ThemedText type={'subtitle'}>
+                       <ThemedText type={'default'}>
                            Before we get started, lets grab your name so we can be a bit more personal:
                        </ThemedText>
                     </ThemedView>
-
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={onTextChange}
+                        placeholder="Enter Me"
+                        value={name}
+                    />
                     <ThemedView style={styles.stepContainer}>
-                        <Button title={'OK I\'m Ready'} color={colors.primary} onPress={onClose} />
+                        <Button title={'OK'} color={colors.primary} onPress={handleOk} />
                     </ThemedView>
                 </View>
             </View>
@@ -51,15 +71,6 @@ const styles = StyleSheet.create({
         gap: 16,
         marginBottom: 16,
     },
-    reactLogo: {
-        height: "70%",
-        width: "100%",
-        bottom: 0,
-        marginBottom: '5%',
-        position: 'absolute',
-        objectFit: "contain",
-        alignSelf: 'center',
-    },
     modalOuter: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -72,5 +83,12 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: 'white',
         borderRadius: 8,
-    }
+    },
+    input: {
+        height: 40,
+        marginTop: 16,
+        marginBottom: 16,
+        borderWidth: 1,
+        padding: 10,
+    },
 });

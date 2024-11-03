@@ -2,7 +2,7 @@ import {
     Button,
     Modal as RNModal,
     ModalProps as RNModalProps,
-    StyleSheet,
+    StyleSheet, TextInput,
     TouchableOpacity,
     TouchableWithoutFeedback,
     View
@@ -53,68 +53,48 @@ type UpdateStateType =
     | 'selectedBlend'
     | 'isBlendSelected';
 
+interface FormState {
+    roaster: string;
+    blendName: string;
+    tastingNotes: string;
+    dose: string;
+    yield: string;
+    time: string
+    rating: string;
+}
+
+type FormStateType = 'roaster' | 'blendName' | 'tastingNotes' | 'dose' | 'yield' | 'time' | 'rating';
+
+const initialFormState = {
+    roaster: '',
+    blendName: '',
+    tastingNotes: '',
+    dose: '',
+    yield: '',
+    time: '',
+    rating: ''
+}
+
+
 export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: AddBeanModalProps) => {
     const dispatch = useAppDispatch();
-    const roasters = useAppSelector(selectRemoteRoasters);
-    const beans = useAppSelector(selectRemoteBeans);
-    const [modalState, setModalState] = useState<AddBeanModalState>(initialModalState);
+    const [formState, setFormState] = useState<FormState>(initialFormState)
 
-    const updateState = (name: UpdateStateType, value: any) => {
-        setModalState(prevState => ({
+    const onTextChange = (name: FormStateType, text: string) => {
+        setFormState(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: text
         }))
-    }
-
-    useEffect(() => {
-        updateState('roastersDropdown', serverRoastersToDropdown(roasters))
-    }, [])
-
-    const onRoasterSelect = (text: string) => {
-        const roaster = roasters.find(roaster => roaster.name === text);
-        if (!roaster) {
-            updateState('isRoasterSelected', false)
-            return;
-        }
-        const blends = beans.filter(blend => blend.roasterId === roaster.id)
-
-        updateState('blendDropdown', serverBeansToDropdown(blends));
-        updateState('selectedRoaster', text);
-        updateState('isRoasterSelected', true);
     };
 
-    const onBlendSelected = (text: string) => {
-        if (!text) return
-        const blend = beans.find(bean => bean.blendName === text);
-
-        if (!blend) {
-            updateState('isBlendSelected', false);
-            return;
-        }
-        updateState('selectedBlend', text);
-        updateState('isBlendSelected', true);
-    }
-
     const onSave = () => {
-        if (!modalState.isBlendSelected || !modalState.isRoasterSelected) return;
-        const blend = beans.find(blend => blend.blendName === modalState.selectedBlend);
-        if (!blend) return;
-
         const userBean: UserBean = {
-            buyLink: "",
-            origins: "",
-            rating: 0,
-            recipe: {
-                dose: '',
-                yield: '',
-                time: '',
-            },
-            roastDate: "",
-            roasterId: "",
-            tastingNotes: "",
-            id: blend.id,
-            blendName: blend.blendName
-        }
+            id: new Date().toLocaleString(),
+            roasterName: formState.roaster,
+            blendName: formState.blendName,
+        };
+
+        console.log(userBean)
 
         dispatch(addUserBean(userBean))
         onClose()
@@ -135,7 +115,7 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
                         <View style={styles.titleContainer} >
                             <ThemedText type={'subtitle'}>Add Your Beans</ThemedText >
                             <Ionicons.Button
-                                name="add"
+                                name="search"
                                 size={24}
                                 backgroundColor={'transparent'}
                                 color={colors.tertiary}
@@ -148,14 +128,52 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
                             type={'default'}
                             style={styles.titleContainer}
                         >
-                            Search our database or add your own!
+                            Add your bean profile, or use the search tool above.
                         </ThemedText >
 
                         <View style={styles.content} >
-                            <DropdownComponent
-                                placeholder={'Roaster'}
-                                data={modalState.roastersDropdown}
-                                onChange={(text) => onRoasterSelect(text)}
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => onTextChange('roaster', text)}
+                                placeholder="Roaster"
+                                value={formState.roaster}
+                            />
+
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => onTextChange('blendName', text)}
+                                placeholder="Blend Name"
+                                value={formState.blendName}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => onTextChange('tastingNotes', text)}
+                                placeholder="Tasting Notes (Optional)"
+                                value={formState.tastingNotes}
+                            />
+                            {/*<TextInput*/}
+                            {/*    style={styles.input}*/}
+                            {/*    onChangeText={(text) => onTextChange('dose', text)}*/}
+                            {/*    placeholder="Dose (Optional)"*/}
+                            {/*    value={formState.dose}*/}
+                            {/*/>*/}
+                            {/*<TextInput*/}
+                            {/*    style={styles.input}*/}
+                            {/*    onChangeText={(text) => onTextChange('yield', text)}*/}
+                            {/*    placeholder="Yield (Optional)"*/}
+                            {/*    value={formState.yield}*/}
+                            {/*/>*/}
+                            {/*<TextInput*/}
+                            {/*    style={styles.input}*/}
+                            {/*    onChangeText={(text) => onTextChange('time', text)}*/}
+                            {/*    placeholder="Time (Optional)"*/}
+                            {/*    value={formState.time}*/}
+                            {/*/>*/}
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => onTextChange('rating', text)}
+                                placeholder="Rating (Optional)"
+                                value={formState.rating}
                             />
 
                             <Button
@@ -211,14 +229,53 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     content: {
-        gap: 16,
+        gap: 8,
     },
-
     input: {
-        height: 40,
-        marginTop: 16,
-        marginBottom: 16,
+        marginTop: 0,
+        marginBottom: 0,
         borderWidth: 1,
-        padding: 10,
+        padding: 8,
     },
 });
+
+// const roasters = useAppSelector(selectRemoteRoasters);
+// const beans = useAppSelector(selectRemoteBeans);
+// const [modalState, setModalState] = useState<AddBeanModalState>(initialModalState);
+//
+// const updateState = (name: UpdateStateType, value: any) => {
+//     setModalState(prevState => ({
+//         ...prevState,
+//         [name]: value
+//     }))
+// }
+//
+// useEffect(() => {
+//     updateState('roastersDropdown', serverRoastersToDropdown(roasters))
+// }, [])
+//
+// const onRoasterSelect = (text: string) => {
+//     const roaster = roasters.find(roaster => roaster.name === text);
+//     if (!roaster) {
+//         updateState('isRoasterSelected', false)
+//         return;
+//     }
+//     const blends = beans.filter(blend => blend.roasterId === roaster.id)
+//
+//     updateState('blendDropdown', serverBeansToDropdown(blends));
+//     updateState('selectedRoaster', text);
+//     updateState('isRoasterSelected', true);
+// };
+//
+// const onBlendSelected = (text: string) => {
+//     if (!text) return
+//     const blend = beans.find(bean => bean.blendName === text);
+//
+//     if (!blend) {
+//         updateState('isBlendSelected', false);
+//         return;
+//     }
+//     updateState('selectedBlend', text);
+//     updateState('isBlendSelected', true);
+// }
+

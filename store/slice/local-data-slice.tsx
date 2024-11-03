@@ -37,6 +37,8 @@ export const localDataSlice = createSlice({
 
 export const { setUserName, addUserMachine, addUserBean } = localDataSlice.actions;
 
+export const selectUser = (state: RootState) => state.localData.data.username;
+
 export const selectAppData = (state: RootState) => state.localData.data;
 
 export const selectUserMachines = (state: RootState) => state.localData.data.machines;

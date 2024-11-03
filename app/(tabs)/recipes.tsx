@@ -9,6 +9,7 @@ import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from
 import colors from "@/components/colors";
 import { SlideView } from "@/components/anim/slide-forward";
 import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { LayoutAnimationConfig } from 'react-native-reanimated';
 
 export default function Recipes() {
     const [screenNav, setScreenNav] = React.useState('landing');
@@ -29,6 +30,7 @@ export default function Recipes() {
         >
             <ThemedView >
                 <ThemedView style={styles.content} >
+                    <LayoutAnimationConfig skipEntering>
                     {screenNav === 'landing' &&
                         <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft} style={styles.container} >
                             <RecipeLanding navForward={(screen: string) => setScreenNav(screen)} />
@@ -44,6 +46,7 @@ export default function Recipes() {
                             <RecipeMachines navBack={() => setScreenNav('landing')} />
                         </Animated.View >
                     }
+                    </LayoutAnimationConfig>
                 </ThemedView >
             </ThemedView >
         </ParallaxScrollView >

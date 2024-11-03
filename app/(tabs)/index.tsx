@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, Animated, Button, Linking } from 'react-native';
+import { Image, StyleSheet, View, Animated, Button, Linking } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -7,10 +7,12 @@ import { ThemedView } from '@/components/ThemedView';
 import React from "react";
 import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
+import { selectUser, useAppSelector } from "../../store";
 
 export default function HomeScreen() {
     const [wave, setWave] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
+    const username = useAppSelector(selectUser).toUpperCase();
 
     function fadeInWave() {
         setWave(true);
@@ -42,7 +44,7 @@ export default function HomeScreen() {
             } >
             <View style={styles.content} >
                 <ThemedView style={styles.titleContainer} >
-                    <TypeWriter textArr={["HELLO!"]} onComplete={() => fadeInWave()} />
+                    <TypeWriter textStyle={'title'} textArr={[`HELLO ${username.toUpperCase()}!`]} onComplete={() => fadeInWave()} />
                     <Animated.View style={[{opacity}]} >
                         {wave && <HelloWave />}
                     </Animated.View >

@@ -23,11 +23,11 @@ export interface Bean {
 export interface  UserBean {
     id: string;
     blendName: string;
-    roasterId: string;
-    origins: string;
-    tastingNotes: string;
-    recipe: Recipe;
-    rating: number;
-    buyLink: string;
-    roastDate: string;
+    roasterId?: string;
+    roasterName?: string;
+    origins?: string;
+    tastingNotes?: string;
+    recipe?: Recipe;
+    rating?: number;
+    buyLink?: string;
 }
