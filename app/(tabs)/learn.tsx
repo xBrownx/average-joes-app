@@ -11,7 +11,13 @@ import colors from "@/components/colors";
 import { Colors } from "@/constants/Colors";
 import LearnLandingPage from "@/features/learn/components/landing-page";
 import LearnPlayerPage from "@/features/learn/components/player-page";
-import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from 'react-native-reanimated';
+import Animated, {
+    LayoutAnimationConfig,
+    SlideInLeft,
+    SlideInRight,
+    SlideOutLeft,
+    SlideOutRight
+} from 'react-native-reanimated';
 
 export default function Learn() {
     const [videoScreen, setVideoScreen] = React.useState(false);
@@ -35,6 +41,7 @@ export default function Learn() {
                 style={styles.headerImage}
             />}>
             <ThemedView style={styles.container} >
+                <LayoutAnimationConfig skipEntering>
                 {!videoScreen &&
                     <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft}>
                         <LearnLandingPage navToVideo={navToVideo} />
@@ -45,6 +52,7 @@ export default function Learn() {
                         <LearnPlayerPage title={videoTitle} videoId={videoId} navBack={navBack} />
                     </Animated.View>
                 }
+                </LayoutAnimationConfig>
             </ThemedView>
         </ParallaxScrollView>
     );

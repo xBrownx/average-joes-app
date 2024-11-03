@@ -8,6 +8,8 @@ import { ThemedText } from "@/components/text/themed-text";
 import colors from "@/components/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SlideView } from "@/components/anim/slide-forward";
+import TypeWriter from "@/components/text/typewriter-text";
+import { useIsFocused } from "@react-navigation/native";
 
 const {width} = Dimensions.get('window');
 
@@ -35,46 +37,49 @@ function VideoLink({title, navigateToVideo}: { title: string, navigateToVideo: (
 export default function LearnLandingPage({navToVideo}: {
     navToVideo: (videoTitle: string, videoId: string) => void
 }) {
+    const focused = useIsFocused();
     return (
-        <ThemedView style={styles.content}>
-            <ThemedView style={styles.titleContainer}>
-                <ThemedText type="title">Joe's Learning Centre</ThemedText>
+        <>{focused &&
+            <ThemedView style={styles.content}>
+                <ThemedView style={styles.titleContainer}>
+                    <TypeWriter textStyle={'title'} textArr={["LEARNING CENTRE"]} />
+                </ThemedView>
+                <ThemedView style={styles.titleContainer}>
+                    <ThemedText type="default">Learn like a pro with Joe's step by step tutorial videos.</ThemedText>
+                </ThemedView>
+
+                <VideoLink
+                    title={'1: WHAT\'S TO COME'}
+                    navigateToVideo={() => navToVideo('WHAT\'S TO COME', 'ruZFxIWyzlY')}
+                />
+
+                <VideoLink
+                    title={'2: THE GEAR YOU NEED'}
+                    navigateToVideo={() => navToVideo('THE GEAR YOU NEED', '_1iLqkSPnso')}
+                />
+
+                <VideoLink
+                    title={'3: THE PERFECT SHOT - DIALING IN'}
+                    navigateToVideo={() => navToVideo('THE PERFECT SHOT - DIALING IN', 'ZYeDds-IHDU')}
+                />
+
+                <VideoLink
+                    title={'4: THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE'}
+                    navigateToVideo={() => navToVideo('THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE', 'Sv2OlBPKoxM')}
+                />
+
+                <VideoLink
+                    title={'5: MAKE IT PRETTY, LATTE ART - THE HEART'}
+                    navigateToVideo={() => navToVideo('MAKE IT PRETTY, LATTE ART \nTHE HEART', 'kKlPdbixeBM')}
+                />
+
+                <VideoLink
+                    title={'6: UPKEEP - IT’S NO JOKE!'}
+                    navigateToVideo={() => navToVideo('UPKEEP - IT’S NO JOKE!', 'bejf9JIqgrs')}
+                />
+
             </ThemedView>
-            <ThemedView style={styles.titleContainer}>
-                <ThemedText type="default">Learn like a pro with Joe's step by step tutorial videos.</ThemedText>
-            </ThemedView>
-
-            <VideoLink
-                title={'1: WHAT\'S TO COME'}
-                navigateToVideo={() => navToVideo('WHAT\'S TO COME', 'ruZFxIWyzlY')}
-            />
-
-            <VideoLink
-                title={'2: THE GEAR YOU NEED'}
-                navigateToVideo={() => navToVideo('THE GEAR YOU NEED', '_1iLqkSPnso')}
-            />
-
-            <VideoLink
-                title={'3: THE PERFECT SHOT - DIALING IN'}
-                navigateToVideo={() => navToVideo('THE PERFECT SHOT - DIALING IN', 'ZYeDds-IHDU')}
-            />
-
-            <VideoLink
-                title={'4: THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE'}
-                navigateToVideo={() => navToVideo('THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE', 'Sv2OlBPKoxM')}
-            />
-
-            <VideoLink
-                title={'5: MAKE IT PRETTY, LATTE ART - THE HEART'}
-                navigateToVideo={() => navToVideo('MAKE IT PRETTY, LATTE ART \nTHE HEART', 'kKlPdbixeBM')}
-            />
-
-            <VideoLink
-                title={'6: UPKEEP - IT’S NO JOKE!'}
-                navigateToVideo={() => navToVideo('UPKEEP - IT’S NO JOKE!', 'bejf9JIqgrs')}
-            />
-
-        </ThemedView>
+        }</>
     );
 }
 

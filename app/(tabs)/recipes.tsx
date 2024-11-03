@@ -56,10 +56,13 @@ export default function Recipes() {
 
 const styles = StyleSheet.create({
     headerImage: {
-        color: '#808080',
-        bottom: -90,
-        left: -35,
+        height: "70%",
+        width: "60%",
+        bottom: 0,
+        marginBottom: '5%',
         position: 'absolute',
+        objectFit: "contain",
+        alignSelf: 'center',
     },
     content: {
         padding: 32,

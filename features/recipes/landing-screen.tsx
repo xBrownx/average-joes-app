@@ -4,6 +4,8 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import colors from "@/components/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useIsFocused } from "@react-navigation/native";
+import TypeWriter from "@/components/text/typewriter-text";
 
 const menuItems = [
     {
@@ -22,12 +24,13 @@ type RecipeLandingProps = {
 
 
 export default function RecipeLanding({navForward}: RecipeLandingProps) {
-
+    const focused = useIsFocused();
     return (
+        <>{focused &&
         <View style={styles.container}>
             <ThemedView style={styles.container} >
                 <ThemedView style={styles.titleContainer} >
-                    <ThemedText type="title" >RECIPES</ThemedText >
+                    <TypeWriter textStyle={'title'} textArr={["RECIPES"]} />
                 </ThemedView >
                 <ThemedView >
                     <ThemedText type="default" >Checkout your saved beans or add/edit your machine
@@ -55,9 +58,10 @@ export default function RecipeLanding({navForward}: RecipeLandingProps) {
                         />
                     </View>
                 </TouchableOpacity>
-
             ))}
         </View >
+        }
+        </>
     );
 }
 

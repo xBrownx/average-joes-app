@@ -4,12 +4,14 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
-import React from "react";
+import React, { useEffect } from "react";
 import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
 import { selectUser, useAppSelector } from "../../store";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function HomeScreen() {
+    const focused = useIsFocused();
     const [wave, setWave] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
     const username = useAppSelector(selectUser).toUpperCase();
@@ -33,6 +35,12 @@ export default function HomeScreen() {
         });
     };
 
+    useEffect(() => {
+        if (!focused) {
+            setWave(false);
+        }
+    }, [focused]);
+
     return (
         <ParallaxScrollView
             headerBackgroundColor={{light: colors.background, dark: '#ce2127'}}
@@ -41,36 +49,41 @@ export default function HomeScreen() {
                     source={require('@/assets/images/small-logo.png')}
                     style={styles.reactLogo}
                 />
-            } >
-            <View style={styles.content} >
-                <ThemedView style={styles.titleContainer} >
-                    <TypeWriter textStyle={'title'} textArr={[`HELLO ${username.toUpperCase()}!`]} onComplete={() => fadeInWave()} />
-                    <Animated.View style={[{opacity}]} >
-                        {wave && <HelloWave />}
-                    </Animated.View >
-                </ThemedView >
-                <ThemedView style={styles.stepContainer} >
-                    <ThemedText type="subtitle" >Average Joe's Barista Bonanza</ThemedText >
-                    <ThemedText >
-                        Let us help you dial in, save your setups and teach you some other handy skills.{' '}
-                    </ThemedText >
-                    <ThemedText >
-                        Check out more here:{' '}
-                    </ThemedText >
-                </ThemedView >
-                <ThemedView style={styles.stepContainer} >
-                    <Button title={'ABOUT'} color={colors.primary} onPress={() =>  {}} />
-                </ThemedView >
-                <ThemedView style={styles.stepContainer} >
-                    <Button title={'SHOP'} color={colors.primary} onPress={() => openExternalUrl('https://averagejoescoffee.com.au/') } />
-                </ThemedView >
-                <ThemedView style={styles.stepContainer} >
-                    <Button title={'CONTACT'} color={colors.primary} onPress={() => {
-                    }} />
-                </ThemedView >
+            }>
+            {focused &&
+                <View style={styles.content}>
+                    <ThemedView style={styles.titleContainer}>
+                        <TypeWriter textStyle={'title'} textArr={[`HELLO ${username.toUpperCase()}!`]}
+                                    onComplete={() => fadeInWave()} />
+                        <Animated.View style={[{opacity}]}>
+                            {wave && <HelloWave />}
+                        </Animated.View>
+                    </ThemedView>
 
-            </View >
-        </ParallaxScrollView >
+                    <ThemedView style={styles.stepContainer}>
+                        <ThemedText type="subtitle">Average Joe's Barista Bonanza</ThemedText>
+                        <ThemedText>
+                            Let us help you dial in, save your setups and teach you some other handy skills.{' '}
+                        </ThemedText>
+                        <ThemedText>
+                            Check out more here:{' '}
+                        </ThemedText>
+                    </ThemedView>
+                    <ThemedView style={styles.stepContainer}>
+                        <Button title={'ABOUT'} color={colors.primary} onPress={() => {
+                        }} />
+                    </ThemedView>
+                    <ThemedView style={styles.stepContainer}>
+                        <Button title={'SHOP'} color={colors.primary}
+                                onPress={() => openExternalUrl('https://averagejoescoffee.com.au/')} />
+                    </ThemedView>
+                    <ThemedView style={styles.stepContainer}>
+                        <Button title={'CONTACT'} color={colors.primary} onPress={() => {
+                        }} />
+                    </ThemedView>
+                </View>
+            }
+        </ParallaxScrollView>
     );
 }
 

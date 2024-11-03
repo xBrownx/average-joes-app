@@ -1,58 +1,55 @@
-import { Image, StyleSheet } from 'react-native';
-import RecipeLanding from "@/features/recipes/landing-screen";
+import { Image, StyleSheet, View } from 'react-native';
 import React, { useEffect } from "react";
-import RecipeMachines from "@/features/recipes/machines/machine-screen";
-import RecipeBeans from "@/features/recipes/beans/beans-screen";
 import { ThemedView } from "@/components/ThemedView";
-import Footer from "@/components/Footer";
 import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated";
 import colors from "@/components/colors";
-import { SlideView } from "@/components/anim/slide-forward";
+import TypeWriter from "@/components/text/typewriter-text";
+import { ThemedText } from "@/components/text/themed-text";
+import { Stack } from "expo-router";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Pantry() {
-    const [screenNav, setScreenNav] = React.useState('');
-
+    const [screenNav, setScreenNav] = React.useState('landing');
+    const isFocused = useIsFocused();
     useEffect(() => {
-        setScreenNav('landing')
-    }, [])
+        console.log(isFocused);
+    }, [isFocused])
 
     return (
-        <Footer >
-            <ThemedView style={styles.container} >
-                <Animated.View >
-                    <Animated.View
-                        style={[
-                            styles.header,
-                            {backgroundColor: colors.backgroundSecondary},
-                        ]} >
-                        <Image
-                            source={require('@/assets/images/small-logo.png')}
-                            style={styles.reactLogo}
-                        />
-                    </Animated.View >
+        <ThemedView style={styles.container}>
+            <Animated.View>
+                <Animated.View
+                    style={[
+                        styles.header,
+                        {backgroundColor: colors.backgroundSecondary},
+                    ]}>
+                    <Image
+                        source={require('@/assets/images/small-logo.png')}
+                        style={styles.reactLogo}
+                    />
+                </Animated.View>
+                <View style={styles.content}>
+                    {isFocused && <ThemedView>
+                        <TypeWriter textStyle={'title'} textArr={["PANTRY"]} />
+                    </ThemedView> }
+                    <ThemedView>
+                        <ThemedText>
+                            Keep track of what's in your pantry and always have a fresh bean ready to roast.
+                        </ThemedText>
+                    </ThemedView>
+                </View>
+                <ThemedView>
+                    <ThemedView style={styles.content}>
+                        <Animated.View
+                            entering={SlideInLeft}
+                            exiting={SlideOutLeft}
+                        >
 
-                    <ThemedView >
-                        <ThemedView style={styles.content} >
-                            {screenNav === 'landing' &&
-                                <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft} >
-                                    <RecipeLanding navForward={(screen: string) => setScreenNav(screen)} />
-                                </Animated.View >
-                            }
-                            {screenNav === 'beans' &&
-                                <Animated.View id={'2'} entering={SlideInRight} exiting={SlideOutRight} >
-                                    <RecipeBeans navBack={() => setScreenNav('landing')} />
-                                </Animated.View >
-                            }
-                            {screenNav === 'machines' &&
-                                <Animated.View id={'3'} entering={SlideInRight} exiting={SlideOutRight} >
-                                    <RecipeMachines navBack={() => setScreenNav('landing')} />
-                                </Animated.View >
-                            }
-                        </ThemedView >
-                    </ThemedView >
-                </Animated.View >
-            </ThemedView >
-        </Footer >
+                        </Animated.View>
+                    </ThemedView>
+                </ThemedView>
+            </Animated.View>
+        </ThemedView>
     );
 }
 

@@ -7,7 +7,7 @@ type TypeWriterProps = {
     textArr: string[];
     textStyle?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
     speed? : number;
-    onComplete: () => void;
+    onComplete?: () => void;
 }
 
 type Timeouts = {
@@ -66,7 +66,10 @@ export default function TypeWriter({textArr, textStyle, speed, onComplete}: Type
         } else {
             clearInterval(timeoutsRef.current.cursorTimeout);
             setCursorColor("transparent");
-            onComplete();
+
+            if(onComplete) {
+                onComplete()
+            }
         }
     };
 
