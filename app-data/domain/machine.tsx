@@ -13,8 +13,6 @@ export interface Machine {
     models: MachineModel[];
 }
 
-
-
 export interface UserMachine {
     id: string;
     make: string;
