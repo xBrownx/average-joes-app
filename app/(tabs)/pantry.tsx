@@ -7,7 +7,8 @@ import TypeWriter from "@/components/text/typewriter-text";
 import { ThemedText } from "@/components/text/themed-text";
 import { Stack } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
-
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+import PantryLanding from "@/features/pantry/pantry-landing";
 export default function Pantry() {
     const [screenNav, setScreenNav] = React.useState('landing');
     const isFocused = useIsFocused();
@@ -16,49 +17,26 @@ export default function Pantry() {
     }, [isFocused])
 
     return (
-        <ThemedView style={styles.container}>
-            <Animated.View>
-                <Animated.View
-                    style={[
-                        styles.header,
-                        {backgroundColor: colors.backgroundSecondary},
-                    ]}>
-                    <Image
-                        source={require('@/assets/images/small-logo.png')}
-                        style={styles.reactLogo}
-                    />
-                </Animated.View>
-                <View style={styles.content}>
-                    {isFocused && <ThemedView>
-                        <TypeWriter textStyle={'title'} textArr={["PANTRY"]} />
-                    </ThemedView> }
-                    <ThemedView>
-                        <ThemedText>
-                            Keep track of what's in your pantry and always have a fresh bean ready to roast.
-                        </ThemedText>
-                    </ThemedView>
-                </View>
-                <ThemedView>
-                    <ThemedView style={styles.content}>
-                        <Animated.View
-                            entering={SlideInLeft}
-                            exiting={SlideOutLeft}
-                        >
-
-                        </Animated.View>
-                    </ThemedView>
-                </ThemedView>
-            </Animated.View>
-        </ThemedView>
+        <ParallaxScrollView
+            headerBackgroundColor={{light: '#F0E8E2', dark: '#353636'}}
+            headerImage={<Image
+                source={require('@/assets/images/avatar.png')}
+                style={styles.headerImage}
+            />}>
+            <PantryLanding />
+        </ParallaxScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     headerImage: {
-        color: '#808080',
-        bottom: -90,
-        left: -35,
+        height: "70%",
+        width: "60%",
+        bottom: 0,
+        marginBottom: '5%',
         position: 'absolute',
+        objectFit: "contain",
+        alignSelf: 'center',
     },
     content: {
         padding: 32,

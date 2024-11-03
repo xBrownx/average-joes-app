@@ -1,14 +1,7 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform, Dimensions, TouchableOpacity, View } from 'react-native';
-import YoutubePlayer from 'react-native-youtube-iframe'
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
+import { StyleSheet, Image } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
 import React from "react";
-import colors from "@/components/colors";
-import { Colors } from "@/constants/Colors";
 import LearnLandingPage from "@/features/learn/components/landing-page";
 import LearnPlayerPage from "@/features/learn/components/player-page";
 import Animated, {
