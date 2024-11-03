@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated";
 import colors from "@/components/colors";
 import { SlideView } from "@/components/anim/slide-forward";
+import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 export default function Recipes() {
     const [screenNav, setScreenNav] = React.useState('landing');
@@ -17,42 +18,36 @@ export default function Recipes() {
     }, [])
 
     return (
-        <Footer >
-            <ThemedView style={styles.container} >
-                <Animated.View >
-                    <Animated.View
-                        style={[
-                            styles.header,
-                            {backgroundColor: colors.backgroundSecondary},
-                        ]} >
-                        <Image
-                            source={require('@/assets/images/small-logo.png')}
-                            style={styles.reactLogo}
-                        />
-                    </Animated.View >
-
-                    <ThemedView >
-                        <ThemedView style={styles.content} >
-                            {screenNav === 'landing' &&
-                                <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft} >
-                                    <RecipeLanding navForward={(screen: string) => setScreenNav(screen)} />
-                                </Animated.View >
-                            }
-                            {screenNav === 'beans' &&
-                                <Animated.View id={'2'} entering={SlideInRight} exiting={SlideOutRight} >
-                                    <RecipeBeans navBack={() => setScreenNav('landing')} />
-                                </Animated.View >
-                            }
-                            {screenNav === 'machines' &&
-                                <Animated.View id={'3'} entering={SlideInRight} exiting={SlideOutRight} >
-                                    <RecipeMachines navBack={() => setScreenNav('landing')} />
-                                </Animated.View >
-                            }
-                        </ThemedView >
-                    </ThemedView >
-                </Animated.View >
+        <ParallaxScrollView
+            headerBackgroundColor={{light: '#F0E8E2', dark: '#353636'}}
+            headerImage={
+                <Image
+                    source={require('@/assets/images/small-logo.png')}
+                    style={styles.headerImage}
+                />
+            }
+        >
+            <ThemedView >
+                <ThemedView style={styles.content} >
+                    {screenNav === 'landing' &&
+                        <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft} style={styles.container} >
+                            <RecipeLanding navForward={(screen: string) => setScreenNav(screen)} />
+                        </Animated.View >
+                    }
+                    {screenNav === 'beans' &&
+                        <Animated.View id={'2'} entering={SlideInRight} exiting={SlideOutRight} >
+                            <RecipeBeans navBack={() => setScreenNav('landing')} />
+                        </Animated.View >
+                    }
+                    {screenNav === 'machines' &&
+                        <Animated.View id={'3'} entering={SlideInRight} exiting={SlideOutRight} >
+                            <RecipeMachines navBack={() => setScreenNav('landing')} />
+                        </Animated.View >
+                    }
+                </ThemedView >
             </ThemedView >
-        </Footer >
+        </ParallaxScrollView >
+
     );
 }
 
@@ -65,11 +60,10 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 32,
-        gap: 16,
-        overflow: 'hidden',
     },
     container: {
         flex: 1,
+        width: '100%',
     },
     header: {
         height: 250,

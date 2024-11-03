@@ -1,5 +1,5 @@
-import { GoogleSheetsResponseDto } from "@/app-data/store/dto/dto";
-import { MachineModel, ServerBean, ServerMachine } from "@/app-data/store/domain";
+import { GoogleSheetsResponseDto } from "@/store/dto/dto";
+import { MachineModel, Roaster, ServerBean, ServerMachine } from "@/store/domain";
 
 
 function dtoToKeyPair(dto: GoogleSheetsResponseDto) {
@@ -56,4 +56,21 @@ export function dtoToServerBeans(dto: GoogleSheetsResponseDto): ServerBean[] {
     })
 
     return beans;
+}
+
+export function dtoToServerRoasters(dto: GoogleSheetsResponseDto): Roaster[] {
+    let roasters : Roaster[] = [];
+    const roastersKeyPairArray =  dtoToKeyPair(dto)
+
+    roastersKeyPairArray.forEach(roaster => {
+        const serverRoaster: Roaster = {
+            id: roaster.id,
+            name: roaster.name,
+            profile: roaster.profile,
+        };
+        roasters.push(serverRoaster);
+
+    })
+
+    return roasters;
 }

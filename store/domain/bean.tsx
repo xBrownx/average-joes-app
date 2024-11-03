@@ -1,4 +1,4 @@
-import { Recipe } from "@/app-data/store/domain/recipe";
+import { Recipe } from "@/store/domain/recipe";
 
 export interface ServerBean {
     id: string;
@@ -20,6 +20,14 @@ export interface Bean {
     buyLink: string;
 }
 
-export interface UserBean {
-
+export interface  UserBean {
+    id: string;
+    blendName: string;
+    roasterId: string;
+    origins: string;
+    tastingNotes: string;
+    recipe: Recipe;
+    rating: number;
+    buyLink: string;
+    roastDate: string;
 }

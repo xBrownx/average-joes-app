@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from "react-redux";
-import store, { useAppDispatch } from "@/app-data/store/store";
-import { loadRemoteData } from "@/app-data/store";
+import store, { useAppDispatch } from "@/store/store";
+import { loadRemoteData } from "@/store/slice/remote-data-slice";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

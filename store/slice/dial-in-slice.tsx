@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@/app-data/store/reducers";
+import { RootState } from "@/store/reducers";
 
 
 export type DialInState = {

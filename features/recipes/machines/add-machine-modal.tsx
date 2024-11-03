@@ -10,12 +10,13 @@ import {
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
 import DropdownComponent, { DropdownData } from "@/components/dropdown/dropdown";
-import { useAppDispatch, useAppSelector } from "@/app-data/store/store";
-import { selectAppData, addUserMachine, selectServerMachines } from "@/app-data/store/slice/app-data-slice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { addUserMachine } from "@/store/slice/local-data-slice";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { UserMachine } from "@/app-data/store/domain";
-import { serverMachinesToDropdown } from "@/app-data/store/use-case";
+import { UserMachine } from "../../../store/domain";
+import { serverMachinesToDropdown } from "../../../store/usecase";
+import { selectRemoteMachines } from "@/store/slice/remote-data-slice";
 
 type AddMachineModalProps = RNModalProps & {
     isOpen: boolean;
@@ -27,26 +28,28 @@ type AddMachineModalState = {
     machinesDropdown: DropdownData[],
     modelsDropdown: DropdownData[],
     selectedMake: string,
-    makeSelected: boolean,
     selectedModel: string,
-    modelSelected: boolean,
+    isMakeSelected: boolean,
+    isModelSelected: boolean,
 }
 
 const initialModalState: AddMachineModalState = {
     machinesDropdown: [],
     modelsDropdown: [],
     selectedMake: '',
-    makeSelected: false,
     selectedModel: '',
-    modelSelected: false,
+    isMakeSelected: false,
+    isModelSelected: false,
 }
+
+type UpdateStateType = 'machinesDropdown' | 'modelsDropdown' | 'selectedMake' | 'selectedModel' | 'isMakeSelected' | 'isModelSelected';
 
 export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}: AddMachineModalProps) => {
     const dispatch = useAppDispatch();
-    const machines = useAppSelector(selectServerMachines);
+    const machines = useAppSelector(selectRemoteMachines);
     const [modalState, setModalState] = useState<AddMachineModalState>(initialModalState)
 
-    const updateState = (name: string, value: any) => {
+    const updateState = (name: UpdateStateType, value: any) => {
         setModalState(prevState => ({
             ...prevState,
             [name]: value
@@ -60,7 +63,7 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
     const onMakeSelect = (text: string) => {
         const machine = machines.find(machine => machine.make === text);
         if (!machine) {
-            updateState('makeSelected', false)
+            updateState('isMakeSelected', false)
             return;
         }
 
@@ -70,7 +73,7 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
 
         updateState('modelsDropdown', modelsDropdown);
         updateState('selectedMake', text);
-        updateState('makeSelected', true);
+        updateState('isMakeSelected', true);
 
     }
 
@@ -80,16 +83,16 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
         const model = make ? make.models.find(model => model.name === text) : null;
 
         if (!model) {
-            updateState('makeSelected', false);
-            updateState('modelSelected', false);
+            updateState('isMakeSelected', false);
+            updateState('isModelSelected', false);
             return;
         }
         updateState('selectedModel', text);
-        updateState('modelSelected', true);
+        updateState('isModelSelected', true);
     }
 
     const onSave = () => {
-        if (!modalState.modelSelected) return;
+        if (!modalState.isModelSelected || !modalState.isMakeSelected) return;
         const make = machines.find(machine => machine.make === modalState.selectedMake);
         const model = make ? make.models.find(model => model.name === modalState.selectedModel) : null;
         if (!model || !make) return;
@@ -142,7 +145,7 @@ export const AddMachineModal = ({isOpen, onClose, withInput, children, ...rest}:
                                 onChange={(text) => onMakeSelect(text)}
                             />
 
-                            {modalState.makeSelected &&
+                            {modalState.isMakeSelected &&
                                 <DropdownComponent
                                     placeholder={'Model'}
                                     data={modalState.modelsDropdown}
@@ -204,7 +207,6 @@ const styles = StyleSheet.create({
     content: {
         gap: 16,
     },
-
     input: {
         height: 40,
         marginTop: 16,

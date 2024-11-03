@@ -27,6 +27,16 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
+                name="recipes"
+                options={{
+                    title: 'Recipes',
+                    tabBarIcon: ({color, focused}) => (
+                        <TabBarIcon name={focused ? 'book' : 'book-outline'} color={colors.primary} />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
                 name="dial-in"
                 options={{
                     title: 'Dial In',
@@ -37,15 +47,14 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-                name="recipes"
+                name="pantry"
                 options={{
-                    title: 'Recipes',
+                    title: 'Pantry',
                     tabBarIcon: ({color, focused}) => (
-                        <TabBarIcon name={focused ? 'book' : 'book-outline'} color={colors.primary} />
+                        <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={colors.primary} />
                     ),
                 }}
             />
-
 
             <Tabs.Screen
                 name="learn"

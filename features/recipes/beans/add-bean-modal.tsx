@@ -10,18 +10,16 @@ import {
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
 import DropdownComponent, { DropdownData } from "@/components/dropdown/dropdown";
-import { useAppDispatch, useAppSelector } from "@/app-data/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
-    selectAppData,
     addUserBean,
-    selectServerBeans,
-    selectServerMachines, selectServerRosters, addUserMachine
-} from "@/app-data/store/slice/app-data-slice";
+    addUserMachine
+} from "@/store/slice/local-data-slice";
+import { UserBean } from "@/store/domain";
+import { serverBeansToDropdown, serverMachinesToDropdown, serverRoastersToDropdown } from "@/store/usecase";
+import { selectRemoteBeans, selectRemoteRoasters } from "@/store/slice/remote-data-slice";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { UserBean, UserMachine } from "@/app-data/store/domain";
-import { serverBeansToDropdown, serverMachinesToDropdown, serverRoastersToDropdown } from "@/app-data/store/use-case";
-import { text } from "node:stream/consumers";
 
 type AddBeanModalProps = RNModalProps & {
     isOpen: boolean;
@@ -47,12 +45,18 @@ const initialModalState: AddBeanModalState = {
     isBlendSelected: false,
 }
 
-type UpdateStateType = 'roastersDropdown' | 'blendDropdown' | 'selectedRoaster' | 'isRoasterSelected' | 'selectedBlend' | 'isBlendSelected';
+type UpdateStateType =
+    'roastersDropdown'
+    | 'blendDropdown'
+    | 'selectedRoaster'
+    | 'isRoasterSelected'
+    | 'selectedBlend'
+    | 'isBlendSelected';
 
 export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: AddBeanModalProps) => {
     const dispatch = useAppDispatch();
-    const roasters = useAppSelector(selectServerRosters);
-    const beans = useAppSelector(selectServerBeans);
+    const roasters = useAppSelector(selectRemoteRoasters);
+    const beans = useAppSelector(selectRemoteBeans);
     const [modalState, setModalState] = useState<AddBeanModalState>(initialModalState);
 
     const updateState = (name: UpdateStateType, value: any) => {
@@ -97,13 +101,74 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
         if (!blend) return;
 
         const userBean: UserBean = {
+            buyLink: "",
+            origins: "",
+            rating: 0,
+            recipe: {
+                dose: '',
+                yield: '',
+                time: '',
+            },
+            roastDate: "",
+            roasterId: "",
+            tastingNotes: "",
             id: blend.id,
-            blendName: blend.blendName,
+            blendName: blend.blendName
         }
 
         dispatch(addUserBean(userBean))
         onClose()
     }
+
+    return (
+        <RNModal
+            visible={isOpen}
+            transparent
+            animationType="fade"
+            statusBarTranslucent
+            style={styles.container}
+            {...rest}
+        >
+            <TouchableOpacity style={styles.modalOuter} onPress={onClose} >
+                <TouchableWithoutFeedback >
+                    <View style={styles.modalInner} >
+                        <View style={styles.titleContainer} >
+                            <ThemedText type={'subtitle'}>Add Your Beans</ThemedText >
+                            <Ionicons.Button
+                                name="add"
+                                size={24}
+                                backgroundColor={'transparent'}
+                                color={colors.tertiary}
+                                onPress={() => {
+                                }}
+                            />
+                        </View >
+
+                        <ThemedText
+                            type={'default'}
+                            style={styles.titleContainer}
+                        >
+                            Search our database or add your own!
+                        </ThemedText >
+
+                        <View style={styles.content} >
+                            <DropdownComponent
+                                placeholder={'Roaster'}
+                                data={modalState.roastersDropdown}
+                                onChange={(text) => onRoasterSelect(text)}
+                            />
+
+                            <Button
+                                title={'SAVE'}
+                                color={colors.primary}
+                                onPress={onSave}
+                            />
+                        </View >
+                    </View >
+                </TouchableWithoutFeedback >
+            </TouchableOpacity >
+        </RNModal >
+    );
 
 }
 

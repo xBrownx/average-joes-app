@@ -22,20 +22,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundSecondary,
         paddingTop: 8,
         flexDirection: 'column',
-        width: 150,
-        height: 150,
         marginBottom: 5,
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
         zIndex: 2,
+        height: 300,
     },
     content: {
         flex: 1,
         width: '100%',
-        height: '100%',
         justifyContent: 'center',
         gap: 4
+    },
 
-    }
 });

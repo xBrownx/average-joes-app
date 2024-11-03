@@ -1,5 +1,5 @@
 export interface Recipe {
-    does: string;
+    dose: string;
     yield: string;
     time: string;
 }
