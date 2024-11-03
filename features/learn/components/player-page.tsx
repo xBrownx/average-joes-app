@@ -1,7 +1,7 @@
 import YoutubePlayer from "react-native-youtube-iframe";
 import React, { useState } from "react";
 import { Dimensions, FlatList, StyleSheet, ActivityIndicator, Animated, Easing } from "react-native";
-import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
+import { AddMachineModal } from "@/features/recipes/machines/add-machine-modal";
 import { ThemedView } from "@/components/ThemedView";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@/components/colors";

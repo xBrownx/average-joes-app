@@ -6,9 +6,9 @@ import CardView from "@/components/card/card-view";
 import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
-import { AddMachineModal } from "@/features/recipes/components/add-machine-modal";
+import { AddMachineModal } from "@/features/recipes/machines/add-machine-modal";
 import { useAppSelector } from "@/app-data/store/store";
-import { selectAppData, selectUserMachines } from "@/app-data/store/app-data-slice";
+import { selectAppData, selectUserMachines } from "@/app-data/store/slice/app-data-slice";
 
 interface UserMachine {
     id: string;
@@ -56,7 +56,7 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
             <AddMachineModal isOpen={modalOpen} onClose={closeModal} />
             <FlatList
                 ListHeaderComponent={
-                    <ThemedView >
+                    <ThemedView style={styles.headingContainer}>
                         <ThemedView style={styles.titleContainer} >
                             <Ionicons.Button
                                 name="arrow-back"
@@ -97,30 +97,19 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
 }
 
 const styles = StyleSheet.create({
+    headingContainer: {
+        gap: 8,
+        marginBottom: 8,
+    },
     content: {
         flex: 1,
         padding: 32,
         gap: 16,
         overflow: 'hidden',
     },
-    headerImage: {
-        color: '#808080',
-        bottom: -90,
-        left: -35,
-        position: 'absolute',
-    },
     titleContainer: {
         flexDirection: 'row',
         gap: 8,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
-    },
-    cardImage: {
-        flex: 1,
-        width: 'auto',
-        objectFit: 'contain',
     },
     cardText: {
         alignSelf: "center",

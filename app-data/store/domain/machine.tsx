@@ -7,7 +7,7 @@ export interface MachineModel {
     dosingRingSize: string;
 }
 
-export interface Machine {
+export interface ServerMachine {
     id: string;
     make: string;
     models: MachineModel[];

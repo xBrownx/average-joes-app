@@ -1,8 +1,8 @@
 import { Image, StyleSheet } from 'react-native';
-import RecipeLanding from "@/features/recipes/components/landing-screen";
+import RecipeLanding from "@/features/recipes/landing-screen";
 import React, { useEffect } from "react";
-import RecipeMachines from "@/features/recipes/components/machine-screen";
-import RecipeBeans from "@/features/recipes/components/beans-screen";
+import RecipeMachines from "@/features/recipes/machines/machine-screen";
+import RecipeBeans from "@/features/recipes/beans/beans-screen";
 import { ThemedView } from "@/components/ThemedView";
 import Footer from "@/components/Footer";
 import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated";

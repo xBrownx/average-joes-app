@@ -5,7 +5,7 @@ import React from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
 import { ThemedText } from "@/components/text/themed-text";
 import { useAppDispatch, useAppSelector } from "@/app-data/store/store";
-import { selectPortafilter, setPortafilter } from "@/app-data/store/dial-in-slice";
+import { selectPortafilter, setPortafilter } from "@/app-data/store/slice/dial-in-slice";
 import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from '@expo/vector-icons/FontAwesome';

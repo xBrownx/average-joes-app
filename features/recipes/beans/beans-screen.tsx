@@ -14,7 +14,6 @@ type RecipeBeansProps = {
 export default function RecipeBeans({navBack}: RecipeBeansProps) {
     const [beans, setBeans] = useState<string[]>([]);
 
-
     const onLoadMachineName = () => {
         getDataString("machine-name").then((machineName) => {
             console.log(machineName);

@@ -1,4 +1,4 @@
-import { Bean } from "@/app-data/domain/bean";
+import { Bean } from "@/app-data/store/domain/bean";
 
 export interface Roaster {
     id: string,

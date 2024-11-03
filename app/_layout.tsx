@@ -6,11 +6,8 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from "react-redux";
-import store, { useAppSelector } from "@/app-data/store/store";
-import { selectAppData } from "@/app-data/store";
-import { useInitialLoad, useSaveAppData } from "@/app-data/data/local/use-app-data";
-import app from "react-native/template/App";
-
+import store, { useAppDispatch } from "@/app-data/store/store";
+import { loadRemoteData } from "@/app-data/store";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,7 +30,7 @@ function RootLayoutNav() {
 }
 
 function App() {
-
+    const dispatch = useAppDispatch();
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
@@ -43,6 +40,7 @@ function App() {
 
     useEffect(() => {
         console.log('App() useEffect()')
+        dispatch(loadRemoteData())
         if (loaded) {
             SplashScreen.hideAsync();
         }
