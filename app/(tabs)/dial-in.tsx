@@ -1,17 +1,47 @@
 import { Image, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "@/features/dial-in/components/modal";
 import { DialInLanding, StepOne, StepThree, StepTwo } from "../../features/dial-in/components";
+import { useIsFocused } from "@react-navigation/native";
+
+
+
+interface DialInState {
+    isStartModalOpen: boolean;
+    currentStep: 'landing' | 'coffee-select' | 'portafilter-select' | 'step-1' | 'step-2' | 'step-3';
+}
+
+const initialState: DialInState = {
+    isStartModalOpen: false,
+    currentStep: 'landing',
+}
+
+type DialInAction = 'isStartModalOpen' | 'currentStep';
 
 export default function DialIn() {
-    const [modalOpen, setModalOpen] = React.useState(false);
-    const [step, setStep] = React.useState('0');
-    const closeModal = () => {
-        setModalOpen(false);
-        setStep('1');
+    const focused = useIsFocused()
+    const [state, setState] = useState<DialInState>(initialState);
+    const updateState = (name: DialInAction, value: any) => {
+        setState(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
     }
+    const closeModal = () => {
+        updateState('isStartModalOpen', false);
+        updateState('currentStep', 'coffee-select');
+    }
+
+    const navTo = (page: string) => {
+        updateState('currentStep', page);
+    }
+
+    useEffect(() => {
+        // if(!focused) navTo('landing');
+    }, [focused]);
+
     return (
             <ParallaxScrollView
                 headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
@@ -21,15 +51,16 @@ export default function DialIn() {
                         style={styles.reactLogo}
                     />
                 }>
-                <Modal isOpen={modalOpen} onClose={closeModal} />
+                <Modal isOpen={state.isStartModalOpen} onClose={closeModal} />
                 {
                     {
-                        '0': <DialInLanding setModalOpen={setModalOpen} />,
-                        '1': <StepOne setStep={setStep} />,
-                        '2': <StepTwo setStep={setStep} />,
-                        '3': <StepThree setStep={setStep} />,
-                        '4': <DialInLanding setModalOpen={setModalOpen} />,
-                    }[step]
+                        'landing': <DialInLanding onStart={() => updateState('isStartModalOpen', true)} onSkip={() => navTo('step-1')}/>,
+                        'coffee-select': <StepOne onNext={() => navTo('portafilter-select')} onBack={() => navTo('landing')} />,
+                        'portafilter-select': <StepTwo onNext={() => navTo('step-1')} onBack={() => navTo('coffee-select')} />,
+                        'step-1': <StepThree onNext={() => navTo('step-2')} onBack={() => navTo('portafilter-select')} />,
+                        'step-2': <></>,
+                        'step-3': <></>,
+                    }[state.currentStep]
                 }
 
 

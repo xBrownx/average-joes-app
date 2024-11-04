@@ -20,6 +20,7 @@ import { serverBeansToDropdown, serverMachinesToDropdown, serverRoastersToDropdo
 import { selectRemoteBeans, selectRemoteRoasters } from "@/store/slice/remote-data-slice";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Rating } from "react-native-ratings";
 
 type AddBeanModalProps = RNModalProps & {
     isOpen: boolean;
@@ -60,10 +61,10 @@ interface FormState {
     dose: string;
     yield: string;
     time: string
-    rating: string;
+    rating: number;
 }
 
-type FormStateType = 'roaster' | 'blendName' | 'tastingNotes' | 'dose' | 'yield' | 'time' | 'rating';
+type FormStateAction = 'roaster' | 'blendName' | 'tastingNotes' | 'dose' | 'yield' | 'time' | 'rating';
 
 const initialFormState = {
     roaster: '',
@@ -72,7 +73,7 @@ const initialFormState = {
     dose: '',
     yield: '',
     time: '',
-    rating: ''
+    rating: 0
 }
 
 
@@ -80,18 +81,25 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
     const dispatch = useAppDispatch();
     const [formState, setFormState] = useState<FormState>(initialFormState)
 
-    const onTextChange = (name: FormStateType, text: string) => {
+    const updateState = (name: FormStateAction, value: any) => {
         setFormState(prevState => ({
             ...prevState,
-            [name]: text
+            [name]: value
         }))
-    };
+    }
 
     const onSave = () => {
         const userBean: UserBean = {
             id: new Date().toLocaleString(),
             roasterName: formState.roaster,
             blendName: formState.blendName,
+            tastingNotes: formState.tastingNotes,
+            recipe: {
+                dose: formState.dose,
+                yield: formState.yield,
+                time: formState.time,
+            },
+            rating: formState.rating,
         };
 
         console.log(userBean)
@@ -109,11 +117,11 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
             style={styles.container}
             {...rest}
         >
-            <TouchableOpacity style={styles.modalOuter} onPress={onClose} >
-                <TouchableWithoutFeedback >
-                    <View style={styles.modalInner} >
-                        <View style={styles.titleContainer} >
-                            <ThemedText type={'subtitle'}>Add Your Beans</ThemedText >
+            <TouchableOpacity style={styles.modalOuter} onPress={onClose}>
+                <TouchableWithoutFeedback>
+                    <View style={styles.modalInner}>
+                        <View style={styles.titleContainer}>
+                            <ThemedText type={'subtitle'}>Add Your Beans</ThemedText>
                             <Ionicons.Button
                                 name="search"
                                 size={24}
@@ -122,70 +130,70 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
                                 onPress={() => {
                                 }}
                             />
-                        </View >
+                        </View>
 
                         <ThemedText
                             type={'default'}
                             style={styles.titleContainer}
                         >
                             Add your bean profile, or use the search tool above.
-                        </ThemedText >
+                        </ThemedText>
 
-                        <View style={styles.content} >
+                        <View style={styles.content}>
                             <TextInput
                                 style={styles.input}
-                                onChangeText={(text) => onTextChange('roaster', text)}
-                                placeholder="Roaster"
-                                value={formState.roaster}
-                            />
-
-                            <TextInput
-                                style={styles.input}
-                                onChangeText={(text) => onTextChange('blendName', text)}
+                                onChangeText={(text) => updateState('blendName', text)}
                                 placeholder="Blend Name"
                                 value={formState.blendName}
                             />
                             <TextInput
                                 style={styles.input}
-                                onChangeText={(text) => onTextChange('tastingNotes', text)}
-                                placeholder="Tasting Notes (Optional)"
-                                value={formState.tastingNotes}
+                                onChangeText={(text) => updateState('roaster', text)}
+                                placeholder="Roaster"
+                                value={formState.roaster}
                             />
-                            {/*<TextInput*/}
-                            {/*    style={styles.input}*/}
-                            {/*    onChangeText={(text) => onTextChange('dose', text)}*/}
-                            {/*    placeholder="Dose (Optional)"*/}
-                            {/*    value={formState.dose}*/}
-                            {/*/>*/}
-                            {/*<TextInput*/}
-                            {/*    style={styles.input}*/}
-                            {/*    onChangeText={(text) => onTextChange('yield', text)}*/}
-                            {/*    placeholder="Yield (Optional)"*/}
-                            {/*    value={formState.yield}*/}
-                            {/*/>*/}
-                            {/*<TextInput*/}
-                            {/*    style={styles.input}*/}
-                            {/*    onChangeText={(text) => onTextChange('time', text)}*/}
-                            {/*    placeholder="Time (Optional)"*/}
-                            {/*    value={formState.time}*/}
-                            {/*/>*/}
                             <TextInput
                                 style={styles.input}
-                                onChangeText={(text) => onTextChange('rating', text)}
-                                placeholder="Rating (Optional)"
-                                value={formState.rating}
+                                onChangeText={(text) => updateState('tastingNotes', text)}
+                                placeholder="Tasting Notes"
+                                value={formState.tastingNotes}
                             />
-
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => updateState('dose', text)}
+                                placeholder="Dose"
+                                value={formState.dose}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => updateState('yield', text)}
+                                placeholder="Yield"
+                                value={formState.yield}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => updateState('time', text)}
+                                placeholder="Time"
+                                value={formState.time}
+                            />
+                            <Rating
+                                type='heart'
+                                ratingCount={5}
+                                imageSize={40}
+                                startingValue={0}
+                                jumpValue={0.5}
+                                onFinishRating={(rating: number) => updateState('rating', rating)}
+                            />
                             <Button
                                 title={'SAVE'}
                                 color={colors.primary}
                                 onPress={onSave}
                             />
-                        </View >
-                    </View >
-                </TouchableWithoutFeedback >
-            </TouchableOpacity >
-        </RNModal >
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </TouchableOpacity>
+        </RNModal>
     );
 
 }
@@ -236,6 +244,7 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         borderWidth: 1,
         padding: 8,
+        borderRadius: 8,
     },
 });
 

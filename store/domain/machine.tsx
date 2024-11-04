@@ -1,10 +1,10 @@
 export interface MachineModel {
     id: string;
     name: string;
-    size: string;
+    size?: string;
     portafilterSize: string;
-    tamperSize: string;
-    dosingRingSize: string;
+    tamperSize?: string;
+    dosingRingSize?: string;
 }
 
 export interface ServerMachine {

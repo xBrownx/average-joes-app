@@ -1,6 +1,6 @@
 import YoutubePlayer from "react-native-youtube-iframe";
 import React from "react";
-import { Dimensions, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { Dimensions, FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import SlideBackView from "@/components/anim/slide-back";
 import { ThemedView } from "@/components/ThemedView";
@@ -12,6 +12,39 @@ import TypeWriter from "@/components/text/typewriter-text";
 import { useIsFocused } from "@react-navigation/native";
 
 const {width} = Dimensions.get('window');
+
+const videoList = [
+    {
+        index: '1',
+        videoTitle: 'WHAT\'S TO COME',
+        videoId: 'ruZFxIWyzlY'
+    },
+    {
+        index: '2',
+        videoTitle: 'THE GEAR YOU NEED',
+        videoId: '_1iLqkSPnso'
+    },
+    {
+        index: '3',
+        videoTitle: 'THE PERFECT SHOT - \nDIALING IN',
+        videoId: 'ZYeDds-IHDU'
+    },
+    {
+        index: '4',
+        videoTitle: 'THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE',
+        videoId: 'Sv2OlBPKoxM'
+    },
+    {
+        index: '5',
+        videoTitle: 'MAKE IT PRETTY, LATTE\nART THE HEART',
+        videoId: 'kKlPdbixeBM'
+    },
+    {
+        index: '6',
+        videoTitle: 'UPKEEP - IT’S NO JOKE!',
+        videoId: 'bejf9JIqgrs'
+    },
+]
 
 function VideoLink({title, navigateToVideo}: { title: string, navigateToVideo: () => void }) {
     return (
@@ -47,36 +80,28 @@ export default function LearnLandingPage({navToVideo}: {
                 <ThemedView style={styles.titleContainer}>
                     <ThemedText type="default">Learn like a pro with Joe's step by step tutorial videos.</ThemedText>
                 </ThemedView>
-
-                <VideoLink
-                    title={'1: WHAT\'S TO COME'}
-                    navigateToVideo={() => navToVideo('WHAT\'S TO COME', 'ruZFxIWyzlY')}
-                />
-
-                <VideoLink
-                    title={'2: THE GEAR YOU NEED'}
-                    navigateToVideo={() => navToVideo('THE GEAR YOU NEED', '_1iLqkSPnso')}
-                />
-
-                <VideoLink
-                    title={'3: THE PERFECT SHOT - DIALING IN'}
-                    navigateToVideo={() => navToVideo('THE PERFECT SHOT - DIALING IN', 'ZYeDds-IHDU')}
-                />
-
-                <VideoLink
-                    title={'4: THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE'}
-                    navigateToVideo={() => navToVideo('THE ‘RIP, DIP ‘N’ WHIP’ TECHNIQUE', 'Sv2OlBPKoxM')}
-                />
-
-                <VideoLink
-                    title={'5: MAKE IT PRETTY, LATTE ART - THE HEART'}
-                    navigateToVideo={() => navToVideo('MAKE IT PRETTY, LATTE ART \nTHE HEART', 'kKlPdbixeBM')}
-                />
-
-                <VideoLink
-                    title={'6: UPKEEP - IT’S NO JOKE!'}
-                    navigateToVideo={() => navToVideo('UPKEEP - IT’S NO JOKE!', 'bejf9JIqgrs')}
-                />
+                {videoList.map(video => (
+                    <TouchableOpacity
+                        key={video.videoId}
+                        style={styles.cardContainer}
+                        onPress={() => navToVideo(video.videoTitle, video.videoId)}
+                    >
+                        <View style={styles.cardContents}>
+                            <ThemedText
+                                style={styles.cardText}
+                                type={'defaultSemiBold'}
+                            >
+                                {video.index}: {video.videoTitle}
+                            </ThemedText>
+                            <Ionicons.Button
+                                name="arrow-forward"
+                                size={24}
+                                backgroundColor={'transparent'}
+                                color={colors.tertiary}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                ))}
 
             </ThemedView>
         }</>
@@ -108,6 +133,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 6,
+    },
+
+    cardContainer: {
+        elevation: 1,
+        borderRadius: 10,
+        backgroundColor: colors.backgroundSecondary,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        zIndex: 2,
+    },
+    cardContents: {
+        width: '100%',
+        padding: 16,
+        margin: 0,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+
+    },
+    cardText: {
+        color: colors.tertiary,
+        fontSize: 18
     },
 });
 

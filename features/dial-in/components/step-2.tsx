@@ -10,24 +10,20 @@ import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-const StepTwo = ({setStep}: { setStep: (step: string) => void }) => {
+const StepTwo = ({onNext, onBack}: { onNext: () => void, onBack: () => void }) => {
     const portafilter = useAppSelector(selectPortafilter);
     const dispatch = useAppDispatch();
     const [selected, setSelected] = React.useState('')
 
     const onSelect = () => {
         dispatch(setPortafilter(selected));
-        setStep('3')
-    }
-
-    const navigateBack = () => {
-        setStep('1')
+        onNext()
     }
 
     return (
         <View >
             <View style={styles.iconWrapper}>
-                <Ionicons.Button name="arrow-back" size={32} backgroundColor={'transparent'} color={colors.primary} onPress={navigateBack} />
+                <Ionicons.Button name="arrow-back" size={32} backgroundColor={'transparent'} color={colors.primary} onPress={onBack} />
             </View>
 
             <View style={styles.content}>

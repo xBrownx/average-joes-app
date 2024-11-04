@@ -6,7 +6,7 @@ import colors from "@/components/colors";
 import React from "react";
 import { useIsFocused } from "@react-navigation/native";
 
-export default function DialInLanding({setModalOpen}: { setModalOpen: (open: boolean) => void }) {
+export default function DialInLanding({onStart, onSkip}: { onStart: () => void, onSkip: () => void }) {
 
     const isFocused = useIsFocused();
 
@@ -33,9 +33,12 @@ export default function DialInLanding({setModalOpen}: { setModalOpen: (open: boo
                         done your coffee tastes delicious and you have an understanding of how to dial in espresso.
                     </ThemedText>
                 </ThemedView>
-                <ThemedView style={styles.stepContainer}>
-                    <Button title={'Let\'s go'} color={colors.primary} onPress={() => setModalOpen(true)} />
-                </ThemedView>
+                <View style={styles.stepContainer}>
+                    <Button title={'Let\'s go'} color={colors.primary} onPress={onStart} />
+                </View>
+                <View style={styles.stepContainer}>
+                    <Button title={'I\'ve been here before'} color={colors.primary} onPress={onSkip} />
+                </View>
             </View>
         }
         </>

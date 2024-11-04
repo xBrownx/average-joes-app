@@ -7,15 +7,13 @@ import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";
 
-const StepThree = ({setStep}: { setStep: (step: string) => void }) => {
-    const navigateBack = () => {
-        setStep('2')
-    }
+const StepThree = ({onNext, onBack}: { onNext: () => void, onBack: () => void }) => {
+
     return (
         <View >
             <View style={styles.iconWrapper} >
                 <Ionicons.Button name="arrow-back" size={32} backgroundColor={'transparent'} color={colors.primary}
-                                 onPress={navigateBack} />
+                                 onPress={onBack} />
             </View >
 
             <View style={styles.content} >
@@ -33,7 +31,7 @@ const StepThree = ({setStep}: { setStep: (step: string) => void }) => {
                     ))}
 
                     <ThemedView style={styles.stepContainer} >
-                        <Button title={'Next'} color={colors.primary} onPress={() => setStep('4')} />
+                        <Button title={'Next'} color={colors.primary} onPress={onNext} />
                     </ThemedView >
 
                 </CustomTypeWriter >

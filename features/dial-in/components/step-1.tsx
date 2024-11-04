@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
+const StepOne = ({onNext, onBack}: { onNext: () => void, onBack: () => void }) => {
     const beans = useAppSelector(selectBeans);
     const dispatch = useAppDispatch();
 
@@ -17,14 +17,11 @@ const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
         dispatch(setCoffeeBeans(text));
     }
 
-    const navigateBack = () => {
-        setStep('0')
-    }
 
     return (
         <View >
             <View style={styles.iconWrapper}>
-                <Ionicons.Button name="close" size={32} backgroundColor={'transparent'} color={colors.primary} onPress={navigateBack} />
+                <Ionicons.Button name="close" size={32} backgroundColor={'transparent'} color={colors.primary} onPress={onBack} />
             </View>
 
             <View style={styles.content}>
@@ -40,7 +37,7 @@ const StepOne = ({setStep}: { setStep: (step: string) => void }) => {
                     placeholder="Enter Me"
                     value={beans}
                 />
-                <Button title={'Next'} color={colors.primary} onPress={() => setStep('2')} />
+                <Button title={'Next'} color={colors.primary} onPress={onNext} />
             </ThemedView>
         </CustomTypeWriter>
             </View>

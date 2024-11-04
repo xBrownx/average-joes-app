@@ -9,6 +9,8 @@ import React, { useEffect, useState } from "react";
 import { AddMachineModal } from "@/features/recipes/machines/add-machine-modal";
 import { useAppSelector } from "@/store/store";
 import { selectAppData, selectUserMachines } from "@/store/slice/local-data-slice";
+import { ViewMachineModal } from "@/features/recipes/machines/view-machine-modal";
+import { UserMachine } from "@/store/domain";
 
 type RecipeMachinesProps = {
     navBack: () => void;
@@ -22,20 +24,23 @@ type MachineCard = {
 }
 
 type RecipeMachinesState = {
-    isModalOpen: boolean,
+    isAddModalOpen: boolean,
+    isViewModalOpen: boolean,
+    selectedMachineView: UserMachine | null
     machineCards: MachineCard[]
 }
 
 const initialState = {
-    isModalOpen: false,
+    isAddModalOpen: false,
+    isViewModalOpen: false,
+    selectedMachineView: null,
     machineCards: [],
 }
 
-type UpdateStateType = 'isModalOpen' | 'machineCards';
+type UpdateStateType = 'isAddModalOpen' | 'isViewModalOpen' | 'selectedMachineView' | 'machineCards';
 
 export default function RecipeMachines({navBack}: RecipeMachinesProps) {
     const userMachines = useAppSelector(selectUserMachines);
-
     const [state, setState] = React.useState<RecipeMachinesState>(initialState)
 
     const updateState = (name: UpdateStateType, value: any) => {
@@ -43,6 +48,16 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
             ...prevState,
             [name]: value,
         }))
+    }
+
+    const openViewModal = (id: string) => {
+        updateState('selectedMachineView', userMachines.find((machine) => machine.id === id));
+        updateState('isViewModalOpen', true);
+    }
+
+    const closeViewModal = () => {
+        updateState('selectedMachineView', null);
+        updateState('isViewModalOpen', false);
     }
 
     useEffect(() => {
@@ -53,10 +68,13 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
 
     return (
         <>
-            <AddMachineModal isOpen={state.isModalOpen} onClose={() => updateState('isModalOpen', false)} />
-            <ThemedView >
-                <ThemedView style={styles.headingContainer} >
-                    <ThemedView style={styles.titleContainer} >
+            <AddMachineModal isOpen={state.isAddModalOpen} onClose={() => updateState('isAddModalOpen', false)} />
+            <ViewMachineModal isOpen={state.isViewModalOpen} onClose={closeViewModal}
+                              selectedMachine={state.selectedMachineView} />
+
+            <View style={styles.mainContainer}>
+                <View style={styles.headingContainer}>
+                    <View style={styles.titleContainer}>
                         <Ionicons.Button
                             name="arrow-back"
                             size={24}
@@ -64,115 +82,63 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                             color={colors.primary}
                             onPress={navBack}
                         />
-                        <ThemedText type="title" >
-                            MACHINES
-                        </ThemedText >
-
-                    </ThemedView >
-                    <ThemedView >
-                        <ThemedText type="default" >Add, edit or delete your machines here.</ThemedText >
-                    </ThemedView >
-                </ThemedView >
+                        <ThemedText type="title">
+                            YOUR MACHINES
+                        </ThemedText>
+                    </View>
+                    <ThemedText type="default">Add, edit or delete your machine profiles here.</ThemedText>
+                </View>
                 <ThemedView style={styles.listContainer}>
                     {state.machineCards.map((card, idx) => (
-                        <CardView key={card.id + idx} id={card.id} onPress={() => {}} >
-                            <View style={styles.cardContents}>
-                                <ThemedText
-                                    style={styles.cardTitle}
-                                    type={'title'}
-                                >
-                                    {card.make}
-                                </ThemedText >
-                                <ThemedText
-                                    style={styles.cardText}
-                                    type={'defaultSemiBold'}
-                                >
-                                    {card.model}
-                                </ThemedText >
-                                <Image
-                                    source={require('@/assets/images/machines_2.png')}
-                                    style={styles.cardImage}
+                       <CardView
+                            key={card.id}
+                            id={card.id}
+                            icon={
+                                <Ionicons
+                                    name={'information-circle-outline'} size={32}
+                                    color={colors.tertiary}
                                 />
-                            </View>
-                        </CardView >
+                            }
+                            onPress={() => openViewModal(card.id)}
+                        >
+                            <ThemedText type={'subtitle'}>{card.model.toUpperCase()}</ThemedText>
+                            <ThemedText type={'default'}>{card.make}</ThemedText>
+                        </CardView>
                     ))}
-                    <TouchableOpacity
-                        style={styles.cardContainer}
-                        onPress={() => updateState('isModalOpen', true)}
-                    >
-                        <View style={styles.addCardContent}>
-                            <Ionicons.Button
-                                name="add"
-                                size={32}
-                                backgroundColor={'transparent'}
+                    <CardView
+                        id={'add'}
+                        icon={
+                            <Ionicons
+                                name={'add'} size={32}
                                 color={colors.tertiary}
                             />
-                            <ThemedText
-                                style={styles.addCardText}
-                                type={'defaultSemiBold'}
-                            >
-                                ADD NEW
-                            </ThemedText >
-                        </View>
-                    </TouchableOpacity>
-                </ThemedView >
-            </ThemedView >
+                        }
+                        onPress={() => updateState('isAddModalOpen', true)}
+                    >
+                        <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
+                    </CardView>
+                </ThemedView>
+            </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-    headingContainer: {
-        gap: 8,
-        marginBottom: 8,
-    },
-    content: {
-        flex: 1,
-        padding: 32,
+    mainContainer: {
         gap: 16,
+        flexDirection: 'column',
+    },
+    headingContainer: {
+        gap: 16,
+        flexDirection: 'column',
     },
     titleContainer: {
         flexDirection: 'row',
-        gap: 8,
+        gap: 1,
     },
     listContainer: {
+        marginTop: 8,
         gap: 8,
         flexDirection: 'column',
-    },
-    cardTitle: {
-        alignSelf: "center",
-        color: colors.primary,
-    },
-    cardText: {
-        alignSelf: "center",
-        color: colors.tertiary
-    },
-    cardContainer: {
-        elevation: 1,
-        borderRadius: 10,
-        backgroundColor: colors.backgroundSecondary,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        zIndex: 2,
-    },
-    cardContents: {
-        gap: 16,
-    },
-    cardImage: {
-        objectFit: 'scale-down',
-        width: 'auto',
-        height: '60%',
-    },
-    addCardContent: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 4,
-    },
-    addCardText: {
-        alignSelf: "center",
-        color: colors.tertiary,
-        fontSize: 18,
     },
 });

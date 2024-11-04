@@ -8,6 +8,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { getDataString } from "@/util/local-storage";
 import { selectUserBeans, selectUserMachines, useAppSelector } from "@/store";
 import { AddBeanModal } from "@/features/recipes/beans/add-bean-modal";
+import { ViewBeanModal } from "@/features/recipes/beans/view-bean-modal";
+import { UserBean } from "@/store/domain";
 
 type RecipeBeansProps = {
     navBack: () => void;
@@ -21,16 +23,20 @@ type BeanCard = {
 }
 
 type RecipeBeansState = {
-    isModalOpen: boolean,
+    isAddModalOpen: boolean,
+    isViewModalOpen: boolean,
+    selectedBeanView: UserBean | null
     beanCards: BeanCard[]
 }
 
 const initialState = {
-    isModalOpen: false,
+    isAddModalOpen: false,
+    isViewModalOpen: false,
+    selectedBeanView: null,
     beanCards: [],
 }
 
-type UpdateStateType = 'isModalOpen' | 'beanCards'
+type UpdateStateType = 'isAddModalOpen' | 'isViewModalOpen' | 'selectedBeanView' | 'beanCards'
 
 
 export default function RecipeBeans({navBack}: RecipeBeansProps) {
@@ -44,6 +50,16 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
         }))
     }
 
+    const openViewModal = (id: string) => {
+        updateState('selectedBeanView', userBeans.find((bean) => bean.id === id));
+        updateState('isViewModalOpen', true);
+    }
+
+    const closeViewModal = () => {
+        updateState('selectedBeanView', null);
+        updateState('isViewModalOpen', false);
+    }
+
     useEffect(() => {
         updateState('beanCards', userBeans.map((bean) => (
             {id: bean.id, blendName: bean.blendName, roaster: bean.roasterName, image: ""})))
@@ -51,94 +67,77 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
 
     return (
         <>
-            <AddBeanModal isOpen={state.isModalOpen} onClose={() => updateState('isModalOpen', false)} />
-            <ThemedView >
-                <ThemedView style={styles.titleContainer} >
-                    <Ionicons.Button
-                        name="arrow-back"
-                        size={24}
-                        backgroundColor={'transparent'}
-                        color={colors.primary}
-                        onPress={navBack}
-                    />
-                    <ThemedText type="title" >
-                        BEANS
-                    </ThemedText >
-                </ThemedView >
-                <ThemedView style={styles.listContainer} >
+            <AddBeanModal isOpen={state.isAddModalOpen} onClose={() => updateState('isAddModalOpen', false)} />
+            <ViewBeanModal isOpen={state.isViewModalOpen} onClose={closeViewModal} selectedBean={state.selectedBeanView}/>
+            <View style={styles.mainContainer}>
+                <View style={styles.headingContainer}>
+                    <View style={styles.titleContainer}>
+                        <Ionicons.Button
+                            name="arrow-back"
+                            size={24}
+                            backgroundColor={'transparent'}
+                            color={colors.primary}
+                            onPress={navBack}
+                        />
+                        <ThemedText type="title">
+                            YOUR BEANS
+                        </ThemedText>
+                    </View>
+                    <ThemedText type="default">View your recipes or add a new one.</ThemedText>
+                </View>
+
+                <ThemedView style={styles.listContainer}>
                     {state.beanCards.map(card => (
-                        <CardView key={card.id} id={card.id} onPress={() => {}} >
-                            <View style={styles.cardContainer}>
-                                <ThemedText type={'title'}>{card.blendName}</ThemedText >
-                                <ThemedText type={'subtitle'}>{card.roaster}</ThemedText >
-                            </View>
-                        </CardView >
+                        <CardView
+                            key={card.id}
+                            id={card.id}
+                            icon={
+                                <Ionicons
+                                    name={'information-circle-outline'} size={32}
+                                    color={colors.tertiary}
+                                />
+                            }
+                            onPress={() => openViewModal(card.id)}
+                        >
+                            <ThemedText type={'subtitle'}>{card.blendName.toUpperCase()}</ThemedText>
+                            <ThemedText type={'default'}>{card.roaster}</ThemedText>
+                        </CardView>
+
                     ))}
-                    <TouchableOpacity
-                        style={styles.cardContainer}
-                        onPress={() => updateState('isModalOpen', true)}
-                    >
-                        <View style={styles.cardContents} >
-                            <Ionicons.Button
-                                name="add"
-                                size={32}
-                                backgroundColor={'transparent'}
-                                color={colors.tertiary}
-                            />
-                            <ThemedText
-                                style={styles.addCardText}
-                                type={'defaultSemiBold'}
-                            >
-                                ADD NEW
-                            </ThemedText >
-                        </View >
-                    </TouchableOpacity >
-                </ThemedView >
-            </ThemedView >
+                    <CardView
+                            id={'add'}
+                            icon={
+                                <Ionicons
+                                    name={'add'} size={32}
+                                    color={colors.tertiary}
+                                />
+                            }
+                            onPress={() => updateState('isAddModalOpen', true)}
+                        >
+                            <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
+                        </CardView>
+                </ThemedView>
+            </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
-
+    mainContainer: {
+        gap: 16,
+        flexDirection: 'column',
+    },
+    headingContainer: {
+        gap: 16,
+        flexDirection: 'column',
+    },
     titleContainer: {
         flexDirection: 'row',
         gap: 1,
     },
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
-    },
     listContainer: {
+        marginTop: 8,
         gap: 8,
         flexDirection: 'column',
-    },
-    cardText: {
-        alignSelf: "center",
-        color: colors.tertiary
-    },
-    cardContainer: {
-        elevation: 1,
-        borderRadius: 10,
-        backgroundColor: colors.backgroundSecondary,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        zIndex: 2,
-    },
-    cardContents: {
-        width: '100%',
-        padding: 16,
-        margin: 0,
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    addCardText: {
-        alignSelf: "center",
-        color: colors.tertiary,
-        fontSize: 18,
     },
 });

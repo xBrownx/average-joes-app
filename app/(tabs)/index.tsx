@@ -9,15 +9,43 @@ import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
 import { selectUser, useAppSelector } from "../../store";
 import { useIsFocused } from "@react-navigation/native";
+import { ContactModal } from "@/features/home/contact-modal";
+import { RateModal } from "@/features/home/rate-modal";
+import { AboutModal } from "@/features/home/about-modal";
+
+type HomeScreenState = {
+    username: string;
+    isAboutModalOpen: boolean;
+    isContactModalOpen: boolean;
+    isRateModalOpen: boolean;
+    wave: boolean;
+}
+type HomeScreenAction = 'isAboutModalOpen' | 'username' | 'isContactModalOpen' | 'isRateModalOpen' | 'wave' | 'opacity';
+
+const initState = {
+    username: '',
+    isAboutModalOpen: false,
+    isContactModalOpen: false,
+    isRateModalOpen: false,
+    wave: false,
+}
+
 
 export default function HomeScreen() {
     const focused = useIsFocused();
-    const [wave, setWave] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
-    const username = useAppSelector(selectUser).toUpperCase();
+    const [state, setState] = React.useState<HomeScreenState>(initState)
+    state.username = useAppSelector(selectUser).toUpperCase();
+
+    const updateState = (name: HomeScreenAction, value: any) => {
+        setState(prevState => ({
+            ...prevState,
+            [name]: value,
+        }))
+    }
 
     function fadeInWave() {
-        setWave(true);
+        updateState('wave', true);
         Animated.timing(opacity, {
             toValue: 1,
             duration: 500,
@@ -37,7 +65,7 @@ export default function HomeScreen() {
 
     useEffect(() => {
         if (!focused) {
-            setWave(false);
+            updateState('wave', false);
         }
     }, [focused]);
 
@@ -52,11 +80,23 @@ export default function HomeScreen() {
             }>
             {focused &&
                 <View style={styles.content}>
+                    <AboutModal
+                        isOpen={state.isAboutModalOpen}
+                        onClose={() => updateState('isAboutModalOpen', false)}
+                    />
+                    <ContactModal
+                        isOpen={state.isContactModalOpen}
+                        onClose={() => updateState('isContactModalOpen', false)}
+                    />
+                    <RateModal
+                        isOpen={state.isRateModalOpen}
+                        onClose={() => updateState('isRateModalOpen', false)}
+                    />
                     <ThemedView style={styles.titleContainer}>
-                        <TypeWriter textStyle={'title'} textArr={[`HELLO ${username.toUpperCase()}!`]}
+                        <TypeWriter textStyle={'title'} textArr={[`HELLO ${state.username.toUpperCase()}!`]}
                                     onComplete={() => fadeInWave()} />
                         <Animated.View style={[{opacity}]}>
-                            {wave && <HelloWave />}
+                            {state.wave && <HelloWave />}
                         </Animated.View>
                     </ThemedView>
 
@@ -70,16 +110,17 @@ export default function HomeScreen() {
                         </ThemedText>
                     </ThemedView>
                     <ThemedView style={styles.stepContainer}>
-                        <Button title={'ABOUT'} color={colors.primary} onPress={() => {
-                        }} />
+                        <Button title={'ABOUT'} color={colors.primary} onPress={() => updateState('isAboutModalOpen', true)} />
                     </ThemedView>
                     <ThemedView style={styles.stepContainer}>
                         <Button title={'SHOP'} color={colors.primary}
                                 onPress={() => openExternalUrl('https://averagejoescoffee.com.au/')} />
                     </ThemedView>
                     <ThemedView style={styles.stepContainer}>
-                        <Button title={'CONTACT'} color={colors.primary} onPress={() => {
-                        }} />
+                        <Button title={'CONTACT'} color={colors.primary} onPress={() => updateState('isContactModalOpen', true)} />
+                    </ThemedView>
+                    <ThemedView style={styles.stepContainer}>
+                        <Button title={'RATE US'} color={colors.primary} onPress={() => updateState('isRateModalOpen', true)} />
                     </ThemedView>
                 </View>
             }

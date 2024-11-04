@@ -20,7 +20,7 @@ export interface Bean {
     buyLink: string;
 }
 
-export interface  UserBean {
+export interface UserBean {
     id: string;
     blendName: string;
     roasterId?: string;
