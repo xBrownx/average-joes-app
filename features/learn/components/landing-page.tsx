@@ -46,40 +46,19 @@ const videoList = [
     },
 ]
 
-function VideoLink({title, navigateToVideo}: { title: string, navigateToVideo: () => void }) {
-    return (
-        <TouchableOpacity
-            style={styles.heading}
-            onPress={navigateToVideo}
-        >
-            <ThemedText
-                type={'defaultSemiBold'}
-                style={{color: colors.tertiary, fontSize: 14}}
-            >
-                {title}
-            </ThemedText>
-            <Ionicons
-                name={'chevron-forward-outline'}
-                size={18}
-                color={colors.tertiary}
-            />
-        </TouchableOpacity>
-    );
-}
-
 export default function LearnLandingPage({navToVideo}: {
     navToVideo: (videoTitle: string, videoId: string) => void
 }) {
     const focused = useIsFocused();
     return (
         <>{focused &&
-            <ThemedView style={styles.content}>
-                <ThemedView style={styles.titleContainer}>
+            <View style={styles.content}>
+                <View style={styles.titleContainer}>
                     <TypeWriter textStyle={'title'} textArr={["LEARNING CENTRE"]} />
-                </ThemedView>
-                <ThemedView style={styles.titleContainer}>
+                </View>
+                <View style={styles.titleContainer}>
                     <ThemedText type="default">Learn like a pro with Joe's step by step tutorial videos.</ThemedText>
-                </ThemedView>
+                </View>
                 {videoList.map(video => (
                     <TouchableOpacity
                         key={video.videoId}
@@ -103,7 +82,7 @@ export default function LearnLandingPage({navToVideo}: {
                     </TouchableOpacity>
                 ))}
 
-            </ThemedView>
+            </View>
         }</>
     );
 }

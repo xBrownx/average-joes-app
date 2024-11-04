@@ -1,4 +1,4 @@
-import { ServerMachine } from "../domain";
+import { ServerMachine } from "../../domain";
 import { DropdownData } from "@/components/dropdown";
 
 export interface GoogleSheetsResponseDto {

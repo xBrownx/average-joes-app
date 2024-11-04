@@ -4,3 +4,4 @@ export * from './bean';
 export * from './machine';
 export * from './recipe';
 export * from './roaster';
+export * from './pantry-item';

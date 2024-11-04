@@ -7,7 +7,7 @@ import { ThemedView } from '@/components/ThemedView';
 import React, { useEffect } from "react";
 import TypeWriter from "@/components/text/typewriter-text";
 import colors from "@/components/colors";
-import { selectUser, useAppSelector } from "../../store";
+import { selectUser, useAppSelector } from "@/store";
 import { useIsFocused } from "@react-navigation/native";
 import { ContactModal } from "@/features/home/contact-modal";
 import { RateModal } from "@/features/home/rate-modal";

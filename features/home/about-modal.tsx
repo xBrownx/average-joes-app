@@ -5,6 +5,7 @@ import { ThemedText } from "@/components/text/themed-text";
 import colors from "@/components/colors";
 import { Rating } from 'react-native-ratings';
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { ThemedModal } from "@/components/modal";
 
 type AboutModalProps = RNModalProps & {
     isOpen: boolean;
@@ -12,32 +13,23 @@ type AboutModalProps = RNModalProps & {
     withInput?: boolean;
 }
 
-export function AboutModal({isOpen, onClose, withInput, children, ...rest}: AboutModalProps) {
+export function AboutModal({isOpen, onClose, withInput, ...rest}: AboutModalProps) {
 
     return (
-        <RNModal
-            visible={isOpen}
-            transparent
-            animationType="fade"
-            statusBarTranslucent
-            {...rest}
-        >
-            <View style={styles.modalOuter}>
-                <View style={styles.modalInner}>
-                    <View>
-                        <View style={styles.titleContainer}>
-                            <ThemedText type={'subtitle'}>
-                                WHO IS JOE?
-                            </ThemedText>
-                            <Ionicons name={'close'} size={30} color={colors.tertiary} onPress={onClose} />
-                        </View>
-                        <ThemedText type={'default'}>
-                            Average Joe's is just a couple of industry guys trying to help as many people as we can bring cafe quality coffee into their home.
-                        </ThemedText>
-                    </View>
-                </View>
-            </View>
-        </RNModal>
+        <ThemedModal isOpen={isOpen} close={onClose} >
+            <View >
+                <View style={styles.titleContainer} >
+                    <ThemedText type={'subtitle'} >
+                        WHO IS JOE?
+                    </ThemedText >
+                    <Ionicons name={'close'} size={30} color={colors.tertiary} onPress={onClose} />
+                </View >
+                <ThemedText type={'default'} >
+                    Average Joe's is just a couple of industry guys trying to help as many people as we can bring cafe
+                    quality coffee into their home.
+                </ThemedText >
+            </View >
+        </ThemedModal >
     );
 }
 

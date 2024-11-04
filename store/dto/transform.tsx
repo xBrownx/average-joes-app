@@ -1,5 +1,5 @@
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
-import { MachineModel, Roaster, ServerBean, ServerMachine } from "@/store/domain";
+import { MachineModel, Roaster, ServerBean, ServerMachine } from "../../domain";
 
 
 function dtoToKeyPair(dto: GoogleSheetsResponseDto) {

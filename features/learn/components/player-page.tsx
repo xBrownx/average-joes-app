@@ -6,7 +6,7 @@ import { ThemedView } from "@/components/ThemedView";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@/components/colors";
 import { ThemedText } from "@/components/text/themed-text";
-import CardView from "@/components/card/card-view";
+import ThemedCardView from "@/components/card/card-view";
 import SlideForwardView, { SlideView } from "@/components/anim/slide-forward";
 
 const {width} = Dimensions.get('window');

@@ -39,11 +39,11 @@
             "./assets/fonts/Poppins-ExtraBold.ttf"
           ]
         }
-      ]
+
+      ],
+      "expo-build-properties"
     ],
-    "experiments": {
-      "typedRoutes": true
-    },
+    "experiments": {},
     "extra": {
       "eas": {
         "projectId": "3f826a15-5f46-41e0-bfcd-2712498e77f6"

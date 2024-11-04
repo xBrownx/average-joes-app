@@ -10,7 +10,7 @@ type CardViewProps = ViewProps & {
     icon?: React.ReactNode;
 }
 
-export default function CardView({id, onPress, icon, children, ...otherProps}: CardViewProps) {
+export default function ThemedCardView({id, onPress, icon, children, ...otherProps}: CardViewProps) {
     return (
         <TouchableOpacity
             style={styles.container}

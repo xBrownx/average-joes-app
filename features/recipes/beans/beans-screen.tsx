@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList, Animated, Easing, Dimensions, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
-import CardView from "@/components/card/card-view";
+import ThemedCardView from "@/components/card/card-view";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import colors from "@/components/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -9,7 +9,7 @@ import { getDataString } from "@/util/local-storage";
 import { selectUserBeans, selectUserMachines, useAppSelector } from "@/store";
 import { AddBeanModal } from "@/features/recipes/beans/add-bean-modal";
 import { ViewBeanModal } from "@/features/recipes/beans/view-bean-modal";
-import { UserBean } from "@/store/domain";
+import { UserBean } from "../../../domain";
 
 type RecipeBeansProps = {
     navBack: () => void;
@@ -88,7 +88,7 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
 
                 <ThemedView style={styles.listContainer}>
                     {state.beanCards.map(card => (
-                        <CardView
+                        <ThemedCardView
                             key={card.id}
                             id={card.id}
                             icon={
@@ -101,10 +101,10 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
                         >
                             <ThemedText type={'subtitle'}>{card.blendName.toUpperCase()}</ThemedText>
                             <ThemedText type={'default'}>{card.roaster}</ThemedText>
-                        </CardView>
+                        </ThemedCardView>
 
                     ))}
-                    <CardView
+                    <ThemedCardView
                             id={'add'}
                             icon={
                                 <Ionicons
@@ -115,7 +115,7 @@ export default function RecipeBeans({navBack}: RecipeBeansProps) {
                             onPress={() => updateState('isAddModalOpen', true)}
                         >
                             <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
-                        </CardView>
+                        </ThemedCardView>
                 </ThemedView>
             </View>
         </>

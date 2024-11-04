@@ -2,50 +2,81 @@ import { ThemedView } from "@/components/ThemedView";
 import TypeWriter from "@/components/text/typewriter-text";
 import { ThemedText } from "@/components/text/themed-text";
 import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "@/components/colors";
+import { PantryItem } from "@/domain";
+import ThemedCardView from "@/components/card/card-view";
+import { AddPantryModal } from "@/features/pantry/pantry-add-modal";
+import { TabHeading } from "@/components/tab-heading/tab-heading";
 
+interface PantryLandingState {
+    isFocused: boolean
+    isAddModalOpen: boolean;
+    isViewModalOpen: boolean;
+    selectedPantryItem: PantryItem | null
+}
 
-type PantryLandingProps = {}
+type PantryLandingAction = 'isFocused' | 'isAddModalOpen' | 'isViewModalOpen' | 'selectedPantryItem';
+
+const initialState: PantryLandingState = {
+    isFocused: false,
+    isAddModalOpen: false,
+    isViewModalOpen: false,
+    selectedPantryItem: null,
+}
 
 export default function PantryLanding() {
-    const focused = useIsFocused();
+    const [state, setState] = useState<PantryLandingState>(initialState);
+    state.isFocused = useIsFocused()
+    const updateState = (name: PantryLandingAction, value: any) => {
+        setState(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+
     return (
-        <>{focused &&
-            <ThemedView style={styles.content} >
-                <ThemedView style={styles.titleContainer} >
-                    <TypeWriter textStyle={'title'} textArr={["PANTRY"]}    />
-                </ThemedView >
-                <ThemedView style={styles.titleContainer} >
-                    <ThemedText >
-                        Keep track of what's in your pantry and always have a fresh bean ready to roast.
-                    </ThemedText >
-                </ThemedView >
-                <ThemedView style={styles.listContainer}>
-                    <TouchableOpacity
-                        style={styles.cardContainer}
-                        onPress={() => {}}
-                    >
-                        <View style={styles.addCardContent}>
-                            <Ionicons.Button
-                                name="add"
-                                size={32}
-                                backgroundColor={'transparent'}
-                                color={colors.tertiary}
-                            />
-                            <ThemedText
-                                style={styles.addCardText}
-                                type={'defaultSemiBold'}
-                            >
-                                ADD BAG
+        <>
+            {state.isFocused &&
+                <>
+                    <AddPantryModal
+                        isOpen={state.isAddModalOpen}
+                        onClose={() => updateState('isAddModalOpen', false)} />
+
+                    <View style={styles.content} >
+                        <TabHeading title={"Pantry"} />
+                        <View style={styles.titleContainer} >
+                            <ThemedText >
+                                Keep track of what's in your pantry and always have a fresh bean ready to roast.
                             </ThemedText >
-                        </View>
-                    </TouchableOpacity>
-                </ThemedView>
-            </ThemedView >
-        }</>
+                        </View >
+                        <View style={styles.listContainer} >
+
+                            <ThemedCardView
+                                id={"add"}
+                                icon={
+                                    <Ionicons.Button
+                                        name="add"
+                                        size={32}
+                                        backgroundColor={'transparent'}
+                                        color={colors.tertiary}
+                                    />
+                                }
+                                onPress={() => updateState('isAddModalOpen', true)}
+                            >
+                                <ThemedText
+                                    type={'subtitle'}
+                                >
+                                    ADD BAG
+                                </ThemedText >
+                            </ThemedCardView >
+                        </View >
+                    </View >
+                </>
+            }
+        </>
     );
 }
 
@@ -64,27 +95,5 @@ const styles = StyleSheet.create({
         padding: 32,
         gap: 16,
         overflow: 'hidden',
-    },
-    cardContainer: {
-        elevation: 1,
-        borderRadius: 10,
-        backgroundColor: colors.backgroundSecondary,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        zIndex: 2,
-        paddingTop: 4,
-        paddingBottom: 8,
-    },
-    addCardContent: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 4,
-    },
-    addCardText: {
-        alignSelf: "center",
-        color: colors.tertiary,
-        fontSize: 18,
     },
 });

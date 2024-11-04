@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import store, { useAppDispatch, useAppSelector } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { selectUser } from "@/store";
-import { LoginModal } from "@/features/login";
+import { LoginModal } from "@/features/auth";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -55,7 +55,7 @@ function App() {
     }
     return (
         <>
-            {username === '' ? <LoginModal isOpen={isLoginModal} onClose={() => setLoginModal(false)} /> :
+            {username === '' ? <LoginModal isOpen={isLoginModal} close={() => setLoginModal(false)} /> :
                 <Stack >
                     <Stack.Screen name="(tabs)" options={{headerShown: false}} />
                     <Stack.Screen name="+not-found" />

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RemoteData } from "@/store/domain/remote-data";
+import { RemoteData } from "@/domain/remote-data";
 import { API_URL } from "@/store/util/constants";
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
 import { initEmptyRemoteData } from "@/store/util/use-init-empty-app-data";

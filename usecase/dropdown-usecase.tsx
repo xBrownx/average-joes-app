@@ -1,4 +1,4 @@
-import { Roaster, ServerBean, ServerMachine } from "@/store/domain";
+import { Roaster, ServerBean, ServerMachine } from "../domain";
 import { DropdownData } from "@/components/dropdown";
 
 export function serverMachinesToDropdown(machines: ServerMachine[]): DropdownData[] {

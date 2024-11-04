@@ -10,7 +10,7 @@ import {
 import colors from "@/components/colors";
 import React from "react";
 
-import { UserBean } from "@/store/domain";
+import { UserBean } from "../../../domain";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Rating } from "react-native-ratings";

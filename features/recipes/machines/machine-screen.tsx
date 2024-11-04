@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, FlatList, View, Image, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
-import CardView from "@/components/card/card-view";
+import ThemedCardView from "@/components/card/card-view";
 import SlideForwardView from "@/components/anim/slide-forward";
 import colors from "@/components/colors";
 import React, { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { AddMachineModal } from "@/features/recipes/machines/add-machine-modal";
 import { useAppSelector } from "@/store/store";
 import { selectAppData, selectUserMachines } from "@/store/slice/local-data-slice";
 import { ViewMachineModal } from "@/features/recipes/machines/view-machine-modal";
-import { UserMachine } from "@/store/domain";
+import { UserMachine } from "../../../domain";
 
 type RecipeMachinesProps = {
     navBack: () => void;
@@ -90,7 +90,7 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                 </View>
                 <ThemedView style={styles.listContainer}>
                     {state.machineCards.map((card, idx) => (
-                       <CardView
+                       <ThemedCardView
                             key={card.id}
                             id={card.id}
                             icon={
@@ -103,9 +103,9 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                         >
                             <ThemedText type={'subtitle'}>{card.model.toUpperCase()}</ThemedText>
                             <ThemedText type={'default'}>{card.make}</ThemedText>
-                        </CardView>
+                        </ThemedCardView>
                     ))}
-                    <CardView
+                    <ThemedCardView
                         id={'add'}
                         icon={
                             <Ionicons
@@ -116,7 +116,7 @@ export default function RecipeMachines({navBack}: RecipeMachinesProps) {
                         onPress={() => updateState('isAddModalOpen', true)}
                     >
                         <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
-                    </CardView>
+                    </ThemedCardView>
                 </ThemedView>
             </View>
         </>

@@ -1,5 +1,5 @@
-import { UserData } from "../domain";
-import { RemoteData } from "@/store/domain/remote-data";
+import { UserData } from "../../domain";
+import { RemoteData } from "@/domain/remote-data";
 
 export const initEmptyUserData = (): UserData => {
     return {

@@ -1,4 +1,4 @@
-import { Recipe } from "@/store/domain/recipe";
+import { Recipe } from "@/domain/recipe";
 
 export interface ServerBean {
     id: string;
