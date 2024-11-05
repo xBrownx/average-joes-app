@@ -22,9 +22,7 @@ export function ThemedModal({isOpen, close, children}: ThemedModalProps) {
         >
             <TouchableOpacity style={styles.modalOuter} onPress={close} >
                 <TouchableWithoutFeedback >
-                    <View style={styles.modalInner} >
-                        {children}
-                    </View >
+                    {children}
                 </TouchableWithoutFeedback >
             </TouchableOpacity >
         </RNModal >

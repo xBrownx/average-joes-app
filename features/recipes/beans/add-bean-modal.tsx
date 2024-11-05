@@ -1,10 +1,7 @@
 import {
-    Button,
-    Modal as RNModal,
+    Button, LayoutAnimation,
     ModalProps as RNModalProps,
-    StyleSheet, TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
+    StyleSheet, TouchableWithoutFeedback,
     View
 } from 'react-native';
 import colors from "@/components/colors";
@@ -13,16 +10,17 @@ import DropdownComponent, { DropdownData } from "@/components/dropdown/dropdown"
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import {
     addUserBean,
-    addUserMachine
 } from "@/store/slice/local-data-slice";
-import { UserBean } from "../../../domain";
-import { serverBeansToDropdown, serverMachinesToDropdown, serverRoastersToDropdown } from "../../../usecase";
-import { selectRemoteBeans, selectRemoteRoasters } from "@/store/slice/remote-data-slice";
+import { UserBean } from "@/domain";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Rating } from "react-native-ratings";
 import { ThemedModal } from "@/components/modal";
 import { ThemedInput } from "@/components/input";
+import { FadeIn, FadeOut, LayoutAnimationConfig, LinearTransition, StretchInY } from "react-native-reanimated";
+import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated";
+import { serverBeansToDropdown, serverRoastersToDropdown } from "@/usecase";
+import { selectRemoteBeans, selectRemoteRoasters } from "@/store/slice/remote-data-slice";
 
 type AddBeanModalProps = RNModalProps & {
     isOpen: boolean;
@@ -30,33 +28,16 @@ type AddBeanModalProps = RNModalProps & {
     withInput?: boolean;
 };
 
-type AddBeanModalState = {
-    roastersDropdown: DropdownData[],
-    blendDropdown: DropdownData[],
+interface SearchBeanState {
+    roasters: DropdownData[],
     selectedRoaster: string,
-    isRoasterSelected: boolean,
-    selectedBlend: string,
-    isBlendSelected: boolean,
+    selectedRoasterId: string,
+    blends: DropdownData[],
+    selectedBlendId: string,
 }
-
-const initialModalState: AddBeanModalState = {
-    roastersDropdown: [],
-    blendDropdown: [],
-    selectedRoaster: '',
-    isRoasterSelected: false,
-    selectedBlend: '',
-    isBlendSelected: false,
-}
-
-type UpdateStateType =
-    'roastersDropdown'
-    | 'blendDropdown'
-    | 'selectedRoaster'
-    | 'isRoasterSelected'
-    | 'selectedBlend'
-    | 'isBlendSelected';
 
 interface FormState {
+    isSearch: boolean;
     roaster: string;
     blendName: string;
     tastingNotes: string;
@@ -66,9 +47,10 @@ interface FormState {
     rating: number;
 }
 
-type FormStateAction = 'roaster' | 'blendName' | 'tastingNotes' | 'dose' | 'yield' | 'time' | 'rating';
+type FormStateAction = 'isSearch' | 'roaster' | 'blendName' | 'tastingNotes' | 'dose' | 'yield' | 'time' | 'rating';
 
-const initialFormState = {
+const initialFormState: FormState = {
+    isSearch: false,
     roaster: '',
     blendName: '',
     tastingNotes: '',
@@ -78,6 +60,179 @@ const initialFormState = {
     rating: 0
 }
 
+type AddBeanProps = {
+    formState: FormState,
+    updateState: (name: FormStateAction, value: any) => void,
+    onSave?: () => void
+    onSaveSearch?: () => void
+}
+
+function AddBean({formState, updateState, onSave}: AddBeanProps) {
+    return (
+        <TouchableWithoutFeedback>
+            <Animated.View entering={SlideInLeft.delay(50)} exiting={SlideOutLeft}>
+                <Animated.View style={styles.modalInner}>
+                    <View style={styles.titleContainer}>
+                        <ThemedText type={'subtitle'}>Add Your Beans</ThemedText>
+                        <Ionicons.Button
+                            name="search"
+                            size={24}
+                            backgroundColor={'transparent'}
+                            color={colors.tertiary}
+                            onPress={() => updateState('isSearch', true)}
+                        />
+                    </View>
+
+                    <ThemedText
+                        type={'default'}
+                        style={styles.titleContainer}
+                    >
+                        Add your bean profile, or use the search tool above.
+                    </ThemedText>
+
+                    <View style={styles.content}>
+                        <ThemedInput
+                            onValueChange={(text) => updateState('blendName', text)}
+                            placeholder="Blend Name"
+                            value={formState.blendName}
+                        />
+                        <ThemedInput
+                            onValueChange={(text) => updateState('roaster', text)}
+                            placeholder="Roaster"
+                            value={formState.roaster}
+                        />
+                        <ThemedInput
+                            onValueChange={(text) => updateState('tastingNotes', text)}
+                            placeholder="Tasting Notes"
+                            value={formState.tastingNotes}
+                        />
+                        <ThemedInput
+                            onValueChange={(text) => updateState('dose', text)}
+                            placeholder="Dose"
+                            value={formState.dose}
+                        />
+                        <ThemedInput
+                            onValueChange={(text) => updateState('yield', text)}
+                            placeholder="Yield"
+                            value={formState.yield}
+                        />
+                        <ThemedInput
+                            onValueChange={(text) => updateState('time', text)}
+                            placeholder="Time"
+                            value={formState.time}
+                        />
+                        <Rating
+                            type='heart'
+                            ratingCount={5}
+                            imageSize={40}
+                            startingValue={0}
+                            jumpValue={1}
+                            onFinishRating={(rating: number) => updateState('rating', rating)}
+                        />
+                        <Button
+                            title={'SAVE'}
+                            color={colors.primary}
+                            onPress={onSave}
+                        />
+                    </View>
+                </Animated.View>
+            </Animated.View>
+        </TouchableWithoutFeedback>
+    );
+}
+
+function SearchBean({formState, updateState, onSaveSearch}: AddBeanProps) {
+    const roasters = serverRoastersToDropdown(useAppSelector(selectRemoteRoasters));
+    const allBlends = useAppSelector(selectRemoteBeans);
+    const [state, setState] = useState<SearchBeanState>({
+        roasters: roasters,
+        selectedRoaster: '',
+        selectedRoasterId: '',
+        blends: [],
+        selectedBlendId: '',
+    })
+
+    const onRoasterSelect = (id: string) => {
+        const filteredBlends = allBlends.filter(b => b.roasterId === id);
+        if (!filteredBlends) return
+        setState(prevState => ({
+            ...prevState,
+            selectedRoaster: roasters.find(roaster => roaster.value === id)?.value ?? '',
+            blends: serverBeansToDropdown(filteredBlends)
+        }))
+    }
+
+    const onSave = () => {
+
+    }
+
+    useEffect(() => {
+        setState(prevState => ({
+            ...prevState,
+            selectedRoaster: '',
+            selectedRoasterId: '',
+            selectedBlendId: '',
+            blends: []
+        }))
+    }, [])
+
+    useEffect(() => {
+        LayoutAnimation.easeInEaseOut();
+    }, [state])
+
+
+    return (
+        <TouchableWithoutFeedback>
+            <Animated.View entering={SlideInRight.delay(50)} exiting={SlideOutRight}>
+                <Animated.View layout={LinearTransition} style={styles.modalInner}>
+                    <View style={styles.titleContainer}>
+                        <ThemedText type={'subtitle'}>Search For a Bean</ThemedText>
+                        <Ionicons.Button
+                            name="arrow-back"
+                            size={24}
+                            backgroundColor={'transparent'}
+                            color={colors.tertiary}
+                            onPress={() => updateState('isSearch', false)}
+                        />
+                    </View>
+                    <ThemedText
+                        type={'default'}
+                        style={styles.titleContainer}
+                    >
+                        Add your bean profile, or use the search tool above.
+                    </ThemedText>
+
+                    <View style={styles.content}>
+
+                        <DropdownComponent
+
+                            placeholder="Roaster"
+                            data={state.roasters}
+                            onChange={(value: string) => onRoasterSelect(value)}
+                        />
+                        {state.blends.length > 0 &&
+                            <Animated.View entering={FadeIn}>
+                                <DropdownComponent
+                                    onChange={(value) => {
+                                    }}
+                                    data={state.blends}
+                                    placeholder="Blend Name"
+                                />
+                            </Animated.View>
+                        }
+                        <Animated.View layout={LinearTransition}>
+                            <Button
+                                title={'SAVE'}
+                                color={colors.primary}
+                                onPress={onSaveSearch}
+                            />
+                        </Animated.View>
+                    </View>
+                </Animated.View>
+            </Animated.View>
+        </TouchableWithoutFeedback>
+    );
+}
 
 export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: AddBeanModalProps) => {
     const dispatch = useAppDispatch();
@@ -111,74 +266,16 @@ export const AddBeanModal = ({isOpen, onClose, withInput, children, ...rest}: Ad
     }
 
     return (
-        <ThemedModal isOpen={isOpen} close={onClose} >
-            <View style={styles.titleContainer} >
-                <ThemedText type={'subtitle'} >Add Your Beans</ThemedText >
-                <Ionicons.Button
-                    name="search"
-                    size={24}
-                    backgroundColor={'transparent'}
-                    color={colors.tertiary}
-                    onPress={() => {
-                    }}
-                />
-            </View >
-
-            <ThemedText
-                type={'default'}
-                style={styles.titleContainer}
-            >
-                Add your bean profile, or use the search tool above.
-            </ThemedText >
-
-            <View style={styles.content} >
-                <ThemedInput
-                    onValueChange={(text) => updateState('blendName', text)}
-                    placeholder="Blend Name"
-                    value={formState.blendName}
-                />
-                <ThemedInput
-                    onValueChange={(text) => updateState('roaster', text)}
-                    placeholder="Roaster"
-                    value={formState.roaster}
-                />
-                <ThemedInput
-                    onValueChange={(text) => updateState('tastingNotes', text)}
-                    placeholder="Tasting Notes"
-                    value={formState.tastingNotes}
-                />
-                <ThemedInput
-                    onValueChange={(text) => updateState('dose', text)}
-                    placeholder="Dose"
-                    value={formState.dose}
-                />
-                <ThemedInput
-                    onValueChange={(text) => updateState('yield', text)}
-                    placeholder="Yield"
-                    value={formState.yield}
-                />
-                <ThemedInput
-                    onValueChange={(text) => updateState('time', text)}
-                    placeholder="Time"
-                    value={formState.time}
-                />
-                <Rating
-                    type='heart'
-                    ratingCount={5}
-                    imageSize={40}
-                    startingValue={0}
-                    jumpValue={0.5}
-                    onFinishRating={(rating: number) => updateState('rating', rating)}
-                />
-                <Button
-                    title={'SAVE'}
-                    color={colors.primary}
-                    onPress={onSave}
-                />
-            </View >
-        </ThemedModal >
+        <ThemedModal isOpen={isOpen} close={onClose}>
+            <LayoutAnimationConfig skipEntering>
+                {formState.isSearch
+                    ? <SearchBean formState={formState} updateState={updateState}
+                                  onSaveSearch={() => updateState('isSearch', false)} />
+                    : <AddBean formState={formState} updateState={updateState} onSave={onSave} />
+                }
+            </LayoutAnimationConfig>
+        </ThemedModal>
     );
-
 }
 
 const styles = StyleSheet.create({
@@ -194,6 +291,13 @@ const styles = StyleSheet.create({
     },
     content: {
         gap: 8,
+    },
+    modalInner: {
+        width: '100%',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        backgroundColor: 'white',
+        borderRadius: 8,
     },
 });
 
