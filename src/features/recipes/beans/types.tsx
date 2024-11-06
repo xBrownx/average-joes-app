@@ -1,0 +1,1 @@
+export interface FormState {    isSearch: boolean;    roaster: string;    blendName: string;    tastingNotes: string;    dose: string;    yield: string;    time: string;    rating: number;}export type FormStateAction =    | 'isSearch'    | 'roaster'    | 'blendName'    | 'tastingNotes'    | 'dose'    | 'yield'    | 'time'    | 'rating';

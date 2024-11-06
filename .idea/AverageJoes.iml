@@ -6,7 +6,9 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/node_modules/react-native/node_modules/scheduler/cjs" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules/@eslint/config-array" />
     </content>
+    <content url="file://$MODULE_DIR$/node_modules/@eslint/config-array" />
     <content url="file://$MODULE_DIR$/node_modules/react-native/node_modules/scheduler/cjs" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
