@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Animated, StyleSheet } from "react-native";
 import { TypeWriterText } from "@/components/typewriter";
 import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/text/themed-text";
 
 type CustomTypeWriterProps = {
     text: string[];
-    textStyle?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+    type?: 'default' | 'title' | 'defaultSemiBold' | 'primaryBold' | 'subtitle' | 'link';
     speed?: number;
-    children: React.ReactNode;
+    children?: React.ReactNode;
+    onComplete?: () => void;
+    isShow?: boolean;
 }
 
-export function CustomTypeWriter({text, textStyle, speed, children}: CustomTypeWriterProps) {
+export function CustomTypeWriter({text, type, speed, children, onComplete, isShow}: CustomTypeWriterProps) {
     const [childrenVisible, setChildrenVisible] = React.useState(false);
     const opacity = React.useState(new Animated.Value(0))[0];
 
@@ -21,11 +24,21 @@ export function CustomTypeWriter({text, textStyle, speed, children}: CustomTypeW
             duration: 500,
             useNativeDriver: true,
         }).start()
+        if(onComplete) onComplete();
     }
+
+    useEffect(() => {
+        if(isShow) {
+            fadeInChildren();
+        }
+    }, [isShow])
 
     return (
         <ThemedView style={styles.stepContainer} >
-            <TypeWriterText textArr={text} speed={speed} onComplete={fadeInChildren} textStyle={textStyle}/>
+            {isShow
+                ? text.map(t => (<ThemedText key={t} type={type}>{t}</ThemedText>))
+                : <TypeWriterText textArr={text} speed={speed} onComplete={fadeInChildren} type={type} />
+            }
             <Animated.View style={[{opacity}]}>
                 {childrenVisible && children}
             </Animated.View>

@@ -13,14 +13,14 @@ import { ThemedInput } from '@/components/input';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 import { UserBean } from '@/domain';
-import { FormState, FormStateAction } from '@/features/recipes/beans/types';
+import { FormState } from '@/features/recipes/beans/types';
 import { addUserBean, useAppDispatch } from '@/store';
 import { globalStyles } from '@/styles/global-styles';
 import { StateType } from '@/hooks/useCustomState';
 
 type AddBeanProps = {
     parentState: FormState;
-    updateParentState: (state: StateType<FormStateAction>) => void;
+    updateParentState: (state: StateType<FormState>) => void;
     close: () => void;
 };
 
@@ -30,12 +30,12 @@ export function AddBean({ parentState, updateParentState, close }: AddBeanProps)
         const userBean: UserBean = {
             id: new Date().toLocaleString(),
             roasterName: parentState.roaster,
-            blendName: parentState.blendName,
+            blendName: parentState.blendName?? 'unknown',
             tastingNotes: parentState.tastingNotes,
             recipe: {
-                dose: parentState.dose,
-                yield: parentState.yield,
-                time: parentState.time,
+                dose: parentState.dose?? 'unknown',
+                yield: parentState.yield?? 'unknown',
+                time: parentState.time?? 'unknown',
             },
             rating: parentState.rating,
         };
@@ -51,7 +51,7 @@ export function AddBean({ parentState, updateParentState, close }: AddBeanProps)
                 exiting={SlideOutLeft}
             >
                 <Animated.View style={globalStyles.innerModal}>
-                    <View>
+                    <View style={globalStyles.modalTitle}>
                         <ThemedText type={'subtitle'}>
                             Add Your Beans
                         </ThemedText>
@@ -60,6 +60,7 @@ export function AddBean({ parentState, updateParentState, close }: AddBeanProps)
                             size={24}
                             backgroundColor={'transparent'}
                             color={themedColors.tertiary}
+                            style={{padding: 0, margin: 0}}
                             onPress={() => updateParentState({'isSearch': true})}
                         />
                     </View>
@@ -74,36 +75,36 @@ export function AddBean({ parentState, updateParentState, close }: AddBeanProps)
                                 updateParentState({'blendName': text})
                             }
                             placeholder="Blend Name"
-                            value={parentState.blendName}
+                            value={parentState.blendName!}
                         />
                         <ThemedInput
                             onValueChange={(text) =>
                                 updateParentState({'roaster': text})
                             }
                             placeholder="Roaster"
-                            value={parentState.roaster}
+                            value={parentState.roaster!}
                         />
                         <ThemedInput
                             onValueChange={(text) =>
                                 updateParentState({'tastingNotes': text})
                             }
                             placeholder="Tasting Notes"
-                            value={parentState.tastingNotes}
+                            value={parentState.tastingNotes!}
                         />
                         <ThemedInput
                             onValueChange={(text) => updateParentState({'dose': text})}
                             placeholder="Dose"
-                            value={parentState.dose}
+                            value={parentState.dose!}
                         />
                         <ThemedInput
                             onValueChange={(text) => updateParentState({'yield': text})}
                             placeholder="Yield"
-                            value={parentState.yield}
+                            value={parentState.yield!}
                         />
                         <ThemedInput
                             onValueChange={(text) => updateParentState({'time': text})}
                             placeholder="Time"
-                            value={parentState.time}
+                            value={parentState.time!}
                         />
                         <Rating
                             type="heart"

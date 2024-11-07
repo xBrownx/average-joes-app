@@ -47,7 +47,7 @@ export function LearnLandingPage({navToVideo}: {
         <>{focused &&
             <View style={styles.content}>
                 <View style={styles.titleContainer}>
-                    <TypeWriterText textStyle={'title'} textArr={["LEARNING CENTRE"]} />
+                    <TypeWriterText type={'title'} textArr={["LEARNING CENTRE"]} />
                 </View>
                 <View style={styles.titleContainer}>
                     <ThemedText type="default">Learn like a pro with Joe's step by step tutorial videos.</ThemedText>

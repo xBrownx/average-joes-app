@@ -8,11 +8,12 @@ import {
 } from "react-native";
 
 type ThemedModalProps = RNModalProps & {
+    noExit?: boolean;
     isOpen: boolean;
     close: () => void;
 };
 
-export function ThemedModal({isOpen, close, children}: ThemedModalProps) {
+export function ThemedModal({noExit, isOpen, close, children}: ThemedModalProps) {
     return (
         <RNModal
             visible={isOpen}
@@ -20,7 +21,7 @@ export function ThemedModal({isOpen, close, children}: ThemedModalProps) {
             animationType="fade"
             statusBarTranslucent
         >
-            <TouchableOpacity style={styles.modalOuter} onPress={close} >
+            <TouchableOpacity style={styles.modalOuter} onPress={noExit ? undefined : close} >
                 <TouchableWithoutFeedback >
                     {children}
                 </TouchableWithoutFeedback >

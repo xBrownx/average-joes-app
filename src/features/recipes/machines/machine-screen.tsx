@@ -10,6 +10,7 @@ import { MachineModal } from '@/features/recipes/machines/modal-base';
 import { ViewMachineModal } from '@/features/recipes/machines/modal-view-machine';
 import { selectUserMachines } from '@/store/slice/local-data-slice';
 import { useAppSelector } from '@/store/store';
+import { TypeWriterText } from "@/components/typewriter";
 type RecipeMachinesProps = {
     navBack: () => void;
 };
@@ -101,7 +102,7 @@ export function RecipeMachines({ navBack }: RecipeMachinesProps) {
                             color={themedColors.primary}
                             onPress={navBack}
                         />
-                        <ThemedText type="title">YOUR MACHINES</ThemedText>
+                        <TypeWriterText type="title" textArr={["YOUR MACHINES"]} />
                     </View>
                     <ThemedText type="default">
                         Add, edit or delete your machine profiles here.
@@ -139,6 +140,7 @@ export function RecipeMachines({ navBack }: RecipeMachinesProps) {
                             />
                         }
                         onPress={() => updateState('isAddModalOpen', true)}
+                        style={{paddingVertical: 16}}
                     >
                         <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
                     </ThemedCardView>

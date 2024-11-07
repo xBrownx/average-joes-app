@@ -7,11 +7,11 @@ type FadeUpTextProps = {
     type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
     text: string;
     delay?: number;
-    onComplete?: () => void;
     children?: React.ReactNode;
+    fontSize?: number;
 }
 
-export function FadeUpText({type, text, delay, onComplete, children}: FadeUpTextProps) {
+export function FadeUpText({type, text, delay, children, fontSize}: FadeUpTextProps) {
     const opacity = React.useState(new Animated.Value(0))[0];
     const slideUp = React.useState(new Animated.Value(50))[0];
     const childOpacity = React.useState(new Animated.Value(0))[0];
@@ -61,7 +61,7 @@ export function FadeUpText({type, text, delay, onComplete, children}: FadeUpText
                     type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
                     type === 'subtitle' ? styles.subtitle : undefined,
                     type === 'link' ? styles.link : undefined,
-                    {transform: [{translateY: slideUp}]}
+                    {transform: [{translateY: slideUp}]},
                 ]} >
                     {text}
                 </Animated.Text >
@@ -77,7 +77,7 @@ export function FadeUpText({type, text, delay, onComplete, children}: FadeUpText
 const styles = StyleSheet.create({
     container: {
         gap: 8,
-        marginBottom: 8,
+        marginBottom: 0,
     },
     default: {
         fontSize: 16,

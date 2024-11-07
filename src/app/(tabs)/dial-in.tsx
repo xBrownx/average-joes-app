@@ -2,12 +2,21 @@ import { Image, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import React, { useEffect, useState } from "react";
-import { DialInLanding, StepOne, StepThree, StepTwo, Modal } from "@/features/dial-in/components";
+import {
+    DialInLanding,
+    GetCoffeeScreen,
+    StepOne,
+    GetMachineScreen,
+    Modal,
+    StepTwo,
+    StepThree,
+    StepFour
+} from "@/features/dial-in/components";
 import { useIsFocused } from "@react-navigation/native";
 
 interface DialInState {
     isStartModalOpen: boolean;
-    currentStep: 'landing' | 'coffee-select' | 'portafilter-select' | 'step-1' | 'step-2' | 'step-3';
+    currentStep: 'landing' | 'coffee-select' | 'portafilter-select' | 'step-1' | 'step-2' | 'step-3' | 'step-4';
 }
 
 const initialState: DialInState = {
@@ -52,11 +61,12 @@ export default function DialIn() {
                 {
                     {
                         'landing': <DialInLanding onStart={() => updateState('isStartModalOpen', true)} onSkip={() => navTo('step-1')}/>,
-                        'coffee-select': <StepOne onNext={() => navTo('portafilter-select')} onBack={() => navTo('landing')} />,
-                        'portafilter-select': <StepTwo onNext={() => navTo('step-1')} onBack={() => navTo('coffee-select')} />,
-                        'step-1': <StepThree onNext={() => navTo('step-2')} onBack={() => navTo('portafilter-select')} />,
-                        'step-2': <></>,
-                        'step-3': <></>,
+                        'coffee-select': <GetCoffeeScreen onNext={() => navTo('portafilter-select')} onBack={() => navTo('landing')} />,
+                        'portafilter-select': <GetMachineScreen onNext={() => navTo('step-1')} onBack={() => navTo('coffee-select')} />,
+                        'step-1': <StepOne onNext={() => navTo('step-2')} onBack={() => navTo('portafilter-select')} />,
+                        'step-2': <StepTwo onNext={() => navTo('step-3')} onBack={() => navTo('step-1')} />,
+                        'step-3': <StepThree onNext={() => navTo('step-4')} onBack={() => navTo('step-2')}></StepThree>,
+                        'step-4': <StepFour onNext={() => navTo('step-4')} onBack={() => navTo('step-3')}></StepFour>,
                     }[state.currentStep]
                 }
 

@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/text/themed-text";
 import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { themedColors } from "@/constants/themed-colors";
@@ -8,20 +8,19 @@ import { PantryItem } from "@/domain";
 import { ThemedCardView } from "@/components/card";
 import { AddPantryModal } from "@/features/pantry/pantry-add-modal";
 import { TabHeading } from "@/components/tab-heading/tab-heading";
-import { selectUserPantryItem, useAppSelector } from "../../store";
+import { selectUserPantryItem, useAppSelector } from "@/store";
 import { ViewPantryModal } from "@/features/pantry/pantry-view-modal";
 import { name } from "ts-interface-checker";
 import { useCustomState } from '@/hooks/useCustomState';
 
 interface PantryLandingState {
-    isFocused: boolean
-    isAddModalOpen: boolean;
-    isViewModalOpen: boolean;
-    pantryItems: PantryItem[];
-    selectedPantryItem: PantryItem | null
+    isFocused?: boolean
+    isAddModalOpen?: boolean;
+    isViewModalOpen?: boolean;
+    pantryItems?: PantryItem[];
+    selectedPantryItem?: PantryItem | null
 }
 
-type PantryLandingAction = 'isFocused' | 'isAddModalOpen' | 'isViewModalOpen' | 'selectedPantryItem';
 
 const initialState: PantryLandingState = {
     isFocused: false,
@@ -33,30 +32,37 @@ const initialState: PantryLandingState = {
 }
 
 export default function PantryLanding() {
+    const pantryItems = useAppSelector(selectUserPantryItem);
 
-    const {state, updateState} = useCustomState<PantryLandingState, PantryLandingAction>({
+    const {state, updateState} = useCustomState<PantryLandingState>({
         ...initialState,
         isFocused: useIsFocused(),
         pantryItems: useAppSelector(selectUserPantryItem),
     })
 
     const onItemSelect = (itemId: string) => {
-        updateState('selectedPantryItem', state.pantryItems.find(pantryItem => pantryItem.id === itemId));
-        updateState('isViewModalOpen', true);
+        updateState({
+            'selectedPantryItem': state.pantryItems!.find(pantryItem => pantryItem.id === itemId),
+            'isViewModalOpen': true
+        });
     }
+
+    useEffect(() => {
+        updateState({pantryItems: pantryItems});
+    }, [pantryItems]);
 
     return (
         <>
             {state.isFocused &&
                 <>
                     <AddPantryModal
-                        isOpen={state.isAddModalOpen}
-                        onClose={() => updateState('isAddModalOpen', false)}
+                        isOpen={state.isAddModalOpen!}
+                        onClose={() => updateState({'isAddModalOpen': false})}
                     />
                     <ViewPantryModal
-                        isOpen={state.isViewModalOpen}
-                        onClose={() => updateState('isViewModalOpen', false)}
-                        selectedPantryItem={state.selectedPantryItem}
+                        isOpen={state.isViewModalOpen!}
+                        onClose={() => updateState({'isViewModalOpen': false})}
+                        selectedPantryItem={state.selectedPantryItem!}
                     />
 
                     <View style={styles.content} >
@@ -67,8 +73,9 @@ export default function PantryLanding() {
                             </ThemedText >
                         </View >
                         <View style={styles.listContainer} >
-                            {state.pantryItems.map(pantryItem => (
+                            {state.pantryItems!.map(pantryItem => (
                                 <ThemedCardView
+                                    key={pantryItem.id}
                                     id={pantryItem.id}
                                     onPress={() => onItemSelect(pantryItem.id)}
                                 >
@@ -104,7 +111,8 @@ export default function PantryLanding() {
                                         color={themedColors.tertiary}
                                     />
                                 }
-                                onPress={() => updateState('isAddModalOpen', true)}
+                                style={{paddingVertical: 16}}
+                                onPress={() => updateState({'isAddModalOpen': true})}
                             >
                                 <ThemedText
                                     type={'subtitle'}

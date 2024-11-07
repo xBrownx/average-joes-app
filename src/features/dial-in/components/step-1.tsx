@@ -1,71 +1,80 @@
-import { ThemedView } from "@/components/ThemedView";
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import { Button, StyleSheet, View, Animated, TouchableOpacity } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
-import React from "react";
+import React, { useEffect } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { selectBeans, setCoffeeBeans } from '@/store/slice/dial-in-slice'
-import { useSelector } from "react-redux";
 import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { FadeUpText } from "@/components/text/fade-up-text";
+import { ThemedText } from "@/components/text/themed-text";
+import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
 
 export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
-    const beans = useAppSelector(selectBeans);
-    const dispatch = useAppDispatch();
 
-    const onTextChange = (text: string) => {
-        dispatch(setCoffeeBeans(text));
+    const opacity = React.useState(new Animated.Value(0))[0];
+    const [show, setShow] = React.useState(false);
+    function onShow() {
+        setShow(true);
+    }
+
+    function fadeInNext() {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+            delay: 1000,
+        }).start()
     }
 
 
-    return (
-        <View >
-            <View style={styles.iconWrapper}>
-                <Ionicons.Button name="close" size={32} backgroundColor={'transparent'} color={themedColors.primary} onPress={onBack} />
-            </View>
 
-            <View style={styles.content}>
-        <CustomTypeWriter
-            text={CONSTANTS.qOne}
-            textStyle={'title'}
-            speed={20}
-        >
-            <ThemedView style={styles.stepContainer}>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={onTextChange}
-                    placeholder="Enter Me"
-                    value={beans}
-                />
-                <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
-            </ThemedView>
-        </CustomTypeWriter>
+    useEffect(() => setShow(false), []);
+
+    return (
+        <View>
+            <DialInHeading onBack={onBack} onShow={onShow} icon={'back'} />
+            <View style={styles.container}>
+                <CustomTypeWriter
+                    text={CONSTANTS.qThree}
+                    type={'primaryBold'}
+                    speed={20}
+                    onComplete={fadeInNext}
+                    isShow={show}
+                >
+                    <View style={styles.content}>
+                        {CONSTANTS.qThreeSub.map((text, idx) => (
+                            <FadeUpText
+                                key={idx}
+                                text={text}
+                                type={'default'}
+                                delay={idx * 500}
+                            />
+                        ))}
+                        <Animated.View
+                            style={[{opacity}, styles.buttonWrapper]}
+                        >
+                            <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
+                        </Animated.View>
+                    </View>
+                </CustomTypeWriter>
+
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    stepContainer: {
-        gap: 0,
-        marginBottom: 2,
-    },
-    input: {
-        height: 40,
-        marginTop: 16,
-        marginBottom: 16,
-        borderWidth: 1,
-        padding: 10,
-    },
-    iconWrapper: {
-        alignSelf: 'flex-start',
-        marginLeft: 8,
-        marginTop: 8
+    container: {
+        flex: 1,
+        paddingHorizontal: 32,
+        paddingVertical: 16,
     },
     content: {
         flex: 1,
-        padding: 32,
-        gap: 16,
+        gap: 4,
+        marginTop: 8,
         overflow: 'hidden',
+    },
+    buttonWrapper: {
+        marginTop: 16,
     },
 });

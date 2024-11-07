@@ -6,6 +6,7 @@ import { setUserName, useAppDispatch } from "@/store";
 import { ThemedInput } from "@/components/input";
 import { TabHeading } from "@/components/tab-heading/tab-heading";
 import { ThemedModal } from "@/components/modal";
+import { globalStyles } from "@/styles/global-styles";
 
 type LoginModalProps = {
     isOpen: boolean;
@@ -28,8 +29,8 @@ export const LoginModal = ({isOpen, close, ...rest}: LoginModalProps) => {
     }
 
     return (
-        <ThemedModal isOpen={isOpen} close={close} {...rest} >
-            <View style={styles.container} >
+        <ThemedModal noExit isOpen={isOpen} close={close} {...rest} >
+            <View style={[globalStyles.innerModal, styles.container]} >
                 <TabHeading title={'WELCOME TO JOE\'S!'} />
                 <View >
                     <ThemedText type={'default'} >

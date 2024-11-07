@@ -6,20 +6,21 @@ import PantryLanding from "@/features/pantry/pantry-landing";
 
 export default function Pantry() {
     const [screenNav, setScreenNav] = React.useState('landing');
-    const isFocused = useIsFocused();
-    useEffect(() => {
-        console.log(isFocused);
-    }, [isFocused])
+    const focused = useIsFocused();
 
     return (
-        <ParallaxScrollView
-            headerBackgroundColor={{light: '#F0E8E2', dark: '#353636'}}
-            headerImage={<Image
-                source={require('@/assets/images/avatar.png')}
-                style={styles.headerImage}
-            />}>
-            <PantryLanding />
-        </ParallaxScrollView>
+        <>
+            {focused &&
+                <ParallaxScrollView
+                    headerBackgroundColor={{light: '#F0E8E2', dark: '#353636'}}
+                    headerImage={<Image
+                        source={require('@/assets/images/avatar.png')}
+                        style={styles.headerImage}
+                    />}>
+                    <PantryLanding />
+                </ParallaxScrollView>
+            }
+        </>
     );
 }
 

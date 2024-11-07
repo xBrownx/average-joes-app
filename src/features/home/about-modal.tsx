@@ -6,6 +6,7 @@ import { themedColors } from "@/constants/themed-colors";
 import { Rating } from 'react-native-ratings';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModal } from "@/components/modal";
+import { globalStyles } from "@/styles/global-styles";
 
 type AboutModalProps = RNModalProps & {
     isOpen: boolean;
@@ -17,7 +18,7 @@ export function AboutModal({isOpen, onClose, withInput, ...rest}: AboutModalProp
 
     return (
         <ThemedModal isOpen={isOpen} close={onClose} >
-            <View >
+            <View style={globalStyles.innerModal}>
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >
                         WHO IS JOE?

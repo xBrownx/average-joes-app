@@ -15,7 +15,7 @@ export function DialInLanding({onStart, onSkip}: { onStart: () => void, onSkip: 
             {isFocused &&
             <View style={styles.content}>
                 <ThemedView style={styles.titleContainer}>
-                    <TypeWriterText textStyle={'title'} textArr={["DIAL IN"]} />
+                    <TypeWriterText type={'title'} textArr={["DIAL IN"]} />
                 </ThemedView>
                 <ThemedView style={styles.stepContainer}>
                     <ThemedText>

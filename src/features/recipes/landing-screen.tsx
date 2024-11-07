@@ -30,7 +30,7 @@ export function RecipeLanding({navForward}: RecipeLandingProps) {
         <View style={styles.container}>
             <ThemedView style={styles.container} >
                 <ThemedView style={styles.titleContainer} >
-                    <TypeWriterText textStyle={'title'} textArr={["RECIPES"]} />
+                    <TypeWriterText type={'title'} textArr={["RECIPES"]} />
                 </ThemedView >
                 <ThemedView >
                     <ThemedText type="default" >Checkout your saved beans or add/edit your machine

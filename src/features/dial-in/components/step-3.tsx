@@ -1,59 +1,68 @@
-import { ThemedView } from "@/components/ThemedView";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, View, Animated, TouchableOpacity } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
-import React from "react";
+import React, { useEffect } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
 import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";
+import { ThemedText } from "@/components/text/themed-text";
+import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
 
 export function StepThree({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
 
+    const opacity = React.useState(new Animated.Value(0))[0];
+    const [show, setShow] = React.useState(false);
+
+    function onShow() {
+        setShow(true);
+    }
+
+    function fadeInNext() {
+        Animated.timing(opacity, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+            delay: 1500,
+        }).start()
+    }
+
+    useEffect(() => setShow(false), []);
+
     return (
-        <View >
-            <View style={styles.iconWrapper} >
-                <Ionicons.Button name="arrow-back" size={32} backgroundColor={'transparent'} color={themedColors.primary}
-                                 onPress={onBack} />
-            </View >
-
-            <View style={styles.content} >
+        <View>
+            <DialInHeading onBack={onBack} onShow={onShow} icon={'back'} />
+            <View style={styles.container}>
                 <CustomTypeWriter
-                    text={CONSTANTS.qThree}
-                    textStyle={'title'}
+                    text={CONSTANTS.recipeCont}
+                    type={'default'}
                     speed={20}
+                    onComplete={fadeInNext}
+                    isShow={show}
+                />
+
+                <Animated.View
+                    style={[{opacity}, styles.buttonWrapper]}
                 >
-                    {CONSTANTS.qThreeSub.map((text, idx) => (
-                        <FadeUpText
-                            text={text}
-                            type={'subtitle'}
-                            delay={idx * 500}
-                        />
-                    ))}
-
-                    <ThemedView style={styles.stepContainer} >
-                        <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
-                    </ThemedView >
-
-                </CustomTypeWriter >
-            </View >
-        </View >
+                    <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
+                </Animated.View>
+            </View>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    stepContainer: {
-        gap: 0,
-        marginBottom: 2,
+    container: {
+        flex: 1,
+        paddingHorizontal: 32,
+        paddingVertical: 16,
     },
     content: {
         flex: 1,
-        padding: 32,
-        gap: 16,
+        gap: 4,
+        marginTop: 8,
         overflow: 'hidden',
     },
-    iconWrapper: {
-        alignSelf: 'flex-start',
-        marginLeft: 8,
-        marginTop: 8
+    buttonWrapper: {
+        marginTop: 16,
     },
 });

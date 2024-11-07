@@ -6,7 +6,7 @@ import React from "react";
 export function TabHeading({title}: {title: string}) {
     return (
         <View style={styles.titleContainer} >
-            <TypeWriterText textStyle={'title'} textArr={[title.toUpperCase()]} />
+            <TypeWriterText type={'title'} textArr={[title.toUpperCase()]} />
         </View >
     );
 }

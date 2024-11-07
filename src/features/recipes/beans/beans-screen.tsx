@@ -10,6 +10,9 @@ import { BeanModal } from '@/features/recipes/beans/modal-base';
 import { ViewBeanModal } from '@/features/recipes/beans/modal-view-bean';
 import { selectUserBeans, useAppSelector } from '@/store';
 import { useCustomState } from '@/hooks/useCustomState';
+import { findUserBean } from "@/features/recipes/beans/usecase";
+import { globalStyles } from "@/styles/global-styles";
+import { TypeWriterText } from "@/components/typewriter";
 
 type RecipeBeansProps = {
     navBack: () => void;
@@ -23,68 +26,82 @@ type BeanCard = {
 };
 
 type RecipeBeansState = {
-    userBeans: UserBean[];
-    isAddModalOpen: boolean;
-    isViewModalOpen: boolean;
-    selectedBeanView: UserBean | null;
-    beanCards: BeanCard[];
+    isAddModalOpen?: boolean;
+    isViewModalOpen?: boolean;
+    selectedBeanView?: UserBean | null;
+    beanCards?: BeanCard[];
 };
 
-type UpdateStateAction =
-    | 'isAddModalOpen'
-    | 'isViewModalOpen'
-    | 'selectedBeanView'
-    | 'beanCards';
-
 const initialState = {
-    userBeans: [],
+
     isAddModalOpen: false,
     isViewModalOpen: false,
     selectedBeanView: null,
     beanCards: [],
 };
 
-export function RecipeBeans({ navBack }: RecipeBeansProps) {
-    const { state, updateState } = useCustomState<RecipeBeansState, UpdateStateAction>({
+export function RecipeBeans({navBack}: RecipeBeansProps) {
+    const userBeans = useAppSelector(selectUserBeans)
+    const {state, updateState} = useCustomState<RecipeBeansState>({
         ...initialState,
-        userBeans: useAppSelector(selectUserBeans)
     })
 
     const openViewModal = (id: string) => {
-        updateState({'selectedBeanView': state.userBeans.find((bean) => bean.id === id), 'isViewModalOpen': true});
-        // updateState('isViewModalOpen', true);
+        updateState({
+            selectedBeanView: findUserBean(id, userBeans ?? []),
+            isViewModalOpen: true
+        });
     };
 
     const closeViewModal = () => {
-        updateState({'selectedBeanView': null, 'isViewModalOpen': false});
+        updateState({
+            selectedBeanView: null,
+            isViewModalOpen: false
+        });
     };
 
+    const openAddModal = () => {
+        updateState({isAddModalOpen: true});
+    };
+
+    const closeAddModal = () => {
+        updateState({
+            isAddModalOpen: false
+        });
+        refresh();
+    }
+
+    const refresh = () => {
+
+    }
+
     useEffect(() => {
-        // updateState(
-        //     'beanCards',
-        //     state.userBeans.map((bean) => ({
-        //         id: bean.id,
-        //         blendName: bean.blendName,
-        //         roaster: bean.roasterName,
-        //         image: '',
-        //     })),
-        // );
-    }, [state.userBeans]);
+        console.log('userBeans updated')
+        updateState({
+            beanCards:
+                userBeans!.map((bean) => ({
+                    id: bean.id,
+                    blendName: bean.blendName,
+                    roaster: bean.roasterName,
+                    image: '',
+                })),
+        });
+    }, [userBeans]);
 
     return (
         <>
             <BeanModal
-                isOpen={state.isAddModalOpen}
-                onClose={() => updateState({'isAddModalOpen': false})}
+                isOpen={state.isAddModalOpen!}
+                onClose={closeAddModal}
             />
             <ViewBeanModal
-                isOpen={state.isViewModalOpen}
+                isOpen={state.isViewModalOpen!}
                 onClose={closeViewModal}
-                selectedBean={state.selectedBeanView}
+                selectedBean={state.selectedBeanView!}
             />
-            <View style={styles.mainContainer}>
-                <View style={styles.headingContainer}>
-                    <View style={styles.titleContainer}>
+            <View style={globalStyles.column}>
+                <View style={globalStyles.column}>
+                    <View style={globalStyles.row}>
                         <Ionicons.Button
                             name="arrow-back"
                             size={24}
@@ -92,15 +109,15 @@ export function RecipeBeans({ navBack }: RecipeBeansProps) {
                             color={themedColors.primary}
                             onPress={navBack}
                         />
-                        <ThemedText type="title">YOUR BEANS</ThemedText>
+                        <TypeWriterText type="title" textArr={["YOUR BEANS"]} />
                     </View>
                     <ThemedText type="default">
                         View your recipes or add a new one.
                     </ThemedText>
                 </View>
 
-                <ThemedView style={styles.listContainer}>
-                    {state.beanCards.map((card) => (
+                <ThemedView style={globalStyles.listContainer}>
+                    {state.beanCards!.map((card) => (
                         <ThemedCardView
                             key={card.id}
                             id={card.id}
@@ -130,7 +147,8 @@ export function RecipeBeans({ navBack }: RecipeBeansProps) {
                                 color={themedColors.tertiary}
                             />
                         }
-                        onPress={() => updateState({'isAddModalOpen': true})}
+                        style={{paddingVertical: 16}}
+                        onPress={openAddModal}
                     >
                         <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
                     </ThemedCardView>
@@ -139,23 +157,3 @@ export function RecipeBeans({ navBack }: RecipeBeansProps) {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        gap: 16,
-        flexDirection: 'column',
-    },
-    headingContainer: {
-        gap: 16,
-        flexDirection: 'column',
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        gap: 1,
-    },
-    listContainer: {
-        marginTop: 8,
-        gap: 8,
-        flexDirection: 'column',
-    },
-});

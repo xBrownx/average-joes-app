@@ -6,7 +6,7 @@ import { themedColors } from '@/constants/themed-colors';
 
 type TypeWriterProps = {
     textArr: string[];
-    textStyle?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+    type?: 'default' | 'title' | 'defaultSemiBold' | 'primaryBold' | 'subtitle' | 'link';
     speed?: number;
     onComplete?: () => void;
 };
@@ -27,7 +27,7 @@ const initTimeouts: Timeouts = {
 
 export function TypeWriterText({
                                    textArr,
-                                   textStyle,
+                                   type,
                                    speed,
                                    onComplete,
                                }: TypeWriterProps) {
@@ -122,17 +122,24 @@ export function TypeWriterText({
     return (
         <Text
             style={[
-                textStyle === 'default' ? styles.default : undefined,
-                textStyle === 'title' ? styles.title : undefined,
-                textStyle === 'defaultSemiBold'
-                    ? styles.defaultSemiBold
-                    : undefined,
-                textStyle === 'subtitle' ? styles.subtitle : undefined,
-                textStyle === 'link' ? styles.link : undefined,
+                type === 'default' ? styles.default : undefined,
+                type === 'title' ? styles.title : undefined,
+                type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
+                type === 'primaryBold' ? styles.primaryBold : undefined,
+                type === 'subtitle' ? styles.subtitle : undefined,
+                type === 'link' ? styles.link : undefined,
             ]}
         >
             {text}
-            <Text style={{ color: cursorColor, fontSize: 35 }}>|</Text>
+            <Text style={[
+                type === 'default' ? styles.default : undefined,
+                type === 'title' ? styles.title : undefined,
+                type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
+                type === 'primaryBold' ? styles.primaryBold : undefined,
+                type === 'subtitle' ? styles.subtitle : undefined,
+                type === 'link' ? styles.link : undefined,
+                {color: cursorColorRef.current,},
+            ]}>|</Text>
         </Text>
     );
 }
@@ -154,6 +161,12 @@ const styles = StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         lineHeight: 40,
+        fontFamily: 'PoppinsBold',
+        color: themedColors.primary,
+    },
+    primaryBold: {
+         fontSize: 20,
+        fontWeight: 'bold',
         fontFamily: 'PoppinsBold',
         color: themedColors.primary,
     },

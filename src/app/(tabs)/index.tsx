@@ -93,8 +93,8 @@ export default function HomeScreen() {
                         onClose={() => updateState('isRateModalOpen', false)}
                     />
                     <ThemedView style={styles.titleContainer}>
-                        <TypeWriterText textStyle={'title'} textArr={[`HELLO ${state.username.toUpperCase()}!`]}
-                                    onComplete={() => fadeInWave()} />
+                        <TypeWriterText type={'title'} textArr={[`HELLO ${state.username.toUpperCase()}!`]}
+                                        onComplete={() => fadeInWave()} />
                         <Animated.View style={[{opacity}]}>
                             {state.wave && <HelloWave />}
                         </Animated.View>
