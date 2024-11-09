@@ -1,9 +1,7 @@
-import { Button, Modal as RNModal, ModalProps as RNModalProps, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
 import React from "react";
-import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/text/themed-text";
 import { themedColors } from "@/constants/themed-colors";
-import { Rating } from 'react-native-ratings';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModal } from "@/components/modal";
 import { globalStyles } from "@/styles/global-styles";
