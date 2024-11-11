@@ -2,17 +2,16 @@ import { Image, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import React, { useEffect, useState } from "react";
+import { Modal } from "@/features/dial-in/components";
+import { useIsFocused } from "@react-navigation/native";
 import {
     DialInLanding,
     GetCoffeeScreen,
+    GetMachineScreen, StepFour,
     StepOne,
-    GetMachineScreen,
-    Modal,
-    StepTwo,
     StepThree,
-    StepFour
-} from "@/features/dial-in/components";
-import { useIsFocused } from "@react-navigation/native";
+    StepTwo
+} from "@/features/dial-in/screens";
 
 interface DialInState {
     isStartModalOpen: boolean;

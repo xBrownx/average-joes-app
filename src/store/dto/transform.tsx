@@ -1,5 +1,5 @@
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
-import { MachineModel, Roaster, ServerBean, ServerMachine } from "../../domain";
+import { MachineModel, Roaster, ServerBlend, ServerMachine } from "@/domain";
 
 
 function dtoToKeyPair(dto: GoogleSheetsResponseDto) {
@@ -38,24 +38,24 @@ export function dtoToServerMachines(dto: GoogleSheetsResponseDto): ServerMachine
     return machines;
 }
 
-export function dtoToServerBeans(dto: GoogleSheetsResponseDto): ServerBean[] {
-    let beans: ServerBean[] = [];
-    const beansKeyPairArray =  dtoToKeyPair(dto)
+export function dtoToServerBlends(dto: GoogleSheetsResponseDto): ServerBlend[] {
+    let blends: ServerBlend[] = [];
+    const blendsKeyPairArray =  dtoToKeyPair(dto)
 
-    beansKeyPairArray.forEach(bean => {
-        const serverBean: ServerBean = {
-            id: bean.id,
-            blendName: bean.blendName,
-            roasterId: bean.roasterId,
-            origins: bean.origins,
-            tastingNotes: bean.tastingNotes,
-            buyLink: bean.buyLink,
+    blendsKeyPairArray.forEach(blend => {
+        const serverBlend: ServerBlend = {
+            id: blend.id,
+            blendName: blend.blendName,
+            roasterId: blend.roasterId,
+            origins: blend.origins,
+            tastingNotes: blend.tastingNotes,
+            buyLink: blend.buyLink,
         };
-        beans.push(serverBean);
+        blends.push(serverBlend);
 
     })
 
-    return beans;
+    return blends;
 }
 
 export function dtoToServerRoasters(dto: GoogleSheetsResponseDto): Roaster[] {

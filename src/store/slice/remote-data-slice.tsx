@@ -3,7 +3,7 @@ import { RemoteData } from "@/domain/remote-data";
 import { API_URL } from "@/store/util/constants";
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
 import { initEmptyRemoteData } from "@/store/util/use-init-empty-app-data";
-import { dtoToServerBeans, dtoToServerMachines, dtoToServerRoasters } from "@/store/dto/transform";
+import { dtoToServerBlends, dtoToServerMachines, dtoToServerRoasters } from "@/store/dto/transform";
 import { RootState } from "@/store/reducers";
 
 export const loadRemoteData = createAsyncThunk<RemoteData, void, { rejectValue: string }>(
@@ -20,7 +20,7 @@ export const loadRemoteData = createAsyncThunk<RemoteData, void, { rejectValue: 
 
             let serverData = initEmptyRemoteData();
             serverData.machines = dtoToServerMachines(machinesDto);
-            serverData.beans = dtoToServerBeans(beansDto);
+            serverData.blends = dtoToServerBlends(beansDto);
             serverData.roasters = dtoToServerRoasters(roasterDto);
             return serverData;
         } catch (error) {
@@ -64,7 +64,7 @@ export const remoteDataSlice = createSlice({
 
 export const selectRemoteMachines = (state: RootState) => state.remoteData.data.machines;
 
-export const selectRemoteBeans = (state: RootState) => state.remoteData.data.beans;
+export const selectRemoteBlends = (state: RootState) => state.remoteData.data.blends;
 
 export const selectRemoteRoasters = (state: RootState) => state.remoteData.data.roasters;
 

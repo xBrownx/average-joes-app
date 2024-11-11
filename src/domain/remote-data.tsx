@@ -1,9 +1,7 @@
-import { ServerMachine } from "@/domain/machine";
-import { ServerBean } from "@/domain/bean";
-import { Roaster } from "@/domain/roaster";
+import { ServerMachine, ServerBlend, Roaster } from "@/domain";
 
 export interface RemoteData {
     machines: ServerMachine[],
-    beans: ServerBean[],
+    blends: ServerBlend[],
     roasters: Roaster[],
 }
