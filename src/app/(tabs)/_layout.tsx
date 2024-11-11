@@ -5,6 +5,7 @@ import { TabBarIcon } from '@/components/navigation/tab-bar-icon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { themedColors } from "@/constants/themed-colors";
+import { Image } from 'react-native';
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
@@ -27,11 +28,11 @@ export default function TabLayout() {
             />
 
             <Tabs.Screen
-                name="recipes"
+                name="kitchen"
                 options={{
-                    title: 'Recipes',
+                    title: 'Kitchen',
                     tabBarIcon: ({color, focused}) => (
-                        <TabBarIcon name={focused ? 'book' : 'book-outline'} color={themedColors.primary} />
+                        <Image source={focused ? require('@/assets/icons/kitchen-filled-primary.png') : require('@/assets/icons/kitchen-primary.png')} style={{ width: 28, height: 28, marginBottom: -3}} />
                     ),
                 }}
             />
@@ -46,15 +47,15 @@ export default function TabLayout() {
                 }}
             />
 
-            <Tabs.Screen
-                name="pantry"
-                options={{
-                    title: 'Pantry',
-                    tabBarIcon: ({color, focused}) => (
-                        <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={themedColors.primary} />
-                    ),
-                }}
-            />
+            {/*<Tabs.Screen*/}
+            {/*    name="pantry"*/}
+            {/*    options={{*/}
+            {/*        title: 'Pantry',*/}
+            {/*        tabBarIcon: ({color, focused}) => (*/}
+            {/*            <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={themedColors.primary} />*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*/>*/}
 
             <Tabs.Screen
                 name="learn"

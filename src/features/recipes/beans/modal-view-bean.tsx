@@ -16,12 +16,12 @@ import { Rating } from 'react-native-ratings';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 
-import { UserBean } from '@/domain';
+import { UserRecipe } from '@/domain';
 
 type ViewBeanModalProps = RNModalProps & {
     isOpen: boolean;
     onClose: () => void;
-    selectedBean: UserBean | null;
+    selectedBean: UserRecipe | null;
     withInput?: boolean;
 };
 

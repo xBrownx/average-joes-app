@@ -1,4 +1,3 @@
-import { ThemedView } from "@/components/ThemedView";
 import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
 import React from "react";
@@ -7,9 +6,7 @@ import { ThemedText } from "@/components/text/themed-text";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { selectPortafilter, setPortafilter } from "@/store/slice/dial-in-slice";
 import { CONSTANTS } from "@/features/dial-in/constants";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
+import { DialInHeading } from "@/features/dial-in/screens/dial-in-heading";
 
 export function GetMachineScreen({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
     const portafilter = useAppSelector(selectPortafilter);

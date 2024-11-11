@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initEmptyUserData } from "@/store/util/use-init-empty-app-data";
-import { UserData, UserBean, UserMachine, PantryItem } from "@/domain";
+import { UserData, UserRecipe, UserMachine, PantryItem } from "@/domain";
 import { RootState } from "@/store/reducers";
 
 interface UserDataState {
@@ -25,8 +25,8 @@ export const localDataSlice = createSlice({
         addUserMachine: (state, action: PayloadAction<UserMachine>) => {
             state.data.machines = [...state.data.machines, action.payload]
         },
-        addUserBean: (state, action: PayloadAction<UserBean>) => {
-            state.data.beans = [...state.data.beans, action.payload]
+        addUserRecipe: (state, action: PayloadAction<UserRecipe>) => {
+            state.data.recipes = [...state.data.recipes, action.payload]
         },
         addUserPantryItem: (state, action: PayloadAction<PantryItem>) => {
             state.data.pantry = [...state.data.pantry, action.payload]
@@ -34,17 +34,14 @@ export const localDataSlice = createSlice({
     },
 });
 
-export const { setUserName, addUserMachine, addUserBean, addUserPantryItem } = localDataSlice.actions;
+export const { setUserName, addUserMachine, addUserRecipe, addUserPantryItem } = localDataSlice.actions;
 
 export const selectUser = (state: RootState) => state.localData.data.username;
 
-export const selectAppData = (state: RootState) => state.localData.data;
-
 export const selectUserMachines = (state: RootState) => state.localData.data.machines;
 
-export const selectUserBeans = (state: RootState) => state.localData.data.beans;
+export const selectUserRecipes = (state: RootState) => state.localData.data.recipes;
 
-export const selectUserPantryItem = (state: RootState) => state.localData.data.pantry;
-
+export const selectUserPantryItems = (state: RootState) => state.localData.data.pantry;
 
 export default localDataSlice.reducer;

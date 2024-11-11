@@ -1,61 +1,61 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { ThemedCardView } from '@/components/card';
 import { ThemedText } from '@/components/text/themed-text';
 import { ThemedView } from '@/components/ThemedView';
 import { themedColors } from '@/constants/themed-colors';
-import { UserBean } from '@/domain';
-import { BeanModal } from '@/features/recipes/beans/modal-base';
+import { UserRecipe } from '@/domain';
+import { RecipeModal } from '@/features/recipes/beans/modal-base';
 import { ViewBeanModal } from '@/features/recipes/beans/modal-view-bean';
-import { selectUserBeans, useAppSelector } from '@/store';
+import { selectUserRecipes, useAppSelector } from '@/store';
 import { useCustomState } from '@/hooks/useCustomState';
 import { findUserBean } from "@/features/recipes/beans/usecase";
 import { globalStyles } from "@/styles/global-styles";
 import { TypeWriterText } from "@/components/typewriter";
+import { kitchenStyles } from '@/features/styles/kitchen-styles';
 
-type RecipeBeansProps = {
+type KitchenRecipesProps = {
     navBack: () => void;
 };
 
-type BeanCard = {
+type RecipeCard = {
     id: string;
     blendName: string;
     roaster: string;
     image: string;
 };
 
-type RecipeBeansState = {
+type KitchenRecipeState = {
     isAddModalOpen?: boolean;
     isViewModalOpen?: boolean;
-    selectedBeanView?: UserBean | null;
-    beanCards?: BeanCard[];
+    selectedRecipeView?: UserRecipe | null;
+    beanCards?: RecipeCard[];
 };
 
 const initialState = {
-
     isAddModalOpen: false,
     isViewModalOpen: false,
-    selectedBeanView: null,
+    selectedRecipeView: null,
     beanCards: [],
 };
 
-export function RecipeBeans({navBack}: RecipeBeansProps) {
-    const userBeans = useAppSelector(selectUserBeans)
-    const {state, updateState} = useCustomState<RecipeBeansState>({
+export function KitchenRecipes({navBack}: KitchenRecipesProps) {
+    const userBeans = useAppSelector(selectUserRecipes)
+    const {state, updateState} = useCustomState<KitchenRecipeState>({
         ...initialState,
     })
 
     const openViewModal = (id: string) => {
         updateState({
-            selectedBeanView: findUserBean(id, userBeans ?? []),
+            selectedRecipeView: findUserBean(id, userBeans ?? []),
             isViewModalOpen: true
         });
     };
 
     const closeViewModal = () => {
         updateState({
-            selectedBeanView: null,
+            selectedRecipeView: null,
             isViewModalOpen: false
         });
     };
@@ -90,14 +90,14 @@ export function RecipeBeans({navBack}: RecipeBeansProps) {
 
     return (
         <>
-            <BeanModal
+            <RecipeModal
                 isOpen={state.isAddModalOpen!}
                 onClose={closeAddModal}
             />
             <ViewBeanModal
                 isOpen={state.isViewModalOpen!}
                 onClose={closeViewModal}
-                selectedBean={state.selectedBeanView!}
+                selectedBean={state.selectedRecipeView!}
             />
             <View style={globalStyles.column}>
                 <View style={globalStyles.column}>
@@ -116,7 +116,7 @@ export function RecipeBeans({navBack}: RecipeBeansProps) {
                     </ThemedText>
                 </View>
 
-                <ThemedView style={globalStyles.listContainer}>
+                <ThemedView style={kitchenStyles.listContainer}>
                     {state.beanCards!.map((card) => (
                         <ThemedCardView
                             key={card.id}
@@ -147,7 +147,7 @@ export function RecipeBeans({navBack}: RecipeBeansProps) {
                                 color={themedColors.tertiary}
                             />
                         }
-                        style={{paddingVertical: 16}}
+                        style={kitchenStyles.cardContainer}
                         onPress={openAddModal}
                     >
                         <ThemedText type={'subtitle'}>ADD NEW</ThemedText>

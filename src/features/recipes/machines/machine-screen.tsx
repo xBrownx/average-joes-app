@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { ThemedCardView } from '@/components/card';
 import { ThemedText } from '@/components/text/themed-text';
@@ -11,7 +11,9 @@ import { ViewMachineModal } from '@/features/recipes/machines/modal-view-machine
 import { selectUserMachines } from '@/store/slice/local-data-slice';
 import { useAppSelector } from '@/store/store';
 import { TypeWriterText } from "@/components/typewriter";
-type RecipeMachinesProps = {
+import { kitchenStyles } from '@/features/styles/kitchen-styles';
+
+type KitchenMachinesProps = {
     navBack: () => void;
 };
 
@@ -42,7 +44,7 @@ type UpdateStateType =
     | 'selectedMachineView'
     | 'machineCards';
 
-export function RecipeMachines({ navBack }: RecipeMachinesProps) {
+export function KitchenMachines({ navBack }: KitchenMachinesProps) {
     const userMachines = useAppSelector(selectUserMachines);
     const [state, setState] = React.useState<RecipeMachinesState>(initialState);
 
@@ -92,9 +94,9 @@ export function RecipeMachines({ navBack }: RecipeMachinesProps) {
                 selectedMachine={state.selectedMachineView}
             />
 
-            <View style={styles.mainContainer}>
-                <View style={styles.headingContainer}>
-                    <View style={styles.titleContainer}>
+            <View style={kitchenStyles.mainContainer}>
+                <View style={kitchenStyles.headingContainer}>
+                    <View style={kitchenStyles.titleContainer}>
                         <Ionicons.Button
                             name="arrow-back"
                             size={24}
@@ -108,7 +110,7 @@ export function RecipeMachines({ navBack }: RecipeMachinesProps) {
                         Add, edit or delete your machine profiles here.
                     </ThemedText>
                 </View>
-                <View style={styles.listContainer}>
+                <View style={kitchenStyles.listContainer}>
                     {state.machineCards.map((card, idx) => (
                         <ThemedCardView
                             key={card.id}
@@ -150,22 +152,3 @@ export function RecipeMachines({ navBack }: RecipeMachinesProps) {
     );
 }
 
-const styles = StyleSheet.create({
-    mainContainer: {
-        gap: 16,
-        flexDirection: 'column',
-    },
-    headingContainer: {
-        gap: 16,
-        flexDirection: 'column',
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        gap: 1,
-    },
-    listContainer: {
-        marginTop: 8,
-        gap: 8,
-        flexDirection: 'column',
-    },
-});

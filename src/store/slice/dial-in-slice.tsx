@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store/reducers";
 
-
 export type DialInState = {
-    beans: string;
+    recipeId: string;
+    pantryItemId: string;
+    machineId: string;
     portafilter: string;
 }
 
 const initialState: DialInState = {
-    beans: '',
+    recipeId: '',
+    pantryItemId: '',
+    machineId: '',
     portafilter: '',
 }
 
@@ -16,8 +19,14 @@ export const dialInSlice = createSlice({
     name: 'dial-in',
     initialState,
     reducers: {
-        setCoffeeBeans: (state, action: PayloadAction<string>) => {
-            state.beans = action.payload;
+        setRecipeId: (state, action: PayloadAction<string>) => {
+            state.recipeId = action.payload;
+        },
+        setPantryItemId: (state, action: PayloadAction<string>) => {
+            state.pantryItemId = action.payload;
+        },
+        setMachineId: (state, action: PayloadAction<string>) => {
+            state.machineId = action.payload;
         },
         setPortafilter: (state, action: PayloadAction<string>) => {
             state.portafilter = action.payload;
@@ -25,9 +34,13 @@ export const dialInSlice = createSlice({
     }
 });
 
-export const { setCoffeeBeans, setPortafilter } = dialInSlice.actions;
+export const { setRecipeId, setPantryItemId, setMachineId, setPortafilter } = dialInSlice.actions;
 
-export const selectBeans= (state: RootState) => state.dialIn.beans;
+export const selectRecipeId= (state: RootState) => state.dialIn.recipeId;
+
+export const selectPantryItemId= (state: RootState) => state.dialIn.pantryItemId;
+
+export const selectMachineId= (state: RootState) => state.dialIn.machineId;
 
 export const selectPortafilter= (state: RootState) => state.dialIn.portafilter;
 

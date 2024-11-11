@@ -6,7 +6,7 @@ import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";
 import { ThemedText } from "@/components/text/themed-text";
-import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
+import { DialInHeading } from "@/features/dial-in/screens/dial-in-heading";
 
 export function StepThree({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
 

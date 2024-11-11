@@ -6,12 +6,13 @@ import { CONSTANTS } from "@/features/dial-in/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";
 import { ThemedText } from "@/components/text/themed-text";
-import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
+import { DialInHeading } from "@/features/dial-in/screens/dial-in-heading";
 
-export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
+export function StepTwo({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
 
     const opacity = React.useState(new Animated.Value(0))[0];
     const [show, setShow] = React.useState(false);
+
     function onShow() {
         setShow(true);
     }
@@ -21,11 +22,9 @@ export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => vo
             toValue: 1,
             duration: 500,
             useNativeDriver: true,
-            delay: 1000,
+            delay: 1500,
         }).start()
     }
-
-
 
     useEffect(() => setShow(false), []);
 
@@ -34,14 +33,20 @@ export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => vo
             <DialInHeading onBack={onBack} onShow={onShow} icon={'back'} />
             <View style={styles.container}>
                 <CustomTypeWriter
-                    text={CONSTANTS.qThree}
+                    text={["The Recipe"]}
                     type={'primaryBold'}
+                    speed={20}
+                    isShow={show}
+                >
+                <CustomTypeWriter
+                    text={CONSTANTS.recipe}
+                    type={'default'}
                     speed={20}
                     onComplete={fadeInNext}
                     isShow={show}
                 >
                     <View style={styles.content}>
-                        {CONSTANTS.qThreeSub.map((text, idx) => (
+                        {CONSTANTS.recipeSub.map((text, idx) => (
                             <FadeUpText
                                 key={idx}
                                 text={text}
@@ -49,14 +54,15 @@ export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => vo
                                 delay={idx * 500}
                             />
                         ))}
-                        <Animated.View
-                            style={[{opacity}, styles.buttonWrapper]}
-                        >
-                            <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
-                        </Animated.View>
+
                     </View>
                 </CustomTypeWriter>
-
+                <Animated.View
+                    style={[{opacity}, styles.buttonWrapper]}
+                >
+                    <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
+                </Animated.View>
+                </CustomTypeWriter>
             </View>
         </View>
     );

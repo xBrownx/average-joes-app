@@ -1,4 +1,4 @@
-import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
 import { type TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { rootReducer, RootState } from "./reducers";

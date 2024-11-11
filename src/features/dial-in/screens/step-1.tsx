@@ -3,16 +3,13 @@ import { themedColors } from "@/constants/themed-colors";
 import React, { useEffect } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/CustomTypeWriter";
 import { CONSTANTS } from "@/features/dial-in/constants";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";
-import { ThemedText } from "@/components/text/themed-text";
-import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
+import { DialInHeading } from "@/features/dial-in/screens/dial-in-heading";
 
-export function StepFour({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
+export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
 
     const opacity = React.useState(new Animated.Value(0))[0];
     const [show, setShow] = React.useState(false);
-
     function onShow() {
         setShow(true);
     }
@@ -22,31 +19,27 @@ export function StepFour({onNext, onBack}: { onNext: () => void, onBack: () => v
             toValue: 1,
             duration: 500,
             useNativeDriver: true,
-            delay: 1500,
+            delay: 1000,
         }).start()
     }
+
+
 
     useEffect(() => setShow(false), []);
 
     return (
-        <View >
+        <View>
             <DialInHeading onBack={onBack} onShow={onShow} icon={'back'} />
             <View style={styles.container}>
                 <CustomTypeWriter
-                    text={["The Process"]}
+                    text={CONSTANTS.qThree}
                     type={'primaryBold'}
-                    speed={20}
-                    isShow={show}
-                >
-                <CustomTypeWriter
-                    text={CONSTANTS.process}
-                    type={'default'}
                     speed={20}
                     onComplete={fadeInNext}
                     isShow={show}
                 >
                     <View style={styles.content}>
-                        {CONSTANTS.processSteps.map((text, idx) => (
+                        {CONSTANTS.qThreeSub.map((text, idx) => (
                             <FadeUpText
                                 key={idx}
                                 text={text}
@@ -54,15 +47,14 @@ export function StepFour({onNext, onBack}: { onNext: () => void, onBack: () => v
                                 delay={idx * 500}
                             />
                         ))}
-
+                        <Animated.View
+                            style={[{opacity}, styles.buttonWrapper]}
+                        >
+                            <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
+                        </Animated.View>
                     </View>
                 </CustomTypeWriter>
-                <Animated.View
-                    style={[{opacity}, styles.buttonWrapper]}
-                >
-                    <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
-                </Animated.View>
-                </CustomTypeWriter>
+
             </View>
         </View>
     );
@@ -73,7 +65,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 32,
         paddingVertical: 16,
-        backgroundColor: themedColors.background,
     },
     content: {
         flex: 1,
