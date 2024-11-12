@@ -13,33 +13,35 @@ import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 import { UserMachine } from '@/domain';
 import {
-    FormState,
-    FormStateAction,
-    portafilterOptions,
+    FormState, portafilterOptions,
 } from '@/features/kitchen/machines/types';
 import { addUserMachine, useAppDispatch } from '@/store';
+import { StateType } from '@/hooks/useCustomState';
+import uuid from 'react-native-uuid';
 
 type AddMachineProps = {
-    formState: FormState;
-    updateState: (name: FormStateAction, value: any) => void;
+    parentState: FormState;
+    updateParentState: (state: StateType<FormState>) => void;
     close: () => void;
+    onSaveCallback?: (id: string) => void;
 };
 
-export function AddMachine({ formState, updateState, close }: AddMachineProps) {
+export function AddMachine({ parentState, updateParentState, close, onSaveCallback }: AddMachineProps) {
     const dispatch = useAppDispatch();
 
     const onSave = () => {
-        const id = new Date().toLocaleString();
         const userMachine: UserMachine = {
-            id: id,
-            make: formState.make,
+            id: uuid.v4().toString(),
+            make: parentState.make?? 'unknown',
             model: {
-                id: `${id}_${formState.model}`,
-                name: formState.model,
-                portafilterSize: formState.portafilterSize,
+                id: uuid.v4().toString(),
+                name: parentState.model?? 'unknown',
+                portafilterSize: parentState.portafilterSize?? 'unknown',
             },
         };
         dispatch(addUserMachine(userMachine));
+        if(onSaveCallback)
+            onSaveCallback(userMachine.id);
         close();
     };
 
@@ -59,7 +61,7 @@ export function AddMachine({ formState, updateState, close }: AddMachineProps) {
                             size={24}
                             backgroundColor={'transparent'}
                             color={themedColors.tertiary}
-                            onPress={() => updateState('isSearch', true)}
+                            onPress={() => updateParentState({isSearch: true})}
                         />
                     </View>
 
@@ -69,14 +71,14 @@ export function AddMachine({ formState, updateState, close }: AddMachineProps) {
 
                     <View style={styles.content}>
                         <ThemedInput
-                            onValueChange={(text) => updateState('make', text)}
+                            onValueChange={(text) => updateParentState({make: text})}
                             placeholder="Make"
-                            value={formState.make}
+                            value={parentState.make?? ''}
                         />
                         <ThemedInput
-                            onValueChange={(text) => updateState('model', text)}
+                            onValueChange={(text) => updateParentState({model: text})}
                             placeholder="Model"
-                            value={formState.model}
+                            value={parentState.model?? ''}
                         />
                         <View style={styles.listContainer}>
                             <ThemedText
@@ -92,14 +94,13 @@ export function AddMachine({ formState, updateState, close }: AddMachineProps) {
                                         key={option}
                                         style={styles.singleOptionContainer}
                                         onPress={() =>
-                                            updateState(
-                                                'portafilterSize',
-                                                option,
-                                            )
+                                            updateParentState({
+                                                portafilterSize: option
+                                            })
                                         }
                                     >
                                         <View style={styles.outerCircle}>
-                                            {formState.portafilterSize ===
+                                            {parentState.portafilterSize ===
                                             option ? (
                                                 <View
                                                     style={styles.innerCircle}

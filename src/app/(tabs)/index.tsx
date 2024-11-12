@@ -3,128 +3,116 @@ import { Image, StyleSheet, View, Animated, Button, Linking } from 'react-native
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/text/themed-text';
-import { ThemedView } from '@/components/ThemedView';
-import React, { useEffect } from "react";
-import { TypeWriterText } from "@/components/typewriter";
-import {themedColors } from "@/constants/themed-colors";
-import { selectUser, useAppSelector } from "@/store";
-import { useIsFocused } from "@react-navigation/native";
-import { ContactModal } from "@/features/home/contact-modal";
-import { RateModal } from "@/features/home/rate-modal";
-import { AboutModal } from "@/features/home/about-modal";
+import React, { useEffect } from 'react';
+import { TypeWriterText } from '@/components/typewriter';
+import { themedColors } from '@/constants/themed-colors';
+import { selectUser, useAppSelector } from '@/store';
+import { useIsFocused } from '@react-navigation/native';
+import { ContactModal } from '@/features/home/contact-modal';
+import { RateModal } from '@/features/home/rate-modal';
+import { AboutModal } from '@/features/home/about-modal';
+import { useCustomState } from '@/hooks/useCustomState';
+import { openExternalUrl } from '@/util/open-url';
+import { ThemedButton } from '@/components/button';
 
 type HomeScreenState = {
-    username: string;
-    isAboutModalOpen: boolean;
-    isContactModalOpen: boolean;
-    isRateModalOpen: boolean;
-    wave: boolean;
-}
-type HomeScreenAction = 'isAboutModalOpen' | 'username' | 'isContactModalOpen' | 'isRateModalOpen' | 'wave' | 'opacity';
-
-const initState = {
-    username: '',
-    isAboutModalOpen: false,
-    isContactModalOpen: false,
-    isRateModalOpen: false,
-    wave: false,
+    focused?: boolean;
+    username?: string;
+    isAboutModalOpen?: boolean;
+    isContactModalOpen?: boolean;
+    isRateModalOpen?: boolean;
+    wave?: boolean;
 }
 
 
 export default function HomeScreen() {
+
+    const username = useAppSelector(selectUser).toUpperCase();
     const focused = useIsFocused();
     const opacity = React.useState(new Animated.Value(0))[0];
-    const [state, setState] = React.useState<HomeScreenState>(initState)
-    state.username = useAppSelector(selectUser).toUpperCase();
-
-    const updateState = (name: HomeScreenAction, value: any) => {
-        setState(prevState => ({
-            ...prevState,
-            [name]: value,
-        }))
-    }
+    const { state, updateState } = useCustomState<HomeScreenState>({
+        username: username,
+        isAboutModalOpen: false,
+        isContactModalOpen: false,
+        isRateModalOpen: false,
+        wave: false,
+    });
 
     function fadeInWave() {
-        updateState('wave', true);
+        updateState({ wave: true });
         Animated.timing(opacity, {
             toValue: 1,
             duration: 500,
             useNativeDriver: true,
-        }).start()
+        }).start();
     }
-
-    const openExternalUrl = (url: string) => {
-        Linking.canOpenURL(url).then(supported => {
-            if (supported) {
-                Linking.openURL(url);
-            } else {
-                console.log("Don't know how to open URI: " + url);
-            }
-        });
-    };
 
     useEffect(() => {
         if (!focused) {
-            updateState('wave', false);
+            updateState({ wave: false });
         }
     }, [focused]);
 
     return (
         <ParallaxScrollView
-            headerBackgroundColor={{light: themedColors.background, dark: '#ce2127'}}
             headerImage={
                 <Image
                     source={require('@/assets/images/small-logo.png')}
                     style={styles.reactLogo}
                 />
-            }>
+            } >
             {focused &&
-                <View style={styles.content}>
+                <View style={styles.content} >
                     <AboutModal
-                        isOpen={state.isAboutModalOpen}
-                        onClose={() => updateState('isAboutModalOpen', false)}
+                        isOpen={state.isAboutModalOpen ?? false}
+                        onClose={() => updateState({ isAboutModalOpen: false })}
                     />
                     <ContactModal
-                        isOpen={state.isContactModalOpen}
-                        onClose={() => updateState('isContactModalOpen', false)}
+                        isOpen={state.isContactModalOpen ?? false}
+                        onClose={() => updateState({ isContactModalOpen: false })}
                     />
                     <RateModal
-                        isOpen={state.isRateModalOpen}
-                        onClose={() => updateState('isRateModalOpen', false)}
+                        isOpen={state.isRateModalOpen ?? false}
+                        onClose={() => updateState({ isRateModalOpen: false })}
                     />
-                    <ThemedView style={styles.titleContainer}>
-                        <TypeWriterText type={'title'} textArr={[`HELLO ${state.username.toUpperCase()}!`]}
+                    <View style={styles.titleContainer} >
+                        <TypeWriterText type={'title'} textArr={[`HELLO ${state.username?.toUpperCase() ?? ''}!`]}
                                         onComplete={() => fadeInWave()} />
-                        <Animated.View style={[{opacity}]}>
+                        <Animated.View style={[{ opacity }]} >
                             {state.wave && <HelloWave />}
-                        </Animated.View>
-                    </ThemedView>
+                        </Animated.View >
+                    </View >
 
-                    <ThemedView style={styles.stepContainer}>
-                        <ThemedText type="subtitle">Average Joe's Barista Bonanza</ThemedText>
-                        <ThemedText>
+                    <View style={styles.stepContainer} >
+                        <ThemedText type="subtitle" >Average Joe's Barista Bonanza</ThemedText >
+                        <ThemedText >
                             Let us help you dial in, save your setups and teach you some other handy skills.{' '}
-                        </ThemedText>
-                        <ThemedText>
+                        </ThemedText >
+                        <ThemedText >
                             Check out more here:{' '}
-                        </ThemedText>
-                    </ThemedView>
-                    <ThemedView style={styles.stepContainer}>
-                        <Button title={'ABOUT'} color={themedColors.primary} onPress={() => updateState('isAboutModalOpen', true)} />
-                    </ThemedView>
-                    <ThemedView style={styles.stepContainer}>
-                        <Button title={'SHOP'} color={themedColors.primary}
-                                onPress={() => openExternalUrl('https://averagejoescoffee.com.au/')} />
-                    </ThemedView>
-                    <ThemedView style={styles.stepContainer}>
-                        <Button title={'CONTACT'} color={themedColors.primary} onPress={() => updateState('isContactModalOpen', true)} />
-                    </ThemedView>
-                    <ThemedView style={styles.stepContainer}>
-                        <Button title={'RATE US'} color={themedColors.primary} onPress={() => updateState('isRateModalOpen', true)} />
-                    </ThemedView>
-                </View>
+                        </ThemedText >
+                    </View >
+                    <View style={styles.stepContainer} >
+                        <ThemedButton
+                            title={'ABOUT'}
+                            onPress={() => updateState({ isAboutModalOpen: true })}
+                        />
+                        <ThemedButton
+                            title={'SHOP'}
+                            onPress={() => openExternalUrl('https://averagejoescoffee.com.au/')}
+                        />
+                        <ThemedButton
+                            title={'CONTACT'}
+                            onPress={() => updateState({ isContactModalOpen: true })}
+                        />
+                        <ThemedButton
+                            title={'RATE US'}
+                            onPress={() => updateState({ isRateModalOpen: true })}
+                        />
+                    </View >
+                </View >
             }
-        </ParallaxScrollView>
+        </ParallaxScrollView >
     );
 }
 
@@ -135,16 +123,16 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     stepContainer: {
-        gap: 8,
+        gap: 16,
         marginBottom: 8,
     },
     reactLogo: {
-        height: "70%",
-        width: "60%",
+        height: '70%',
+        width: '60%',
         bottom: 0,
         marginBottom: '5%',
         position: 'absolute',
-        objectFit: "contain",
+        objectFit: 'contain',
         alignSelf: 'center',
     },
     content: {

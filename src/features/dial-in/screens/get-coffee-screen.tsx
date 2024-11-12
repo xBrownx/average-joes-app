@@ -1,6 +1,6 @@
 import { Button, StyleSheet, View } from 'react-native';
 import { themedColors } from '@/constants/themed-colors';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CustomTypeWriter, DialInHeading } from '@/features/dial-in/components';
 import { useAppSelector } from '@/store/store';
 import { DropdownData, ThemedDropdown } from '@/components/dropdown';
@@ -13,6 +13,7 @@ import Animated, {
     StretchOutY,
     LinearTransition,
 } from 'react-native-reanimated';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 
 
 interface GetCoffeeState {
@@ -27,6 +28,7 @@ interface GetCoffeeState {
 export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
     const userRecipes = useAppSelector(selectUserRecipes);
     const pantryItems = useAppSelector(selectUserPantryItems);
+    const tts = useTextToSpeech();
 
     const { state, updateState } = useCustomState<GetCoffeeState>({
         isShow: false,
@@ -37,6 +39,16 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
         isAddModalOpen: false,
     });
 
+    const onShow = () => {
+        updateState({isShow: true});
+        tts.stop();
+    }
+
+    const onBackPressed =() => {
+        tts.stop();
+        onBack();
+    }
+
     const onSelectPantryItem = (id: string) => {
         updateState({ selectedPantryItem: id });
     };
@@ -45,26 +57,36 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
         updateState({ selectedBlend: id });
     };
 
-    const onSaveNewBlend = (id: string) => {
-        updateState({ selectedBlend: id });
-    };
+    useEffect(() => {
+        updateState({
+            userRecipesDropdown: userRecipesToDropdown(userRecipes),
+        });
+    }, [userRecipes]);
+
+    useEffect(() => {
+        const thingToSay = 'Firstly, I need to know what coffee you are using. You can pick from your pantry, saved recipes, or add a new blend.';
+        tts.speak(thingToSay)
+    }, [])
 
     return (
-        <View>
+        <View >
             <AddRecipeModal
-                isOpen={state.isAddModalOpen!}
+                isOpen={state.isAddModalOpen?? false}
                 onClose={() => updateState({ isAddModalOpen: false })}
-                onSaveCallback={onSaveNewBlend}
+                onSaveCallback={onSelectUserRecipe}
             />
             <DialInHeading
-                onBack={onBack}
-                onShow={() => updateState({ isShow: true })} icon={'exit'}
+                onBack={onBackPressed}
+                onShow={onShow}
+                icon={'exit'}
             />
+
             <Animated.View style={styles.content} >
+                {/*{(state.isSpeaking || state.isShow) &&*/}
                 <CustomTypeWriter
                     text={['Firstly, I need to know what coffee you are using. You can pick from your pantry, saved recipes, or add a new blend.']}
                     type={'primaryBold'}
-                    speed={20}
+                    speed={29}
                     isShow={state.isShow}
                 >
                     <Animated.View
@@ -76,6 +98,7 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
                                 <ThemedDropdown
                                     placeholder={'Search Pantry'}
                                     data={state.pantryItemsDropdown}
+                                    value={state.selectedPantryItem?? null}
                                     onChange={onSelectPantryItem}
                                 />
                             </Animated.View >
@@ -93,13 +116,15 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
                                 <ThemedDropdown
                                     placeholder={'Search Recipes'}
                                     data={state.userRecipesDropdown}
+                                    value={state.selectedBlend?? null}
                                     onChange={onSelectUserRecipe}
+
                                 />
                             </Animated.View >
                         }
                         {!state.selectedBlend && !state.selectedPantryItem &&
                             <Animated.View exiting={StretchOutY} layout={LinearTransition} >
-                                <ThemedText style={styles.orText} type={'defaultSemiBold'}>
+                                <ThemedText style={styles.orText} type={'defaultSemiBold'} >
                                     - OR -
                                 </ThemedText >
                             </Animated.View >
@@ -116,11 +141,12 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
                                     : () => updateState({ isAddModalOpen: true })
                                 }
                             />
-                        </Animated.View>
-                    </Animated.View>
-                </CustomTypeWriter>
-            </Animated.View>
-        </View>
+                        </Animated.View >
+                    </Animated.View >
+                </CustomTypeWriter >
+                {/*}*/}
+            </Animated.View >
+        </View >
     );
 }
 

@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { themedColors } from "@/constants/themed-colors";
-import { dateObjToString } from "@/usecase/date-usecase";
+import DateTimePicker, { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 type ThemedDatePickerProps = {
     placeholder: string;
@@ -27,6 +25,26 @@ export function ThemedDatePicker({placeholder, value, onValueChange}: ThemedDate
         hideDatePicker();
     };
 
+    const [date, setDate] = useState<Date | undefined>(new Date(1598051730000));
+
+    const onChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+        const currentDate = selectedDate;
+        setDate(currentDate);
+    };
+
+    const showMode = (currentMode: 'date' | 'time') => {
+        DateTimePickerAndroid.open({
+            value: date?? new Date(Date.now()),
+            onChange,
+            mode: currentMode,
+            is24Hour: true,
+        });
+    };
+
+    const showDatepicker = () => {
+        showMode('date');
+    };
+
 
     return (
         <SafeAreaView >
@@ -36,18 +54,9 @@ export function ThemedDatePicker({placeholder, value, onValueChange}: ThemedDate
                     style={styles.input}
                     placeholder={placeholder}
                     value={value}
-                    onPress={showDatePicker}
+                    onPress={showDatepicker}
                 />
             </Pressable >
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-
-                accentColor={themedColors.primary}
-            />
-
         </SafeAreaView >
     );
 }

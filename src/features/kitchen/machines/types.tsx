@@ -1,1 +1,1 @@
-export interface FormState {    isSearch: boolean;    make: string;    model: string;    portafilterSize: '51mm' | '54mm' | '58mm';}export type FormStateAction = 'isSearch' | 'make' | 'model' | 'portafilterSize';export const portafilterOptions = ['51mm', '54mm', '58mm'];
+export interface FormState {    isSearch?: boolean;    make?: string;    model?: string;    portafilterSize?: '51mm' | '54mm' | '58mm';}export const portafilterOptions = ['51mm', '54mm', '58mm'];

@@ -5,13 +5,14 @@ import { ThemedCardView } from '@/components/card';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 import { UserMachine } from '@/domain';
-import { MachineModal } from '@/features/kitchen/machines/modal-base';
+import { AddMachineModal } from '@/features/kitchen/machines/modal-base';
 import { ViewMachineModal } from '@/features/kitchen/machines/modal-view-machine';
 import { selectUserMachines } from '@/store/slice/local-data-slice';
 import { useAppSelector } from '@/store/store';
 import { TypeWriterText } from "@/components/typewriter";
 import { KitchenChildProps } from "@/features/kitchen/types";
 import { useCustomState } from "@/hooks/useCustomState";
+import { globalStyles } from '@/styles/global-styles';
 
 type MachineCard = {
     id: string;
@@ -65,7 +66,7 @@ export function KitchenMachines({navBack}: KitchenChildProps) {
 
     return (
         <>
-            <MachineModal
+            <AddMachineModal
                 isOpen={state.isAddModalOpen!}
                 onClose={() => updateState({isAddModalOpen: false})}
             />
@@ -75,9 +76,9 @@ export function KitchenMachines({navBack}: KitchenChildProps) {
                 selectedMachine={state.selectedMachineView!}
             />
 
-            <View style={styles.mainContainer}>
-                <View style={styles.headingContainer}>
-                    <View style={styles.titleContainer}>
+            <View style={globalStyles.column}>
+                <View style={globalStyles.column}>
+                    <View style={globalStyles.row}>
                         <Ionicons.Button
                             name="arrow-back"
                             size={24}

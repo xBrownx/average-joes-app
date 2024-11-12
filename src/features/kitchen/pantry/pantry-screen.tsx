@@ -15,6 +15,7 @@ import { useCustomState } from '@/hooks/useCustomState';
 import { KitchenChildProps } from "@/features/kitchen/types";
 import { kitchenStyles } from "@/features/kitchen/styles";
 import { TypeWriterText } from "@/components/typewriter";
+import { globalStyles } from '@/styles/global-styles';
 
 interface KitchenPantryState {
     isAddModalOpen?: boolean;
@@ -57,9 +58,9 @@ export function KitchenPantry({navBack}: KitchenChildProps) {
                 selectedPantryItem={state.selectedPantryItem!}
             />
 
-            <View style={kitchenStyles.mainContainer}>
-                <View style={kitchenStyles.headingContainer}>
-                    <View style={kitchenStyles.titleContainer}>
+            <View style={globalStyles.column}>
+                <View style={globalStyles.column}>
+                    <View style={globalStyles.row}>
                         <Ionicons.Button
                             name="arrow-back"
                             size={24}
@@ -128,11 +129,6 @@ export function KitchenPantry({navBack}: KitchenChildProps) {
 }
 
 const styles = StyleSheet.create({
-    titleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-    },
     listContainer: {
         gap: 8,
         flexDirection: 'column',

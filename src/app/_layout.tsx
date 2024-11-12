@@ -10,6 +10,7 @@ import store, { useAppDispatch, useAppSelector } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { selectUser } from "@/store";
 import { LoginModal } from "@/features/auth";
+ import { themedColors } from '@/constants/themed-colors';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,18 +24,18 @@ export default function RootLayout() {
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
     return (
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme} >
+        // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme} >
             <Provider store={store} >
                 <App />
             </Provider >
-        </ThemeProvider >
+        // </ThemeProvider >
     );
 }
 
 function App() {
     const dispatch = useAppDispatch();
     const username = useAppSelector(selectUser);
-    const [isLoginModal, setLoginModal] = useState(true);
+    const [isLoginModal, setLoginModal] = useState(username !== null);
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
         Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
@@ -43,7 +44,6 @@ function App() {
     });
 
     useEffect(() => {
-        console.log('App() useEffect()')
         dispatch(loadRemoteData())
         if (loaded) {
             SplashScreen.hideAsync();

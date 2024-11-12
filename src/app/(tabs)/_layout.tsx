@@ -7,12 +7,11 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { themedColors } from "@/constants/themed-colors";
 
 export default function TabLayout() {
-    const colorScheme = useColorScheme();
 
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+                tabBarActiveTintColor: themedColors.primary,
                 headerShown: false,
             }} >
 

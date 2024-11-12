@@ -7,15 +7,12 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { FadeUpText } from "@/components/text/fade-up-text";
 import { ThemedText } from "@/components/text/themed-text";
 import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 
 export function StepTwo({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
-
+    const tts = useTextToSpeech();
     const opacity = React.useState(new Animated.Value(0))[0];
     const [show, setShow] = React.useState(false);
-
-    function onShow() {
-        setShow(true);
-    }
 
     function fadeInNext() {
         Animated.timing(opacity, {
@@ -26,11 +23,31 @@ export function StepTwo({onNext, onBack}: { onNext: () => void, onBack: () => vo
         }).start()
     }
 
-    useEffect(() => setShow(false), []);
+    function onShow() {
+        tts.stop();
+        setShow(true);
+    }
+
+    const onBackPressed = () => {
+        tts.stop();
+        onBack();
+    };
+
+    useEffect(() => {
+        const thingToSay = [
+            "The Recipe",
+            "I am going to give you a quick lesson on the fundamentals of dialing in coffee and then we are going to run a shot using these fundamentals - there are 3 variables you need to remember when making coffee:"
+        ];
+        tts.speak(thingToSay);
+    }, []);
 
     return (
         <View>
-            <DialInHeading onBack={onBack} onShow={onShow} icon={'back'} />
+            <DialInHeading
+                onBack={onBackPressed}
+                onShow={onShow}
+                icon={'back'}
+            />
             <View style={styles.container}>
                 <CustomTypeWriter
                     text={["The Recipe"]}

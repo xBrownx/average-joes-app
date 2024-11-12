@@ -22,18 +22,18 @@ import { ThemedDatePicker } from "@/components/date-picker";
 import { ThemedCheckbox } from "@/components/checkbox";
 import { dateObjToString } from "@/usecase/date-usecase";
 
+interface AddRecipeState {
+    isAddPantry?: boolean;
+    roastDate?: string;
+    expiryDate?: string;
+}
+
 type AddRecipeProps = {
     parentState: FormState;
     updateParentState: (state: StateType<FormState>) => void;
     close: () => void;
     onSaveCallback?: (id: string) => void;
 };
-
-interface AddRecipeState {
-    isAddPantry?: boolean;
-    roastDate?: string;
-    expiryDate?: string;
-}
 
 export function AddRecipe({ parentState, updateParentState, close, onSaveCallback  }: AddRecipeProps) {
     const dispatch = useAppDispatch();

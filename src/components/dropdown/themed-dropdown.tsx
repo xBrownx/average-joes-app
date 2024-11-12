@@ -8,8 +8,14 @@ export interface DropdownData {
     value: string;
 }
 
-export function ThemedDropdown({placeholder, data, onChange}: {placeholder: string, data: DropdownData[] | undefined, onChange: (value: string) => void}) {
-    const [value, setValue] = useState<string | null>(null);
+type ThemedDropdownProps = {
+    placeholder: string,
+    data: DropdownData[] | undefined,
+    value: string | null,
+    onChange: (value: string) => void,
+}
+
+export function ThemedDropdown({placeholder, data, value, onChange}: ThemedDropdownProps) {
 
     const renderItem = (item: DropdownData) => {
         return (
@@ -43,7 +49,6 @@ export function ThemedDropdown({placeholder, data, onChange}: {placeholder: stri
             searchPlaceholder="Search..."
             value={value}
             onChange={item => {
-                setValue(item.value);
                 onChange(item.value)
             }}
 

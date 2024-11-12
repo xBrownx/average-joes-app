@@ -8,22 +8,21 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { ThemedView } from '@/components/ThemedView';
-import Footer from "@/components/Footer";
-import { themedColors } from "@/constants/themed-colors";
+import Footer from '@/components/Footer';
+import { themedColors } from '@/constants/themed-colors';
 
 const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
     headerImage: ReactElement;
-    headerBackgroundColor: { dark: string; light: string };
+    headerBackgroundColor?: { dark: string; light: string };
 }>;
 
-export default function ParallaxScrollView({
-                                               children,
-                                               headerImage,
-                                               headerBackgroundColor,
-                                           }: Props) {
-    const colorScheme = useColorScheme() ?? 'light';
+export default function ParallaxScrollView(
+    {
+        children,
+        headerImage,
+    }: Props) {
     const scrollRef = useAnimatedRef<Animated.ScrollView>();
     const scrollOffset = useScrollViewOffset(scrollRef);
 
@@ -34,7 +33,7 @@ export default function ParallaxScrollView({
                     translateY: interpolate(
                         scrollOffset.value,
                         [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                        [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+                        [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75],
                     ),
                 },
                 {
@@ -51,12 +50,12 @@ export default function ParallaxScrollView({
                 <Animated.View
                     style={[
                         styles.header,
-                        {backgroundColor: themedColors.backgroundSecondary},
+                        { backgroundColor: themedColors.backgroundSecondary },
                         headerAnimatedStyle,
                     ]} >
                     {headerImage}
                 </Animated.View >
-                <ThemedView style={{height: '100%', backgroundColor: 'transparent'}} >
+                <ThemedView style={{ height: '100%', backgroundColor: themedColors.background }} >
                     {children}
                 </ThemedView >
             </Animated.ScrollView >
@@ -68,11 +67,12 @@ export default function ParallaxScrollView({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: themedColors.background,
     },
     header: {
         height: 250,
         overflow: 'hidden',
-        justifyContent: "center"
+        justifyContent: 'center',
     },
     content: {
         flex: 1,

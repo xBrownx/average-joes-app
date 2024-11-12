@@ -1,9 +1,6 @@
 export const CONSTANTS = {
-    qOne: ['Firstly, I need to know what coffee you are using. You can type below or take a photo and upload the bag.'],
-    qTwo: ['Okay great. Next, what type of portafilter does your machine have?'],
-    portafilterOptions: ['51mm', '54mm', '58mm'],
-    qThree: ["Cool lets begin.", "Step 1 - Prepare your machine"],
-    qThreeSub: ["- Turn it on an let it get to temp", "- Run a shot (of just hot water) through the portafilter to heat it up. We want it to be consistently hot all the time "],
+
+    qThreeSub: ["- Turn it on and let it get to temp", "- Run a shot (of just hot water) through the portafilter to heat it up. We want it to be consistently hot all the time."],
     recipe: ["I am going to give you a quick lesson on the fundamentals of dialing in coffee and then we are going to run a shot using these fundamentals - there are 3 variables you need to remember when making coffee:"],
     recipeSub: [
         "1. DOSE - the amount of ground coffee that goes IN to the basket (18g on your Machine)",
