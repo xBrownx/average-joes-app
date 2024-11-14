@@ -13,7 +13,7 @@ export const initEmptyUserData = (): UserData => {
 
 export const initEmptyRemoteData = (): RemoteData => {
     return {
-        machines: [],
+        machineMake: [],
         blends: [],
         roasters: []
     }

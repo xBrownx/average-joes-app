@@ -8,6 +8,7 @@ import { FadeUpText } from "@/components/text/fade-up-text";
 import { ThemedText } from "@/components/text/themed-text";
 import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { AnimatedTabs } from "@/components/tabs/animated-tabs";
 
 export function StepTwo({onNext, onBack}: { onNext: () => void, onBack: () => void }) {
     const tts = useTextToSpeech();
@@ -62,17 +63,22 @@ export function StepTwo({onNext, onBack}: { onNext: () => void, onBack: () => vo
                     onComplete={fadeInNext}
                     isShow={show}
                 >
-                    <View style={styles.content}>
-                        {CONSTANTS.recipeSub.map((text, idx) => (
-                            <FadeUpText
-                                key={idx}
-                                text={text}
-                                type={'default'}
-                                delay={idx * 500}
-                            />
-                        ))}
+                    <AnimatedTabs tabs={['DOSE', 'YIELD', 'TIME']} contents={[
+                        <ThemedText>HELLO</ThemedText>,
+                        <ThemedText>IS IT ME</ThemedText>,
+                        <ThemedText>HELLO</ThemedText>,
+                    ]} />
+                    {/*<View style={styles.content}>*/}
+                    {/*    {CONSTANTS.recipeSub.map((text, idx) => (*/}
+                    {/*        <FadeUpText*/}
+                    {/*            key={idx}*/}
+                    {/*            text={text}*/}
+                    {/*            type={'default'}*/}
+                    {/*            delay={idx * 500}*/}
+                    {/*        />*/}
+                    {/*    ))}*/}
 
-                    </View>
+                    {/*</View>*/}
                 </CustomTypeWriter>
                 <Animated.View
                     style={[{opacity}, styles.buttonWrapper]}

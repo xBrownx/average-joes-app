@@ -52,7 +52,7 @@ export default function DialIn() {
                 headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
                 headerImage={
                     <Image
-                        source={require('@/assets/images/dial-in-2.png')}
+                        source={require('@/assets/images/avatar.png')}
                         style={styles.reactLogo}
                     />
                 }>

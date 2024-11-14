@@ -3,25 +3,35 @@ import { RemoteData } from "@/domain/remote-data";
 import { API_URL } from "@/store/util/constants";
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
 import { initEmptyRemoteData } from "@/store/util/use-init-empty-app-data";
-import { dtoToServerBlends, dtoToServerMachines, dtoToServerRoasters } from "@/store/dto/transform";
+import {
+    dtoToServerBlends,
+    dtoToRemoteMachineMakeList,
+    dtoToRemoteRoasterList,
+    dtoToRemoteMachineModelList
+} from "@/store/dto/transform";
 import { RootState } from "@/store/reducers";
 
 export const loadRemoteData = createAsyncThunk<RemoteData, void, { rejectValue: string }>(
     "appData/loadRemoteData",
     async (_, thunkAPI) => {
         try {
-            const machinesResponse = await fetch(API_URL('machines'));
-            const beansResponse = await fetch(API_URL('beans'));
-            const roastersResponse = await fetch(API_URL('roasters'));
+            const makeResponse = await fetch(API_URL('machine-make'));
+            const modelResponse = await fetch(API_URL('machine-model'));
+            const roasterResponse = await fetch(API_URL('roasters'));
+            const blendResponse = await fetch(API_URL('blends'));
 
-            const machinesDto = await machinesResponse.json();
-            const beansDto: GoogleSheetsResponseDto = await beansResponse.json();
-            const roasterDto: GoogleSheetsResponseDto = await roastersResponse.json();
+
+            const makeDto: GoogleSheetsResponseDto = await makeResponse.json();
+            const modelDto: GoogleSheetsResponseDto = await modelResponse.json();
+            const roasterDto: GoogleSheetsResponseDto = await roasterResponse.json();
+            const blendDto: GoogleSheetsResponseDto = await blendResponse.json();
 
             let serverData = initEmptyRemoteData();
-            serverData.machines = dtoToServerMachines(machinesDto);
-            serverData.blends = dtoToServerBlends(beansDto);
-            serverData.roasters = dtoToServerRoasters(roasterDto);
+            serverData.machineMakes = dtoToRemoteMachineMakeList(makeDto);
+            serverData.machineModels = dtoToRemoteMachineModelList(modelDto)
+            serverData.roasters = dtoToRemoteRoasterList(roasterDto);
+            serverData.blends = dtoToServerBlends(blendDto);
+
             return serverData;
         } catch (error) {
             return thunkAPI.rejectWithValue("Failed to fetch server data.");
@@ -62,10 +72,11 @@ export const remoteDataSlice = createSlice({
     }
 })
 
-export const selectRemoteMachines = (state: RootState) => state.remoteData.data.machines;
-
+export const selectRemoteMachineMake = (state: RootState) => state.remoteData.data.machineMakes;
+export const selectRemoteMachineModel = (state: RootState) => state.remoteData.data.machineModels;
+export const selectRemoteRoasters = (state: RootState) => state.remoteData.data.roasters;
 export const selectRemoteBlends = (state: RootState) => state.remoteData.data.blends;
 
-export const selectRemoteRoasters = (state: RootState) => state.remoteData.data.roasters;
+
 
 export default remoteDataSlice.reducer;

@@ -7,10 +7,19 @@ export interface MachineModel {
     dosingRingSize?: string;
 }
 
-export interface ServerMachine {
+export interface RemoteMachineMake {
     id: string;
-    make: string;
-    models: MachineModel[];
+    name: string;
+}
+
+export interface RemoteMachineModel {
+    id: string;
+    name: string;
+    makeId: string;
+    size?: string;
+    portafilterSize: string;
+    tamperSize?: string;
+    dosingRingSize?: string;
 }
 
 export interface UserMachine {

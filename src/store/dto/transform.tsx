@@ -1,76 +1,85 @@
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
-import { MachineModel, Roaster, ServerBlend, ServerMachine } from "@/domain";
+import { MachineModel, RemoteMachineMake, RemoteMachineModel, RemoteRoaster, RemoteBlend } from "@/domain";
 
 
-function dtoToKeyPair(dto: GoogleSheetsResponseDto) {
+function dtoToKeyValuePair(dto: GoogleSheetsResponseDto) {
     const keys: string[] = dto.values[0]
     const values: string[][] = dto.values.slice(1);
     return values.map((val) => Object.assign({}, ...keys.map((k, i) =>
         ({[k]: val[i]}))))
 }
 
-export function dtoToServerMachines(dto: GoogleSheetsResponseDto): ServerMachine[] {
-    let machines: ServerMachine[] = [];
-    const machineKeyPairArray =  dtoToKeyPair(dto)
+export function dtoToRemoteMachineMakeList(dto: GoogleSheetsResponseDto): RemoteMachineMake[] {
+    let machineMakes: RemoteMachineMake[] = [];
+    const keyValuePair = dtoToKeyValuePair(dto);
 
-    machineKeyPairArray.forEach(machine => {
-        const model: MachineModel = {
-            id: machine.id,
-            name: machine.model,
-            size: machine.size,
-            portafilterSize: machine.portafilterSize,
-            tamperSize: machine.tamperSize,
-            dosingRingSize: machine.dosingRingSize,
-        };
-        let make = machines.find(element => element.make === machine.make);
-        if(make) {
-            make.models.push(model);
-        } else {
-            make = {
-                id: machine.make,
-                make: machine.make,
-                models: [model]
-            }
-            machines.push(make)
+    keyValuePair.forEach(make => {
+        const machineMake: RemoteMachineMake = {
+            id: make.id,
+            name: make.name,
         }
-    })
+        machineMakes.push(machineMake);
+    });
 
-    return machines;
+    return machineMakes;
 }
 
-export function dtoToServerBlends(dto: GoogleSheetsResponseDto): ServerBlend[] {
-    let blends: ServerBlend[] = [];
-    const blendsKeyPairArray =  dtoToKeyPair(dto)
+export function dtoToRemoteMachineModelList(dto: GoogleSheetsResponseDto): RemoteMachineModel[] {
+    let machineModels: RemoteMachineModel[] = [];
+    const keyValuePair = dtoToKeyValuePair(dto);
+
+    keyValuePair.forEach(model => {
+        const machineModel: RemoteMachineModel = {
+            id: model.id,
+            name: model.name,
+            makeId: model.makeId,
+            size: model.size,
+            portafilterSize: model.portafilterSize,
+            tamperSize: model.tamperSize,
+            dosingRingSize: model.dosingRingSize,
+        }
+        machineModels.push(machineModel);
+    });
+
+    return machineModels;
+}
+
+export function dtoToRemoteRoasterList(dto: GoogleSheetsResponseDto): RemoteRoaster[] {
+    let roasters : RemoteRoaster[] = [];
+    const roastersKeyPairArray =  dtoToKeyValuePair(dto)
+
+    roastersKeyPairArray.forEach(roaster => {
+        const serverRoaster: RemoteRoaster = {
+            id: roaster.id,
+            name: roaster.name,
+            profile: roaster.profile,
+        };
+        roasters.push(serverRoaster);
+        console.log('roaster', serverRoaster);
+    });
+
+    return roasters;
+}
+
+export function dtoToServerBlends(dto: GoogleSheetsResponseDto): RemoteBlend[] {
+    let blends: RemoteBlend[] = [];
+    const blendsKeyPairArray =  dtoToKeyValuePair(dto)
 
     blendsKeyPairArray.forEach(blend => {
-        const serverBlend: ServerBlend = {
+        const serverBlend: RemoteBlend = {
             id: blend.id,
-            blendName: blend.blendName,
+            name: blend.name,
             roasterId: blend.roasterId,
             origins: blend.origins,
             tastingNotes: blend.tastingNotes,
             buyLink: blend.buyLink,
         };
         blends.push(serverBlend);
+        console.log('Blend', serverBlend);
+    });
 
-    })
+
 
     return blends;
 }
 
-export function dtoToServerRoasters(dto: GoogleSheetsResponseDto): Roaster[] {
-    let roasters : Roaster[] = [];
-    const roastersKeyPairArray =  dtoToKeyPair(dto)
-
-    roastersKeyPairArray.forEach(roaster => {
-        const serverRoaster: Roaster = {
-            id: roaster.id,
-            name: roaster.name,
-            profile: roaster.profile,
-        };
-        roasters.push(serverRoaster);
-
-    })
-
-    return roasters;
-}

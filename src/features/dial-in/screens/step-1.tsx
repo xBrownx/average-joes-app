@@ -76,7 +76,6 @@ export function StepOne({onNext, onBack}: { onNext: () => void, onBack: () => vo
                         </Animated.View>
                     </View>
                 </CustomTypeWriter>
-
             </View>
         </View>
     );

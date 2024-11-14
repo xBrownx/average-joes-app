@@ -1,6 +1,6 @@
-export interface ServerBlend {
+export interface RemoteBlend {
     id: string;
-    blendName: string;
+    name: string;
     roasterId: string;
     origins: string;
     tastingNotes: string;
