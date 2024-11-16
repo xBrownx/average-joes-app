@@ -55,7 +55,6 @@ export function dtoToRemoteRoasterList(dto: GoogleSheetsResponseDto): RemoteRoas
             profile: roaster.profile,
         };
         roasters.push(serverRoaster);
-        console.log('roaster', serverRoaster);
     });
 
     return roasters;
@@ -75,7 +74,6 @@ export function dtoToServerBlends(dto: GoogleSheetsResponseDto): RemoteBlend[] {
             buyLink: blend.buyLink,
         };
         blends.push(serverBlend);
-        console.log('Blend', serverBlend);
     });
 
 

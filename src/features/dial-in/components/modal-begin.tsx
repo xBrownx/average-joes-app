@@ -9,10 +9,9 @@ import { ExternalLink } from '@/components/ExternalLink';
 type ModalProps = RNModalProps & {
     isOpen: boolean;
     onClose: () => void;
-    withInput?: boolean;
 };
 
-export function Modal({ isOpen, onClose }: ModalProps) {
+export function ModalBegin({ isOpen, onClose }: ModalProps) {
     return (
         <ThemedModal isOpen={isOpen} close={onClose} >
             <View style={globalStyles.innerModal} >

@@ -11,6 +11,7 @@ import { useCustomState } from '@/hooks/useCustomState';
 import { userMachinesToDropdown } from '@/usecase';
 import Animated, { LinearTransition, StretchOutY } from 'react-native-reanimated';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { DialInScreenProps } from "@/features/dial-in/types";
 
 
 interface GetMachineState {
@@ -22,9 +23,8 @@ interface GetMachineState {
 
 }
 
-export function GetMachineScreen({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
+export function GetMachineScreen({ onNext, onBack, onExit, onShow, speak }: DialInScreenProps) {
     const userMachines = useAppSelector(selectUserMachines);
-    const tts = useTextToSpeech();
 
     const { state, updateState } = useCustomState<GetMachineState>({
         isShow: false,
@@ -37,14 +37,9 @@ export function GetMachineScreen({ onNext, onBack }: { onNext: () => void, onBac
         updateState({ selectedMachine: id });
     };
 
-    const onShow = () => {
-        tts.stop();
+    const onShowPressed = () => {
         updateState({ isShow: true });
-    };
-
-    const onBackPressed = () => {
-        tts.stop();
-        onBack();
+        onShow();
     };
 
     useEffect(() => {
@@ -52,7 +47,7 @@ export function GetMachineScreen({ onNext, onBack }: { onNext: () => void, onBac
             'Okay, great!',
             'Next, we need to know what type of portafilter your machine has. Pick from your saved machines, or add a new one below.',
         ];
-        tts.speak(thingToSay);
+        speak(thingToSay);
     }, []);
 
     return (
@@ -63,9 +58,9 @@ export function GetMachineScreen({ onNext, onBack }: { onNext: () => void, onBac
                 onSaveCallback={onSelectUserMachine}
             />
             <DialInHeading
-                onBack={onBackPressed}
-                onShow={onShow}
-                icon={'back'}
+                onBack={onBack}
+                onShow={onShowPressed}
+                onExit={onExit}
             />
 
             <Animated.View style={styles.content} >
@@ -74,7 +69,7 @@ export function GetMachineScreen({ onNext, onBack }: { onNext: () => void, onBac
                         'Okay great.',
                         'Next, we need to know what type of portafilter your machine has. Pick from your saved machines, or add a new one below.',
                     ]}
-                    type={'primaryBold'}
+                    type={'default'}
                     speed={30}
                     isShow={state.isShow}
                 >
@@ -127,7 +122,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         paddingHorizontal: 32,
-        paddingVertical: 16,
+        paddingVertical: 32,
         gap: 16,
         overflow: 'hidden',
     },

@@ -8,12 +8,12 @@ import { TabHeading } from '@/components/tab-heading/tab-heading';
 import { ThemedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
 
-type LoginModalProps = {
+type SignUpProps = {
     isOpen: boolean;
     close: () => void;
 };
 
-export const LoginModal = ({ isOpen, close, ...rest }: LoginModalProps) => {
+export const SignUp = ({ isOpen, close, ...rest }: SignUpProps) => {
     const dispatch = useAppDispatch();
     const [name, setName] = React.useState<string>('');
 

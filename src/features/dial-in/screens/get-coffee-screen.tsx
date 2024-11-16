@@ -14,39 +14,30 @@ import Animated, {
     LinearTransition,
 } from 'react-native-reanimated';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { DialInScreenProps } from "@/features/dial-in/types";
 
 
 interface GetCoffeeState {
     isShow?: boolean;
-    pantryItemsDropdown?: DropdownData[];
-    userRecipesDropdown?: DropdownData[];
     selectedPantryItem?: string | null;
     selectedBlend?: string | null;
     isAddModalOpen?: boolean;
 }
 
-export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
+export function GetCoffeeScreen({ onNext, onBack, onExit, onShow, speak }: DialInScreenProps) {
     const userRecipes = useAppSelector(selectUserRecipes);
     const pantryItems = useAppSelector(selectUserPantryItems);
-    const tts = useTextToSpeech();
 
     const { state, updateState } = useCustomState<GetCoffeeState>({
         isShow: false,
-        pantryItemsDropdown: pantryItemsToDropdown(pantryItems),
-        userRecipesDropdown: userRecipesToDropdown(userRecipes),
         selectedPantryItem: null,
         selectedBlend: null,
         isAddModalOpen: false,
     });
 
-    const onShow = () => {
+    const onShowPressed = () => {
         updateState({isShow: true});
-        tts.stop();
-    }
-
-    const onBackPressed =() => {
-        tts.stop();
-        onBack();
+        onShow();
     }
 
     const onSelectPantryItem = (id: string) => {
@@ -58,14 +49,8 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
     };
 
     useEffect(() => {
-        updateState({
-            userRecipesDropdown: userRecipesToDropdown(userRecipes),
-        });
-    }, [userRecipes]);
-
-    useEffect(() => {
         const thingToSay = 'Firstly, I need to know what coffee you are using. You can pick from your pantry, saved recipes, or add a new blend.';
-        tts.speak(thingToSay)
+        speak(thingToSay)
     }, [])
 
     return (
@@ -76,16 +61,16 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
                 onSaveCallback={onSelectUserRecipe}
             />
             <DialInHeading
-                onBack={onBackPressed}
-                onShow={onShow}
-                icon={'exit'}
+                onBack={onBack}
+                onShow={onShowPressed}
+                onExit={onExit}
             />
 
             <Animated.View style={styles.content} >
                 {/*{(state.isSpeaking || state.isShow) &&*/}
                 <CustomTypeWriter
                     text={['Firstly, I need to know what coffee you are using. You can pick from your pantry, saved recipes, or add a new blend.']}
-                    type={'primaryBold'}
+                    type={'default'}
                     speed={29}
                     isShow={state.isShow}
                 >
@@ -97,7 +82,7 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
                             <Animated.View exiting={StretchOutY} layout={LinearTransition} >
                                 <ThemedDropdown
                                     placeholder={'Search Pantry'}
-                                    data={state.pantryItemsDropdown}
+                                    data={pantryItemsToDropdown(pantryItems)}
                                     value={state.selectedPantryItem?? null}
                                     onChange={onSelectPantryItem}
                                 />
@@ -115,7 +100,7 @@ export function GetCoffeeScreen({ onNext, onBack }: { onNext: () => void, onBack
                             <Animated.View exiting={StretchOutY} layout={LinearTransition} >
                                 <ThemedDropdown
                                     placeholder={'Search Recipes'}
-                                    data={state.userRecipesDropdown}
+                                    data={userRecipesToDropdown(userRecipes)}
                                     value={state.selectedBlend?? null}
                                     onChange={onSelectUserRecipe}
 
@@ -158,7 +143,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         paddingHorizontal: 32,
-        paddingVertical: 16,
+        paddingVertical: 32,
         gap: 16,
         overflow: 'hidden',
     },

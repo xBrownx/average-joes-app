@@ -5,6 +5,7 @@ import { Button, StyleSheet, View } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
 import React from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { ThemedButton } from "@/components/button";
 
 export function DialInLanding({onStart, onSkip}: { onStart: () => void, onSkip: () => void }) {
 
@@ -34,10 +35,10 @@ export function DialInLanding({onStart, onSkip}: { onStart: () => void, onSkip: 
                     </ThemedText>
                 </ThemedView>
                 <View style={styles.stepContainer}>
-                    <Button title={'Let\'s go'} color={themedColors.primary} onPress={onStart} />
+                    <ThemedButton title={'Let\'s go'} onPress={onStart} />
                 </View>
                 <View style={styles.stepContainer}>
-                    <Button title={'I\'ve been here before'} color={themedColors.primary} onPress={onSkip} />
+                    <ThemedButton title={'I\'ve been here before'} onPress={onSkip} />
                 </View>
             </View>
         }
