@@ -29,7 +29,7 @@ export const SignUp = ({ isOpen, close, ...rest }: SignUpProps) => {
     };
 
     return (
-        <ThemedModal noExit isOpen={isOpen} close={close} {...rest} >
+        <ThemedModal noExit isOpen={isOpen} onClose={close} {...rest} >
             <View style={[globalStyles.innerModal, styles.container]} >
                 <TabHeading title={'WELCOME TO JOE\'S!'} />
                 <View >

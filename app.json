@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "average-joes",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./src/assets/images/small-logo.png",
@@ -20,6 +20,7 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.xbrownx.AverageJoes"
     },
     "web": {
@@ -28,6 +29,7 @@
       "favicon": "./src/assets/images/favicon.png"
     },
     "plugins": [
+      "@react-native-google-signin/google-signin",
       "expo-router",
       [
         "expo-font",

@@ -84,7 +84,7 @@ export const AddPantryModal = ({ isOpen, onClose, withInput, children, ...rest }
     };
 
     return (
-        <ThemedModal isOpen={isOpen} close={closeModal} >
+        <ThemedModal isOpen={isOpen} onClose={closeModal} >
             <View style={styles.modalInner} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >Add a Pantry Item</ThemedText >

@@ -39,7 +39,7 @@ export function ViewPantryModal({
 }: ViewBeanModalProps) {
     if (!selectedPantryItem) return;
     return (
-        <ThemedModal isOpen={isOpen} close={onClose} >
+        <ThemedModal isOpen={isOpen} onClose={onClose} >
             <View style={styles.modalInner} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >

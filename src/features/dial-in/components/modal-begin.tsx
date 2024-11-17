@@ -13,7 +13,7 @@ type ModalProps = RNModalProps & {
 
 export function ModalBegin({ isOpen, onClose }: ModalProps) {
     return (
-        <ThemedModal isOpen={isOpen} close={onClose} >
+        <ThemedModal isOpen={isOpen} onClose={onClose} >
             <View style={globalStyles.innerModal} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >

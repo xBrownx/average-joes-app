@@ -15,7 +15,7 @@ type AboutModalProps = RNModalProps & {
 export function AboutModal({isOpen, onClose, withInput, ...rest}: AboutModalProps) {
 
     return (
-        <ThemedModal isOpen={isOpen} close={onClose} >
+        <ThemedModal isOpen={isOpen} onClose={onClose} >
             <View style={globalStyles.innerModal}>
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >

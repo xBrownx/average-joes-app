@@ -18,7 +18,7 @@ export function ModalConfirmExit({ isOpen, onClose }: ModalProps) {
     }
 
     return (
-        <ThemedModal isOpen={isOpen} close={onCloseCustom} >
+        <ThemedModal isOpen={isOpen} onClose={onCloseCustom} >
             <View style={globalStyles.innerModal} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >

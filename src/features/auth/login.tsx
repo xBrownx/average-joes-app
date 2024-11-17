@@ -1,11 +1,12 @@
 import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { setUserName, useAppDispatch } from '@/store';
 import { ThemedInput } from '@/components/input';
 import { ThemedButton } from "@/components/button";
 import * as Google from "expo-auth-session/providers/google";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const androidClientId = "575775045423-qls1t2boshhl4bhba2sueg6ti6pibk4p.apps.googleusercontent.com";
 
@@ -33,6 +34,44 @@ export const Login = () => {
         androidClientId: androidClientId,
     })
 
+    async function handleGoogleSignIn() {
+        const user = await AsyncStorage.getItem("@user");
+        if(!user) {
+            if(response?.type === 'success') {
+                await getUserInfo(response.authentication!.accessToken!);
+            }
+        } else {
+            setUserInfo(user);
+        }
+    }
+
+    useEffect(() => {
+        console.log(response);
+    }, [response]);
+
+    const getUserInfo = async (token: string) => {
+        if (!token) return;
+
+        try {
+            const response = await fetch(
+                "https://www.googleapis.com/userinfo/v2/me",
+                {
+                    headers: {Authorization: `Bearer ${token}`},
+                }
+            );
+
+            const user = await response.json();
+            await AsyncStorage.setItem("@user", JSON.stringify(user));
+            setUserInfo(JSON.parse(user));
+        } catch (error) {
+            // pass
+        }
+    }
+
+    useEffect(() => {
+        console.log(request);
+    }, [request]);
+
     return (
         <View style={styles.container}>
             <View>
@@ -57,7 +96,7 @@ export const Login = () => {
                     here.
                 </ThemedText>
             </ThemedText>
-            <ThemedButton title={'Sign In with Google'} onPress={promptAsync} />
+            <ThemedButton title={'Sign In with Google'} onPress={() => promptAsync()} />
         </View>
     );
 };
@@ -66,5 +105,4 @@ const styles = StyleSheet.create({
     container: {
         gap: 16,
     },
-    linkText: {}
 });
