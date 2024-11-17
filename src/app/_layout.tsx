@@ -1,4 +1,3 @@
- import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -10,12 +9,12 @@ import store, { useAppDispatch, useAppSelector } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { selectUser } from "@/store";
 import { AuthModal } from "@/features/auth/auth-modal";
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
 
 export default function RootLayout() {
     return (
@@ -26,9 +25,9 @@ export default function RootLayout() {
 function RootLayoutNav() {
     const colorScheme = useColorScheme();
     return (
-            <Provider store={store} >
-                <App />
-            </Provider >
+        <Provider store={store}>
+            <App />
+        </Provider>
     );
 }
 
@@ -36,6 +35,7 @@ function App() {
     const dispatch = useAppDispatch();
     const username = useAppSelector(selectUser);
     const [isLoginModal, setLoginModal] = useState(username !== null);
+
 
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -51,16 +51,18 @@ function App() {
         }
     }, [loaded]);
 
+
+
     if (!loaded) {
         return null;
     }
     return (
         <>
-            {username === '' ? <AuthModal isOpen={isLoginModal} close={() => setLoginModal(false)} /> :
-                <Stack >
+            {username === '' ? <AuthModal isOpen={isLoginModal} onClose={() => setLoginModal(false)} /> :
+                <Stack>
                     <Stack.Screen name="(tabs)" options={{headerShown: false}} />
                     <Stack.Screen name="+not-found" />
-                </Stack >
+                </Stack>
             }
         </>
     );

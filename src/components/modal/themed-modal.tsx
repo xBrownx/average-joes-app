@@ -1,17 +1,10 @@
 import {
     StyleSheet,
-    View,
-    ModalProps as RNModalProps,
     Modal as RNModal,
     TouchableOpacity,
     TouchableWithoutFeedback
 } from "react-native";
-
-export type ThemedModalProps = RNModalProps & {
-    noExit?: boolean;
-    isOpen: boolean;
-    onClose: () => void;
-};
+import { ThemedModalProps } from "@/components/modal/types";
 
 export function ThemedModal({noExit, isOpen, onClose, children}: ThemedModalProps) {
     return (

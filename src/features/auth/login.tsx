@@ -1,19 +1,22 @@
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
 import React, { useEffect } from 'react';
 import { setUserName, useAppDispatch } from '@/store';
 import { ThemedInput } from '@/components/input';
 import { ThemedButton } from "@/components/button";
-import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSigninButton, GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
-const androidClientId = "575775045423-qls1t2boshhl4bhba2sueg6ti6pibk4p.apps.googleusercontent.com";
+// const androidClientId = "575775045423-qls1t2boshhl4bhba2sueg6ti6pibk4p.apps.googleusercontent.com";
 
 export const Login = () => {
     const dispatch = useAppDispatch();
     const [name, setName] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
+
+    const configGoogleSignIn = () => {
+        GoogleSignin.configure({});
+    };
 
     const onEmailChange = (text: string) => {
         setName(text);
@@ -28,49 +31,39 @@ export const Login = () => {
             dispatch(setUserName(name));
         }
     };
-
-    const [userInfo, setUserInfo] = React.useState<any>(null);
-    const [request, response, promptAsync] = Google.useAuthRequest({
-        androidClientId: androidClientId,
-    })
-
-    async function handleGoogleSignIn() {
-        const user = await AsyncStorage.getItem("@user");
-        if(!user) {
-            if(response?.type === 'success') {
-                await getUserInfo(response.authentication!.accessToken!);
-            }
-        } else {
-            setUserInfo(user);
-        }
-    }
-
-    useEffect(() => {
-        console.log(response);
-    }, [response]);
-
-    const getUserInfo = async (token: string) => {
-        if (!token) return;
-
+    const signIn = async () => {
         try {
-            const response = await fetch(
-                "https://www.googleapis.com/userinfo/v2/me",
-                {
-                    headers: {Authorization: `Bearer ${token}`},
-                }
-            );
-
-            const user = await response.json();
-            await AsyncStorage.setItem("@user", JSON.stringify(user));
-            setUserInfo(JSON.parse(user));
+            await GoogleSignin.hasPlayServices();
+            const res = await GoogleSignin.signIn();
         } catch (error) {
-            // pass
+            switch (error.code) {
+                case statusCodes.SIGN_IN_CANCELLED:
+                    console.error("User Sign In is required");
+                    break;
+                case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+                    console.error("Google Play Services are needed");
+                    break;
+            }
+            console.log("Error", error.code, error.toString());
         }
-    }
+    };
+
+    const checkIfUserIsValid = async () => {
+        const isValid = GoogleSignin.hasPreviousSignIn();
+        if (isValid) {
+            // navigate to your main screens
+        } else {
+            try {
+                await GoogleSignin.signInSilently();
+            } catch (err) {
+                console.log("Error", err.code);
+            }
+        }
+    };
 
     useEffect(() => {
-        console.log(request);
-    }, [request]);
+        configGoogleSignIn(); // will execute everytime the component mounts
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -96,7 +89,12 @@ export const Login = () => {
                     here.
                 </ThemedText>
             </ThemedText>
-            <ThemedButton title={'Sign In with Google'} onPress={() => promptAsync()} />
+            <GoogleSigninButton
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={signIn}
+                disabled={false}
+            />
         </View>
     );
 };
