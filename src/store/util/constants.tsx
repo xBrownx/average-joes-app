@@ -1,4 +1,3 @@
-const API_KEY = 'AIzaSyDdjwrdiL2aWbCaZb8PPi-fbNw5DqJtxTE';
-const SHEET_ID = '1q8onki1uoZgprYpWYovQk9amv7dSdJtV0zmCDWSzvCc';
+import {GOOGLE_SHEET_ID, GOOGLE_API_KEY} from '@env';
 
-export const API_URL = (sheet: 'machine-make' | 'machine-model' | 'roasters' | 'blends' | 'popup-tips') => `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${sheet}?valueRenderOption=FORMATTED_VALUE&key=${API_KEY}`
+export const API_URL = (sheet: 'machine-make' | 'machine-model' | 'roasters' | 'blends' | 'popup-tips') => `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/${sheet}?valueRenderOption=FORMATTED_VALUE&key=${GOOGLE_API_KEY}`

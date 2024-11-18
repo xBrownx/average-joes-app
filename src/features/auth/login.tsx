@@ -6,6 +6,7 @@ import { ThemedInput } from '@/components/input';
 import { ThemedButton } from "@/components/button";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSigninButton, GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { noSavedCredentialFoundResult } from '@react-native-google-signin/google-signin/src/constants';
 
 // const androidClientId = "575775045423-qls1t2boshhl4bhba2sueg6ti6pibk4p.apps.googleusercontent.com";
 
@@ -35,7 +36,7 @@ export const Login = () => {
         try {
             await GoogleSignin.hasPlayServices();
             const res = await GoogleSignin.signIn();
-        } catch (error) {
+        } catch (error: any) {
             switch (error.code) {
                 case statusCodes.SIGN_IN_CANCELLED:
                     console.error("User Sign In is required");
@@ -55,7 +56,7 @@ export const Login = () => {
         } else {
             try {
                 await GoogleSignin.signInSilently();
-            } catch (err) {
+            } catch (err: any) {
                 console.log("Error", err.code);
             }
         }
