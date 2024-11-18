@@ -1,26 +1,26 @@
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
 import React from 'react';
-import { setUserName, useAppDispatch } from '@/store';
-import { ThemedInput } from '@/components/input';
-import { TabHeading } from '@/components/tab-heading/tab-heading';
-import { ThemedModal, ThemedModalProps } from '@/components/modal';
+import { ThemedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
-import { Login } from '@/features/auth/login';
+import { SignIn } from '@/features/auth/sign-in';
+import { SignUp } from "@/features/auth/sign-up";
+import { ThemedModalProps } from "@/components/modal/types";
+import { LayoutAnimationConfig } from "react-native-reanimated";
 
+export const AuthModal = ({isOpen, onClose}: ThemedModalProps) => {
 
-export const AuthModal = ({ isOpen, onClose }: ThemedModalProps) => {
+    const [isSignUp, setSignUp] = React.useState(false);
 
     return (
-        <ThemedModal noExit isOpen={isOpen} onClose={onClose} >
-            <View style={[globalStyles.innerModal, styles.container]} >
-                <ThemedText type={'title'} >
-                    WELCOME TO JOE'S!
-                </ThemedText >
-                <Login />
-            </View >
-        </ThemedModal >
+        <ThemedModal noExit isOpen={isOpen} onClose={onClose}>
+            <LayoutAnimationConfig skipEntering>
+                {isSignUp
+                    ? <SignUp setSignIn={() => setSignUp(false)} />
+                    : <SignIn setSignUp={() => setSignUp(true)} />
+                }
+            </LayoutAnimationConfig>
+        </ThemedModal>
 
     );
 };

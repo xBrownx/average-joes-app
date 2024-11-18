@@ -1,62 +1,100 @@
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
-import React from 'react';
-import { setUserName, useAppDispatch } from '@/store';
+import React, { useState } from 'react';
+import { useAppDispatch } from '@/store';
 import { ThemedInput } from '@/components/input';
-import { TabHeading } from '@/components/tab-heading/tab-heading';
-import { ThemedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
+import auth from '@react-native-firebase/auth';
+import Animated, { LinearTransition, SlideInRight, SlideOutRight } from "react-native-reanimated";
 
-type SignUpProps = {
-    isOpen: boolean;
-    close: () => void;
-};
 
-export const SignUp = ({ isOpen, close, ...rest }: SignUpProps) => {
+interface SignUpState {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
+
+
+export const SignUp = ({setSignIn}: { setSignIn: () => void }) => {
     const dispatch = useAppDispatch();
-    const [name, setName] = React.useState<string>('');
 
-    const onTextChange = (text: string) => {
-        setName(text);
+    const [state, setState] = useState<SignUpState>({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    })
+
+    const onTextChange = (field: keyof SignUpState, value: string) => {
+        setState(prevState => ({
+            ...prevState,
+            [field]: value
+        }));
     };
 
-    const handleOk = () => {
-        if (name !== '' && name !== null) {
-            dispatch(setUserName(name));
-            close();
-        }
-    };
+    function onSignUp() {
+        auth().createUserWithEmailAndPassword(state.email, state.password)
+            .then((result) => {
+
+            })
+    }
 
     return (
-        <ThemedModal noExit isOpen={isOpen} onClose={close} {...rest} >
-            <View style={[globalStyles.innerModal, styles.container]} >
-                <TabHeading title={'WELCOME TO JOE\'S!'} />
-                <View >
-                    <ThemedText type={'default'} >
-                        Login or sign up
-                    </ThemedText >
-                </View >
+        <TouchableWithoutFeedback>
+            <Animated.View
+                entering={SlideInRight.delay(50)}
+                exiting={SlideOutRight}
+                layout={LinearTransition}
+                style={[globalStyles.innerModal, styles.container]}
+            >
+                <View>
+                    <ThemedText type={'default'}>
+                        Sign Up
+                    </ThemedText>
+                </View>
                 <ThemedInput
-                    onValueChange={onTextChange}
+                    onValueChange={(value) => onTextChange("firstName", value)}
+                    placeholder="First Name"
+                    value={state.firstName}
+                />
+                <ThemedInput
+                    onValueChange={(value) => onTextChange("lastName", value)}
+                    placeholder="Last Name"
+                    value={state.lastName}
+                />
+                <ThemedInput
+                    onValueChange={(value) => onTextChange("email", value)}
                     placeholder="Email"
-                    value={name}
+                    value={state.email}
                 />
                 <ThemedInput
-                    onValueChange={onTextChange}
+                    onValueChange={(value) => onTextChange("password", value)}
                     placeholder="Password"
-                    value={name}
+                    value={state.password}
                 />
-                <Button title={'GO'} color={themedColors.primary} onPress={handleOk} />
-                <ThemedText type={'default'} >
-                    Don't have an account? Sign up{' '}
-                        <ThemedText type={'defaultSemiBold'} onPress={() => console.log('sign up')}>
-                            here.
-                        </ThemedText >
-                </ThemedText >
-            </View >
-        </ThemedModal >
+                <ThemedInput
+                    onValueChange={(value) => onTextChange("confirmPassword", value)}
+                    placeholder="Confirm Password"
+                    value={state.confirmPassword}
+                />
 
+                <Button
+                    title={'SIGN UP'}
+                    color={themedColors.primary}
+                    onPress={onSignUp}
+                />
+                <ThemedText type={'default'}>
+                    Already have an account? Sign in{' '}
+                    <ThemedText type={'defaultSemiBold'} onPress={setSignIn}>
+                        here.
+                    </ThemedText>
+                </ThemedText>
+            </Animated.View>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -64,8 +102,5 @@ const styles = StyleSheet.create({
     container: {
         gap: 16,
     },
-    linkText: {
-
-
-    }
+    linkText: {}
 });
