@@ -6,9 +6,6 @@ import { ThemedInput } from '@/components/input';
 import { ThemedButton } from "@/components/button";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSigninButton, GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { noSavedCredentialFoundResult } from '@react-native-google-signin/google-signin/src/constants';
-
-// const androidClientId = "575775045423-qls1t2boshhl4bhba2sueg6ti6pibk4p.apps.googleusercontent.com";
 
 export const Login = () => {
     const dispatch = useAppDispatch();
@@ -16,7 +13,7 @@ export const Login = () => {
     const [password, setPassword] = React.useState<string>('');
 
     const configGoogleSignIn = () => {
-        GoogleSignin.configure({});
+        GoogleSignin.configure();
     };
 
     const onEmailChange = (text: string) => {
@@ -33,6 +30,7 @@ export const Login = () => {
         }
     };
     const signIn = async () => {
+        console.log("sign in pressed")
         try {
             await GoogleSignin.hasPlayServices();
             const res = await GoogleSignin.signIn();
@@ -91,7 +89,8 @@ export const Login = () => {
                 </ThemedText>
             </ThemedText>
             <GoogleSigninButton
-                size={GoogleSigninButton.Size.Wide}
+                style={{height: 100, width: '100%'}}
+                size={GoogleSigninButton.Size.Standard}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={signIn}
                 disabled={false}
