@@ -84,7 +84,6 @@ export const SignIn = ({setSignUp}: { setSignUp: () => void }) => {
                     setSignInResult={onGoogleSignInResult}
                 />
 
-
                 <ThemedText type={'default'} style={styles.footerText}>
                     Create an account{' '}
                     <ThemedText type={'defaultSemiBold'} onPress={setSignUp}>
