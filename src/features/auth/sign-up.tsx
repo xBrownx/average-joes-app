@@ -1,8 +1,9 @@
-import { Button, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Button, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 import React, { useState } from 'react';
 import { useAppDispatch } from '@/store';
+import { setUserName } from '@/store';
 import { ThemedInput } from '@/components/input';
 import { globalStyles } from '@/styles/global-styles';
 import auth from '@react-native-firebase/auth';
@@ -39,7 +40,15 @@ export const SignUp = ({setSignIn}: { setSignIn: () => void }) => {
     function onSignUp() {
         auth().createUserWithEmailAndPassword(state.email, state.password)
             .then((result) => {
-
+                const user = {
+                    email: result.user.email,
+                    firstName: state.firstName,
+                    lastName: state.lastName,
+                }
+                dispatch(setUserName(state.firstName));
+            })
+            .catch((error: any) => {
+                console.log('Error:', error, 'with code', error.code);
             })
     }
 

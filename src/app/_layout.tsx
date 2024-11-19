@@ -3,27 +3,17 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from "react-redux";
 import store, { useAppDispatch, useAppSelector } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { selectUser } from "@/store";
 import { AuthModal } from "@/features/auth/auth-modal";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
-
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-
 export default function RootLayout() {
-    return (
-        <RootLayoutNav />
-    );
-}
-
-function RootLayoutNav() {
-    const colorScheme = useColorScheme();
     return (
         <Provider store={store}>
             <App />
@@ -33,9 +23,9 @@ function RootLayoutNav() {
 
 function App() {
     const dispatch = useAppDispatch();
-    const username = useAppSelector(selectUser);
-    const [isLoginModal, setLoginModal] = useState(username !== null);
-
+    const [isLoginModal, setLoginModal] = useState(true);
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
     const [loaded] = useFonts({
         SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -44,6 +34,12 @@ function App() {
         PoppinsBold: require('../assets/fonts/Poppins-Bold.ttf'),
     });
 
+    // Handle user state changes
+    function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+
     useEffect(() => {
         dispatch(loadRemoteData())
         if (loaded) {
@@ -51,15 +47,23 @@ function App() {
         }
     }, [loaded]);
 
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
 
-
-    if (!loaded) {
+    if (!loaded || initializing) {
         return null;
     }
+
     return (
         <>
-            {username === '' ? <AuthModal isOpen={isLoginModal} onClose={() => setLoginModal(false)} /> :
-                <Stack>
+            {!user
+                ? <AuthModal
+                    isOpen={isLoginModal}
+                    onClose={() => setLoginModal(false)}
+                />
+                : <Stack>
                     <Stack.Screen name="(tabs)" options={{headerShown: false}} />
                     <Stack.Screen name="+not-found" />
                 </Stack>
