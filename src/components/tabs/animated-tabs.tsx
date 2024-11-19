@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Appearance, Dimensions, LayoutAnimation } from 'react-native';
 import Animated, { LinearTransition, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { themedColors } from "@/constants/themed-colors";
+import { useCustomState } from '../../hooks/use-custom-state';
 
-const TAB_WIDTH = 100;
+interface AnimatedTabState {
+    activeTab?: number;
+    tabWidth?: number;
+}
 
 type TabProps = {
     tabs: string[],
@@ -11,18 +15,22 @@ type TabProps = {
 };
 
 export const AnimatedTabs: React.FC<TabProps> = ({tabs, contents}) => {
-    const [activeTab, setActiveTab] = useState(0);
+    const {state, updateState} = useCustomState<AnimatedTabState>({
+        activeTab: -1,
+        tabWidth: 0,
+    })
     const activeIndex = useSharedValue(0);
-    const [width, setWidth] = React.useState(0);
 
     const onTabPress = (index: number) => {
-        setActiveTab(index);
+        updateState({activeTab: index});
         activeIndex.value = withTiming(index, {duration: 300});
     };
 
     const animatedStyle = useAnimatedStyle(() => {
         return {
-            transform: [{translateX: activeIndex.value * (width/3) }],
+            transform: [{
+                translateX: activeIndex.value * (state.tabWidth! / 3)
+            }],
         };
     });
 
@@ -30,24 +38,51 @@ export const AnimatedTabs: React.FC<TabProps> = ({tabs, contents}) => {
     return (
         <Animated.View
             style={styles.wrapper}
-            onLayout={event => setWidth(event.nativeEvent.layout.width)}
+            onLayout={event => updateState({tabWidth: event.nativeEvent.layout.width})}
             layout={LinearTransition}
         >
             <View style={styles.container}>
-                <Animated.View style={[styles.highlight, animatedStyle, {width: (width / 3) - 20}]} />
-                <View style={[styles.tabsContainer, {width: TAB_WIDTH * tabs.length}]}>
+                <Animated.View
+                    style={[
+                        styles.highlight,
+                        animatedStyle,
+                        {width: (state.tabWidth! / 3) - 20}
+                    ]}
+                />
+                <View
+                    style={[
+                        styles.tabsContainer,
+                        {width: state.tabWidth! * tabs.length}
+                    ]}
+                >
                     {tabs.map((tab, index) => (
-                        <TouchableOpacity key={index} onPress={() => onTabPress(index)} style={styles.tab}>
-                            <Text style={activeTab === index ? styles.activeTabText : styles.tabText}>{tab}</Text>
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => onTabPress(index)}
+                            style={styles.tab}
+                        >
+                            <Text
+                                style={state.activeTab === index
+                                    ? styles.activeTabText
+                                    : styles.tabText}
+                            >
+                                {tab}
+                            </Text>
                         </TouchableOpacity>
                     ))}
                 </View>
             </View>
-            <Animated.View style={styles.content} layout={LinearTransition}>
-                {/*{contents[activeTab]}*/}
+            <Animated.View
+                style={styles.content}
+                layout={LinearTransition}
+            >
                 {contents.map((content, idx) => {
                     return (
-                        <View key={idx}>{activeTab === idx && content}</View>
+                        <View
+                            key={idx}
+                        >
+                            {state.activeTab === idx && content}
+                        </View>
                     )
                 })}
             </Animated.View>

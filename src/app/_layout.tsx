@@ -58,7 +58,7 @@ function App() {
 
     return (
         <>
-            {!user
+            {false //!user
                 ? <AuthModal
                     isOpen={isLoginModal}
                     onClose={() => setLoginModal(false)}
