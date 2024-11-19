@@ -1,6 +1,5 @@
 import { Animated, StyleSheet, Text, View } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
-import { ThemedView } from "@/components/ThemedView";
 import React, { useEffect, useRef, useState } from "react";
 
 type FadeUpTextProps = {
@@ -52,8 +51,7 @@ export function FadeUpText({type, text, delay, children, fontSize}: FadeUpTextPr
     }, []);
 
     return (
-        <ThemedView style={styles.container} >
-
+        <View style={styles.container} >
             <Animated.View style={{opacity}} >
                 <Animated.Text style={[
                     type === 'default' ? styles.default : undefined,
@@ -70,7 +68,7 @@ export function FadeUpText({type, text, delay, children, fontSize}: FadeUpTextPr
             <Animated.View style={{opacity: childOpacity}} >
                 {childrenVisible && children}
             </Animated.View >
-        </ThemedView >
+        </View >
     );
 }
 

@@ -3,9 +3,8 @@ import { ThemedText } from '@/components/text/themed-text';
 import React from 'react';
 import { setUserName, useAppDispatch } from '@/store';
 import { ThemedInput } from '@/components/input';
-import { ThemedButton } from "@/components/button";
 import { CustomGoogleSignIn } from "@/features/auth/sign-in-google";
-import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { themedColors } from "@/constants/themed-colors";
 import Animated, {
     LinearTransition,
@@ -17,11 +16,11 @@ import { globalStyles } from "@/styles/global-styles";
 export const SignIn = ({setSignUp}: { setSignUp: () => void }) => {
     const dispatch = useAppDispatch();
 
-    const [name, setName] = React.useState<string>('');
+    const [email, setEmail] = React.useState<string>('');
     const [password, setPassword] = React.useState<string>('');
 
     const onEmailChange = (text: string) => {
-        setName(text);
+        setEmail(text);
     };
 
     const onPasswordChange = (text: string) => {
@@ -29,8 +28,10 @@ export const SignIn = ({setSignUp}: { setSignUp: () => void }) => {
     };
 
     const handleOk = () => {
-        if (name !== '' && name !== null) {
-            dispatch(setUserName(name));
+        if (email !== '' && email !== null) {
+            auth().signInWithEmailAndPassword(email, password).then((result) => {
+
+            })
         }
     };
 
@@ -62,7 +63,7 @@ export const SignIn = ({setSignUp}: { setSignUp: () => void }) => {
                 <ThemedInput
                     onValueChange={onEmailChange}
                     placeholder="Email"
-                    value={name}
+                    value={email}
                 />
                 <ThemedInput
                     onValueChange={onPasswordChange}

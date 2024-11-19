@@ -1,9 +1,8 @@
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { KitchenLanding, KitchenRecipes, KitchenMachines, KitchenPantry } from "@/features/kitchen";
 import React, { useEffect } from "react";
-import { ThemedView } from "@/components/ThemedView";
 import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated";
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
 import { useIsFocused } from "@react-navigation/native";
 
@@ -24,8 +23,8 @@ export default function Kitchen() {
                 />
             }
         >
-            <ThemedView >
-                <ThemedView style={styles.content} >
+            <View >
+                <View style={styles.content} >
                     <LayoutAnimationConfig skipEntering>
                     {screenNav === 'landing' &&
                         <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft} style={styles.container} >
@@ -48,8 +47,8 @@ export default function Kitchen() {
                         </Animated.View >
                     }
                     </LayoutAnimationConfig>
-                </ThemedView >
-            </ThemedView >
+                </View >
+            </View >
         </ParallaxScrollView >
 
     );

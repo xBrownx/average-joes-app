@@ -2,8 +2,6 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Image } from 'react-native';
 import { TabBarIcon } from '@/components/navigation/tab-bar-icon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { themedColors } from "@/constants/themed-colors";
 
 export default function TabLayout() {
@@ -48,22 +46,22 @@ export default function TabLayout() {
                 }}
             />
 
-            {/*<Tabs.Screen*/}
-            {/*    name="pantry"*/}
-            {/*    options={{*/}
-            {/*        title: 'Pantry',*/}
-            {/*        tabBarIcon: ({color, focused}) => (*/}
-            {/*            <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={themedColors.primary} />*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
-
             <Tabs.Screen
                 name="learn"
                 options={{
                     title: 'Learn',
                     tabBarIcon: ({color, focused}) => (
                         <TabBarIcon name={focused ? 'school' : 'school-outline'} color={themedColors.primary} />
+                    ),
+                }}
+            />
+
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: 'Profile',
+                    tabBarIcon: ({color, focused}) => (
+                        <TabBarIcon name={focused ? 'person' : 'person-outline'} color={themedColors.primary} />
                     ),
                 }}
             />

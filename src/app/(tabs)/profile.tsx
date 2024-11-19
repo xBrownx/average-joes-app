@@ -2,7 +2,7 @@ import { Image, StyleSheet } from 'react-native';
 import 'react-native-gesture-handler';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import React from "react";
-import { DialInCore } from "@/features/dial-in";
+import { ProfileCore } from "@/features/profile";
 
 export default function DialIn() {
     return (
@@ -14,7 +14,7 @@ export default function DialIn() {
                         style={styles.headerImage}
                     />
                 }>
-                <DialInCore />
+                <ProfileCore />
             </ParallaxScrollView>
     );
 }
@@ -30,5 +30,3 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 });
-
-

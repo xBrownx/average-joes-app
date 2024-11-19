@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Appearance, Dimensions, LayoutAnimation } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Animated, { LinearTransition, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { themedColors } from "@/constants/themed-colors";
-import { useCustomState } from '../../hooks/use-custom-state';
+import { useCustomState } from '@/hooks';
 
 interface AnimatedTabState {
     activeTab?: number;
@@ -42,13 +42,15 @@ export const AnimatedTabs: React.FC<TabProps> = ({tabs, contents}) => {
             layout={LinearTransition}
         >
             <View style={styles.container}>
-                <Animated.View
-                    style={[
-                        styles.highlight,
-                        animatedStyle,
-                        {width: (state.tabWidth! / 3) - 20}
-                    ]}
-                />
+                {state.activeTab! >= 0 &&
+                    <Animated.View
+                        style={[
+                            styles.highlight,
+                            animatedStyle,
+                            {width: (state.tabWidth! / 3) - 20}
+                        ]}
+                    />
+                }
                 <View
                     style={[
                         styles.tabsContainer,
@@ -72,20 +74,22 @@ export const AnimatedTabs: React.FC<TabProps> = ({tabs, contents}) => {
                     ))}
                 </View>
             </View>
-            <Animated.View
-                style={styles.content}
-                layout={LinearTransition}
-            >
-                {contents.map((content, idx) => {
-                    return (
-                        <View
-                            key={idx}
-                        >
-                            {state.activeTab === idx && content}
-                        </View>
-                    )
-                })}
-            </Animated.View>
+            {state.activeTab! >= 0 &&
+                <Animated.View
+                    style={styles.content}
+                    layout={LinearTransition}
+                >
+                    {contents.map((content, idx) => {
+                        return (
+                            <View
+                                key={idx}
+                            >
+                                {state.activeTab === idx && content}
+                            </View>
+                        )
+                    })}
+                </Animated.View>
+            }
         </Animated.View>
     );
 };
@@ -101,6 +105,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: 'white',
         marginBottom: 10,
+        overflow: 'hidden',
     },
     container: {
         position: 'relative',

@@ -4,7 +4,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     View,
-    StyleSheet,
+    StyleSheet
 } from 'react-native';
 import Animated, { SlideInLeft, SlideOutLeft } from 'react-native-reanimated';
 
@@ -12,11 +12,9 @@ import { ThemedInput } from '@/components/input';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 import { UserMachine } from '@/domain';
-import {
-    FormState, portafilterOptions,
-} from '@/features/kitchen/machines/types';
+import { FormState, portafilterOptions } from '@/features/kitchen/machines/types';
 import { addUserMachine, useAppDispatch } from '@/store';
-import { StateType } from '@/hooks/useCustomState';
+import { StateType } from '@/hooks';
 import uuid from 'react-native-uuid';
 
 type AddMachineProps = {
@@ -26,21 +24,21 @@ type AddMachineProps = {
     onSaveCallback?: (id: string) => void;
 };
 
-export function AddMachine({ parentState, updateParentState, close, onSaveCallback }: AddMachineProps) {
+export function AddMachine({parentState, updateParentState, close, onSaveCallback}: AddMachineProps) {
     const dispatch = useAppDispatch();
 
     const onSave = () => {
         const userMachine: UserMachine = {
             id: uuid.v4().toString(),
-            make: parentState.make?? 'unknown',
+            make: parentState.make ?? 'unknown',
             model: {
                 id: uuid.v4().toString(),
-                name: parentState.model?? 'unknown',
-                portafilterSize: parentState.portafilterSize?? 'unknown',
+                name: parentState.model ?? 'unknown',
+                portafilterSize: parentState.portafilterSize ?? 'unknown',
             },
         };
         dispatch(addUserMachine(userMachine));
-        if(onSaveCallback)
+        if (onSaveCallback)
             onSaveCallback(userMachine.id);
         close();
     };
@@ -73,17 +71,17 @@ export function AddMachine({ parentState, updateParentState, close, onSaveCallba
                         <ThemedInput
                             onValueChange={(text) => updateParentState({make: text})}
                             placeholder="Make"
-                            value={parentState.make?? ''}
+                            value={parentState.make ?? ''}
                         />
                         <ThemedInput
                             onValueChange={(text) => updateParentState({model: text})}
                             placeholder="Model"
-                            value={parentState.model?? ''}
+                            value={parentState.model ?? ''}
                         />
                         <View style={styles.listContainer}>
                             <ThemedText
                                 type={'defaultSemiBold'}
-                                style={{ color: 'black' }}
+                                style={{color: 'black'}}
                             >
                                 Portafilter Size:
                             </ThemedText>

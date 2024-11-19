@@ -8,8 +8,7 @@ import {
 } from "@/features/dial-in/screens";
 import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { useCustomState } from "@/hooks/useCustomState";
-import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useCustomState, useTextToSpeech } from "@/hooks";
 
 type CurrentStep = 'landing' | 'coffee-select' | 'portafilter-select' | 'prepare' | 'recipe' | 'process' | 'pull-shot' | '';
 

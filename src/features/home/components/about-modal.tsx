@@ -5,14 +5,9 @@ import { themedColors } from "@/constants/themed-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModal } from "@/components/modal";
 import { globalStyles } from "@/styles/global-styles";
+import { ThemedModalProps } from "@/components/modal/types";
 
-type AboutModalProps = RNModalProps & {
-    isOpen: boolean;
-    onClose: () => void;
-    withInput?: boolean;
-}
-
-export function AboutModal({isOpen, onClose, withInput, ...rest}: AboutModalProps) {
+export function AboutModal({isOpen, onClose }: ThemedModalProps) {
 
     return (
         <ThemedModal isOpen={isOpen} onClose={onClose} >

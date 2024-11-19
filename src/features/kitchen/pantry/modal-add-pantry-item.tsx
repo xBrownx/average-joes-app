@@ -1,14 +1,10 @@
 import {
     Button,
-    Modal as RNModal,
-    ModalProps as RNModalProps,
-    StyleSheet, TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
+    StyleSheet,
     View,
 } from 'react-native';
 import { themedColors } from '@/constants/themed-colors';
-import React, { useState } from 'react';
+import React from 'react';
 import { useAppDispatch } from '@/store/store';
 import { addUserPantryItem } from '@/store/slice/local-data-slice';
 import { ThemedText } from '@/components/text/themed-text';
@@ -16,78 +12,61 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { PantryItem } from '@/domain';
 import uuid from 'react-native-uuid';
 import { ThemedInput } from '@/components/input';
-import CheckBox from 'expo-checkbox';
 import { ThemedCheckbox } from '@/components/checkbox/themed-checkbox';
 import { ThemedModal } from '@/components/modal';
 import { ThemedDatePicker } from '@/components/date-picker';
 import { dateObjToString } from '@/usecase/date-usecase';
-
-type AddPantryModalProps = RNModalProps & {
-    isOpen: boolean;
-    onClose: () => void;
-    withInput?: boolean;
-};
+import { ThemedModalProps } from "@/components/modal/types";
+import { useCustomState } from "@/hooks";
 
 interface FormState {
-    blendName: string;
-    roasterName: string;
-    roastDate: string;
-    expiryDate: string;
-    isNotifyExpiry: boolean;
+    blendName?: string;
+    roasterName?: string;
+    roastDate?: string;
+    expiryDate?: string;
+    isNotifyExpiry?: boolean;
 }
 
-type FormStateAction = 'blendName' | 'roasterName' | 'roastDate' | 'expiryDate' | 'isNotifyExpiry';
-
-const initialFormState: FormState = {
-    blendName: '',
-    roasterName: '',
-    roastDate: '',
-    expiryDate: '',
-    isNotifyExpiry: false,
-};
-
-export const AddPantryModal = ({ isOpen, onClose, withInput, children, ...rest }: AddPantryModalProps) => {
+export const AddPantryModal = ({isOpen, onClose}: ThemedModalProps) => {
     const dispatch = useAppDispatch();
-    const [formState, setFormState] = useState<FormState>(initialFormState);
+    const {state, updateState} = useCustomState<FormState>({
+        blendName: '',
+        roasterName: '',
+        roastDate: '',
+        expiryDate: '',
+        isNotifyExpiry: false,
+    });
 
 
     const closeModal = () => {
-        setFormState(initialFormState);
+        // setFormState(initialFormState);
         onClose();
     };
 
-    const updateState = (name: FormStateAction, value: any) => {
-        setFormState(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
     const handleCheckboxPress = () => {
-        setFormState(prevState => ({
-            ...prevState,
-            'isNotifyExpiry': !prevState.isNotifyExpiry,
-        }));
+        updateState({
+            isNotifyExpiry: !state.isNotifyExpiry,
+        });
     };
 
     const onSave = () => {
         const pantryItem: PantryItem = {
             id: uuid.v4().toString(),
-            blendName: formState.blendName,
-            roasterName: formState.roasterName,
-            roastDate: formState.roastDate,
-            expiryDate: formState.expiryDate,
-            isNotifyExpiry: formState.isNotifyExpiry,
+            blendName: state.blendName ?? '',
+            roasterName: state.roasterName ?? '',
+            roastDate: state.roastDate ?? '',
+            expiryDate: state.expiryDate ?? '',
+            isNotifyExpiry: state.isNotifyExpiry ?? false,
         };
         dispatch(addUserPantryItem(pantryItem));
         closeModal();
     };
 
     return (
-        <ThemedModal isOpen={isOpen} onClose={closeModal} >
-            <View style={styles.modalInner} >
-                <View style={styles.titleContainer} >
-                    <ThemedText type={'subtitle'} >Add a Pantry Item</ThemedText >
+        <ThemedModal isOpen={isOpen} onClose={closeModal}>
+            <View style={styles.modalInner}>
+                <View style={styles.titleContainer}>
+                    <ThemedText type={'subtitle'}>Add a Pantry Item</ThemedText>
                     <Ionicons.Button
                         name="search"
                         size={24}
@@ -97,38 +76,38 @@ export const AddPantryModal = ({ isOpen, onClose, withInput, children, ...rest }
                         onPress={() => {
                         }}
                     />
-                </View >
+                </View>
 
                 <ThemedText
                     type={'default'}
                     style={styles.titleContainer}
                 >
                     Let Joe help you keep your beans fresh!
-                </ThemedText >
+                </ThemedText>
 
-                <View style={styles.content} >
+                <View style={styles.content}>
                     <ThemedInput
-                        onValueChange={(text) => updateState('blendName', text)}
+                        onValueChange={(text) => updateState({blendName: text})}
                         placeholder="Blend Name"
-                        value={formState.blendName}
+                        value={state.blendName ?? ''}
                     />
                     <ThemedInput
-                        onValueChange={(text) => updateState('roasterName', text)}
+                        onValueChange={(text) => updateState({roasterName: text})}
                         placeholder="Roaster Name"
-                        value={formState.roasterName}
+                        value={state.roasterName ?? ''}
                     />
                     <ThemedDatePicker
-                        onValueChange={(date: Date) => updateState('roastDate', dateObjToString(date))}
+                        onValueChange={(date: Date) => updateState({roastDate: dateObjToString(date)})}
                         placeholder="Roast Date"
-                        value={formState.roastDate}
+                        value={state.roastDate ?? ''}
                     />
                     <ThemedDatePicker
-                        onValueChange={(date: Date) => updateState('expiryDate', dateObjToString(date))}
+                        onValueChange={(date: Date) => updateState({expiryDate: dateObjToString(date)})}
                         placeholder="Expiry Date"
-                        value={formState.expiryDate}
+                        value={state.expiryDate ?? ''}
                     />
                     <ThemedCheckbox
-                        checked={formState.isNotifyExpiry}
+                        checked={state.isNotifyExpiry ?? false}
                         setChecked={handleCheckboxPress}
                         label="Notify Expiry?"
                     />
@@ -137,9 +116,9 @@ export const AddPantryModal = ({ isOpen, onClose, withInput, children, ...rest }
                         color={themedColors.primary}
                         onPress={onSave}
                     />
-                </View >
-            </View >
-        </ThemedModal >
+                </View>
+            </View>
+        </ThemedModal>
     );
 };
 

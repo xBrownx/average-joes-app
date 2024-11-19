@@ -2,12 +2,9 @@ import { Button, StyleSheet, View, Animated, TouchableOpacity } from "react-nati
 import { themedColors } from "@/constants/themed-colors";
 import React, { useEffect } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/custom-type-writer";
-import { CONSTANTS } from "@/features/dial-in/constants";
 import { FadeUpText } from "@/components/text/fade-up-text";
 import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
-import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { DialInScreenProps } from "@/features/dial-in/types";
-
 
 export function DialInPrepare({onNext, onBack, onExit, onShow, speak}: DialInScreenProps) {
 
@@ -62,7 +59,10 @@ export function DialInPrepare({onNext, onBack, onExit, onShow, speak}: DialInScr
                     >
 
                         <View style={styles.content}>
-                            {CONSTANTS.qThreeSub.map((text, idx) => (
+                            {[
+                                "- Turn it on and let it get to temp",
+                                "- Run a shot (of just hot water) through the portafilter to heat it up. We want it to be consistently hot all the time."
+                            ].map((text, idx) => (
                                 <FadeUpText
                                     key={idx}
                                     text={text}

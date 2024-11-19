@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import Animated, { FadeIn, FadeOut, LinearTransition, SlideInLeft, SlideOutLeft } from 'react-native-reanimated';
-
 import { ThemedInput } from '@/components/input';
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
@@ -16,7 +15,7 @@ import { UserRecipe } from '@/domain';
 import { FormState } from '@/features/kitchen/recipes/types';
 import { addUserRecipe, useAppDispatch } from '@/store';
 import { globalStyles } from '@/styles/global-styles';
-import { StateType, useCustomState } from '@/hooks/useCustomState';
+import { StateType, useCustomState } from '@/hooks/use-custom-state';
 import uuid from "react-native-uuid";
 import { ThemedDatePicker } from "@/components/date-picker";
 import { ThemedCheckbox } from "@/components/checkbox";

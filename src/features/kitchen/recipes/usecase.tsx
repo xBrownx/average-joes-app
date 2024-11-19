@@ -29,7 +29,7 @@ export function findUserRecipeWithId(id: string, userRecipes: UserRecipe[]): Use
 
 export function findServerBlendNameWithId(id: string, serverBlends: RemoteBlend[]): string {
     console.log(id);
-    return serverBlends.find((blend) => blend.id === id)?.blendName?? 'none found'
+    return serverBlends.find((blend) => blend.id === id)?.name?? 'none found'
 }
 
 export function findServerRoasterNameWithId(id: string, serverRoasters: RemoteRoaster[]): string {

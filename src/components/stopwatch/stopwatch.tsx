@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { ThemedText } from "@/components/text/themed-text";
-import { useCustomState } from "@/hooks/useCustomState";
+import { useCustomState } from "@/hooks";
 import { themedColors } from "@/constants/themed-colors";
 
 type CF = ({0: `#${string}`; } & {1: `#${string}`; } & `#${string}`[])

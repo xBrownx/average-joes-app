@@ -4,7 +4,6 @@ import { themedColors } from '@/constants/themed-colors';
 import React from 'react';
 import { ThemedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
-import { ExternalLink } from '@/components/ExternalLink';
 
 type ModalProps = RNModalProps & {
     isOpen: boolean;

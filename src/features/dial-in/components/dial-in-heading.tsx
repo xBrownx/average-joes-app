@@ -1,7 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { themedColors } from '@/constants/themed-colors';
-import { ThemedText } from '@/components/text/themed-text';
 import React, { useState } from 'react';
 import { selectMuted, setMuted, useAppDispatch, useAppSelector } from '@/store';
 import { ModalConfirmExit } from "@/features/dial-in/components/modal-confirm-exit";

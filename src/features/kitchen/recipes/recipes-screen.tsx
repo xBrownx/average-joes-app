@@ -3,13 +3,12 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { ThemedCardView } from '@/components/card';
 import { ThemedText } from '@/components/text/themed-text';
-import { ThemedView } from '@/components/ThemedView';
 import { themedColors } from '@/constants/themed-colors';
 import { UserRecipe } from '@/domain';
 import { AddRecipeModal } from '@/features/kitchen/recipes/modal-recipe-base';
 import { ViewRecipeModal } from '@/features/kitchen/recipes/modal-view-recipe';
 import { selectUserRecipes, useAppSelector } from '@/store';
-import { useCustomState } from '@/hooks/useCustomState';
+import { useCustomState } from '@/hooks';
 import { findUserRecipeWithId } from "@/features/kitchen/recipes/usecase";
 import { globalStyles } from "@/styles/global-styles";
 import { TypeWriterText } from "@/components/typewriter";
@@ -103,7 +102,7 @@ export function KitchenRecipes({navBack}: KitchenChildProps) {
                     </ThemedText>
                 </View>
 
-                <ThemedView style={globalStyles.listContainer}>
+                <View style={globalStyles.listContainer}>
                     {state.recipeCards!.map((card) => (
                         <ThemedCardView
                             key={card.id}
@@ -139,7 +138,7 @@ export function KitchenRecipes({navBack}: KitchenChildProps) {
                     >
                         <ThemedText type={'subtitle'}>ADD NEW</ThemedText>
                     </ThemedCardView>
-                </ThemedView>
+                </View>
             </View>
         </>
     );

@@ -1,6 +1,5 @@
-import { StyleSheet, Image } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedView } from '@/components/ThemedView';
+import { StyleSheet, Image, View } from 'react-native';
+import ParallaxScrollView from '@/components/parallax-scroll-view';
 import React from "react";
 import { LearnLandingPage } from "@/features/learn/components/landing-page";
 import { LearnPlayerPage } from "@/features/learn/components/player-page";
@@ -33,7 +32,7 @@ export default function Learn() {
                 source={require('@/assets/images/avatar.png')}
                 style={styles.headerImage}
             />}>
-            <ThemedView style={styles.container} >
+            <View style={styles.container} >
                 <LayoutAnimationConfig skipEntering>
                 {!videoScreen &&
                     <Animated.View id={'1'} entering={SlideInLeft} exiting={SlideOutLeft}>
@@ -46,7 +45,7 @@ export default function Learn() {
                     </Animated.View>
                 }
                 </LayoutAnimationConfig>
-            </ThemedView>
+            </View>
         </ParallaxScrollView>
     );
 }

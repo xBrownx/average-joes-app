@@ -4,11 +4,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { Provider } from "react-redux";
-import store, { useAppDispatch, useAppSelector } from "@/store/store";
+import store, { useAppDispatch } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
-import { selectUser } from "@/store";
 import { AuthModal } from "@/features/auth/auth-modal";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { composeNode } from "yaml/dist/compose/compose-node";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,7 +24,7 @@ export default function RootLayout() {
 function App() {
     const dispatch = useAppDispatch();
     const [isLoginModal, setLoginModal] = useState(true);
-    const [initializing, setInitializing] = useState(true);
+    const [initializing, setInitializing] = useState(true); // may need to change this to true
     const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
     const [loaded] = useFonts({
@@ -37,6 +37,7 @@ function App() {
     // Handle user state changes
     function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
         setUser(user);
+        console.log(user);
         if (initializing) setInitializing(false);
     }
 
@@ -58,7 +59,7 @@ function App() {
 
     return (
         <>
-            {false //!user
+            {!user
                 ? <AuthModal
                     isOpen={isLoginModal}
                     onClose={() => setLoginModal(false)}

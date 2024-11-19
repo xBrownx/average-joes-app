@@ -11,7 +11,7 @@ import { selectUserMachines } from '@/store/slice/local-data-slice';
 import { useAppSelector } from '@/store/store';
 import { TypeWriterText } from "@/components/typewriter";
 import { KitchenChildProps } from "@/features/kitchen/types";
-import { useCustomState } from "@/hooks/useCustomState";
+import { useCustomState } from "@/hooks";
 import { globalStyles } from '@/styles/global-styles';
 
 type MachineCard = {

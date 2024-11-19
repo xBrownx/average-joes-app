@@ -3,26 +3,21 @@ import React from 'react';
 import {
     Button,
     Linking,
-    Modal as RNModal,
-    ModalProps as RNModalProps,
     StyleSheet,
-    TouchableOpacity,
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
 
 import { Rating } from 'react-native-ratings';
-
 import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
-
 import { UserRecipe } from '@/domain';
+import { ThemedModalProps } from "@/components/modal/types";
+import { ThemedModal } from "@/components/modal";
+import { globalStyles } from "@/styles/global-styles";
 
-type ViewRecipeModalProps = RNModalProps & {
-    isOpen: boolean;
-    onClose: () => void;
+type ViewRecipeModalProps = ThemedModalProps & {
     selectedRecipe: UserRecipe | null;
-    withInput?: boolean;
 };
 
 function FieldValue({name, value}: { name: string; value?: string }) {
@@ -78,9 +73,6 @@ export const ViewRecipeModal = (
         isOpen,
         onClose,
         selectedRecipe,
-        withInput,
-        children,
-        ...rest
     }: ViewRecipeModalProps
 ) => {
     if (!selectedRecipe) return;
@@ -96,72 +88,63 @@ export const ViewRecipeModal = (
     };
 
     return (
-        <RNModal
-            visible={isOpen}
-            transparent
-            animationType="fade"
-            statusBarTranslucent
-            style={styles.container}
-            {...rest}
-        >
-            <TouchableOpacity style={styles.modalOuter} onPress={onClose}>
-                <TouchableWithoutFeedback>
-                    <View style={styles.modalInner}>
-                        <View style={styles.titleContainer}>
-                            <ThemedText type={'subtitle'}>
-                                Blend Details
-                            </ThemedText>
-                            <Ionicons.Button
-                                name="close"
-                                size={24}
-                                backgroundColor={'transparent'}
-                                color={themedColors.tertiary}
-                                onPress={onClose}
-                            />
-                        </View>
-                        <FieldValue
-                            name={'Blend Name'}
-                            value={selectedRecipe.blendName}
+        <ThemedModal isOpen={isOpen} onClose={onClose}>
+            <TouchableWithoutFeedback>
+                <View style={globalStyles.innerModal}>
+                    <View style={styles.titleContainer}>
+                        <ThemedText type={'subtitle'}>
+                            Blend Details
+                        </ThemedText>
+                        <Ionicons.Button
+                            name="close"
+                            size={24}
+                            backgroundColor={'transparent'}
+                            color={themedColors.tertiary}
+                            onPress={onClose}
                         />
-                        <FieldValue
-                            name={'Roaster'}
-                            value={selectedRecipe.roasterName ?? 'unknown'}
-                        />
-                        <FieldValue
-                            name={'Tasting Notes'}
-                            value={selectedRecipe.tastingNotes ?? 'unknown'}
-                        />
-                        <Recipe
-                            dose={selectedRecipe.dose ?? 'unknown'}
-                            yieldVal={selectedRecipe.yield ?? 'unknown'}
-                            time={selectedRecipe.time ?? 'unknown'}
-                        />
-                        <FieldValue name={'Rating'} />
-                        <Rating
-                            type="heart"
-                            ratingCount={5}
-                            imageSize={40}
-                            startingValue={selectedRecipe.rating ?? 0}
-                            jumpValue={0.5}
-                            readonly
-                            style={{
-                                alignItems: 'flex-start',
-                                marginBottom: 16,
-                            }}
-                        />
-                        {selectedRecipe && (
-                            <Button
-                                title={'BUY MORE'}
-                                color={themedColors.primary}
-                                onPress={() =>
-                                    openExternalUrl(selectedRecipe.buyLink)
-                                }
-                            />
-                        )}
                     </View>
-                </TouchableWithoutFeedback>
-            </TouchableOpacity>
-        </RNModal>
+                    <FieldValue
+                        name={'Blend Name'}
+                        value={selectedRecipe.blendName}
+                    />
+                    <FieldValue
+                        name={'Roaster'}
+                        value={selectedRecipe.roasterName ?? 'unknown'}
+                    />
+                    <FieldValue
+                        name={'Tasting Notes'}
+                        value={selectedRecipe.tastingNotes ?? 'unknown'}
+                    />
+                    <Recipe
+                        dose={selectedRecipe.dose ?? 'unknown'}
+                        yieldVal={selectedRecipe.yield ?? 'unknown'}
+                        time={selectedRecipe.time ?? 'unknown'}
+                    />
+                    <FieldValue name={'Rating'} />
+                    <Rating
+                        type="heart"
+                        ratingCount={5}
+                        imageSize={40}
+                        startingValue={selectedRecipe.rating ?? 0}
+                        jumpValue={0.5}
+                        readonly
+                        style={{
+                            alignItems: 'flex-start',
+                            marginBottom: 16,
+                        }}
+                    />
+                    {selectedRecipe && (
+                        <Button
+                            title={'BUY MORE'}
+                            color={themedColors.primary}
+                            onPress={() =>
+                                openExternalUrl(selectedRecipe.buyLink)
+                            }
+                        />
+                    )}
+                </View>
+            </TouchableWithoutFeedback>
+        </ThemedModal>
     );
 };
 
@@ -175,33 +158,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 16,
         justifyContent: 'space-between',
-    },
-    stepContainer: {
-        gap: 16,
-        marginBottom: 16,
-    },
-    reactLogo: {
-        height: '70%',
-        width: '100%',
-        bottom: 0,
-        marginBottom: '5%',
-        position: 'absolute',
-        objectFit: 'contain',
-        alignSelf: 'center',
-    },
-    modalOuter: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        paddingLeft: 8,
-        paddingRight: 8,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    },
-    modalInner: {
-        width: '100%',
-        padding: 16,
-        backgroundColor: 'white',
-        borderRadius: 8,
     },
     content: {
         gap: 8,

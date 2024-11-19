@@ -1,22 +1,15 @@
-import {
-    Linking,
-    ModalProps as RNModalProps,
-    StyleSheet,
-    View,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { themedColors } from '@/constants/themed-colors';
 import React from 'react';
 import { ThemedText } from '@/components/text/themed-text';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ThemedModal } from '@/components/modal';
 import { PantryItem } from '@/domain';
+import { ThemedModalProps } from "@/components/modal/types";
+import { globalStyles } from "@/styles/global-styles";
 
-
-type ViewBeanModalProps = RNModalProps & {
-    isOpen: boolean;
-    onClose: () => void;
+type ViewBeanModalProps = ThemedModalProps & {
     selectedPantryItem: PantryItem | null,
-    withInput?: boolean;
 };
 
 function FieldValue({ name, value }: { name: string, value?: string }) {
@@ -39,8 +32,11 @@ export function ViewPantryModal({
 }: ViewBeanModalProps) {
     if (!selectedPantryItem) return;
     return (
-        <ThemedModal isOpen={isOpen} onClose={onClose} >
-            <View style={styles.modalInner} >
+        <ThemedModal
+            isOpen={isOpen}
+            onClose={onClose}
+        >
+            <View style={globalStyles.innerModal} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >
                         Blend Details
@@ -77,29 +73,6 @@ const styles = StyleSheet.create({
     stepContainer: {
         gap: 16,
         marginBottom: 16,
-    },
-    reactLogo: {
-        height: '70%',
-        width: '100%',
-        bottom: 0,
-        marginBottom: '5%',
-        position: 'absolute',
-        objectFit: 'contain',
-        alignSelf: 'center',
-    },
-    modalOuter: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        paddingLeft: 8,
-        paddingRight: 8,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    },
-    modalInner: {
-        width: '100%',
-        padding: 16,
-        backgroundColor: 'white',
-        borderRadius: 8,
     },
     content: {
         gap: 8,

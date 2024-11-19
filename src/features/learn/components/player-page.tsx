@@ -1,7 +1,6 @@
 import YoutubePlayer from "react-native-youtube-iframe";
 import React, { useState } from "react";
-import { Dimensions, StyleSheet, ActivityIndicator } from "react-native";
-import { ThemedView } from "@/components/ThemedView";
+import { Dimensions, StyleSheet, ActivityIndicator, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { themedColors } from "@/constants/themed-colors";
 import { ThemedText } from "@/components/text/themed-text";
@@ -23,8 +22,8 @@ export function LearnPlayerPage({title, videoId, navBack}: {
     }
 
     return (
-        <ThemedView>
-            <ThemedView style={styles.titleContainer}>
+        <View>
+            <View style={styles.titleContainer}>
                 <Ionicons.Button
                     name="arrow-back"
                     size={24}
@@ -35,17 +34,23 @@ export function LearnPlayerPage({title, videoId, navBack}: {
                 <ThemedText type="subtitle">
                     {title}
                 </ThemedText>
-            </ThemedView>
-            <ThemedView style={styles.content}>
-                {videoLoading && <ActivityIndicator style={styles.spinner} size="large" color={themedColors.primary} />}
+            </View>
+            <View style={styles.content}>
+                {videoLoading &&
+                    <ActivityIndicator
+                        style={styles.spinner}
+                        size="large"
+                        color={themedColors.primary}
+                    />
+                }
                 <YoutubePlayer
                     height={200}
                     width={width - 64}
                     videoId={videoId}
                     onReady={() => setVideoLoading(false)}
                 />
-            </ThemedView>
-        </ThemedView>
+            </View>
+        </View>
     );
 }
 
@@ -56,21 +61,11 @@ const styles = StyleSheet.create({
         gap: 16,
         overflow: 'hidden',
     },
-    headerImage: {
-        color: '#808080',
-        bottom: -90,
-        left: -35,
-        position: 'absolute',
-    },
     titleContainer: {
         paddingVertical: 20,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 0,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'transparent',
     },
     spinner: {
         position: 'absolute',

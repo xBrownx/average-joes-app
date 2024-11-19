@@ -1,4 +1,4 @@
-import { Button, StyleSheet, View, Animated, TouchableOpacity } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
 import React, { useEffect, useState } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/custom-type-writer";

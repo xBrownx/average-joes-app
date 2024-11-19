@@ -1,8 +1,6 @@
 import { StyleSheet, View } from 'react-native';
-import { ThemedText } from '@/components/text/themed-text';
 import React from 'react';
 import { ThemedModal } from '@/components/modal';
-import { globalStyles } from '@/styles/global-styles';
 import { SignIn } from '@/features/auth/sign-in';
 import { SignUp } from "@/features/auth/sign-up";
 import { ThemedModalProps } from "@/components/modal/types";

@@ -3,9 +3,9 @@ import { themedColors } from '@/constants/themed-colors';
 import React, { useEffect } from 'react';
 import { CustomTypeWriter, DialInHeading } from '@/features/dial-in/components';
 import { useAppSelector } from '@/store/store';
-import { DropdownData, ThemedDropdown } from '@/components/dropdown';
+import { ThemedDropdown } from '@/components/dropdown';
 import { selectUserRecipes, selectUserPantryItems } from '@/store';
-import { useCustomState } from '@/hooks/useCustomState';
+import { useCustomState } from '@/hooks';
 import { AddRecipeModal } from '@/features/kitchen';
 import { pantryItemsToDropdown, userRecipesToDropdown } from '@/usecase';
 import { ThemedText } from '@/components/text/themed-text';
@@ -13,7 +13,6 @@ import Animated, {
     StretchOutY,
     LinearTransition,
 } from 'react-native-reanimated';
-import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { DialInScreenProps } from "@/features/dial-in/types";
 
 

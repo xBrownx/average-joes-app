@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { TypeWriterText } from "@/components/typewriter";
-import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/text/themed-text";
 
 type CustomTypeWriterProps = {
@@ -34,7 +33,7 @@ export function CustomTypeWriter({text, type, speed, children, onComplete, isSho
     }, [isShow])
 
     return (
-        <ThemedView style={styles.stepContainer} >
+        <View style={styles.stepContainer} >
             {isShow
                 ? text.map(t => (<ThemedText key={t} type={type}>{t}</ThemedText>))
                 : <TypeWriterText textArr={text} speed={speed} onComplete={fadeInChildren} type={type} />
@@ -42,7 +41,7 @@ export function CustomTypeWriter({text, type, speed, children, onComplete, isSho
             <Animated.View style={[{opacity}]}>
                 {childrenVisible && children}
             </Animated.View>
-        </ThemedView >
+        </View >
     );
 }
 

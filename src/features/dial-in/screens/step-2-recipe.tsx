@@ -5,7 +5,7 @@ import { CustomTypeWriter } from '@/features/dial-in/components/custom-type-writ
 import { ThemedText } from '@/components/text/themed-text';
 import { DialInHeading } from '@/features/dial-in/components/dial-in-heading';
 import { AnimatedTabs } from '@/components/tabs/animated-tabs';
-import { FadeIn, LinearTransition } from 'react-native-reanimated';
+import { LinearTransition } from 'react-native-reanimated';
 import { FadeInText } from '@/features/dial-in/components/fade-in-text';
 import Anim from 'react-native-reanimated';
 import { DialInScreenProps } from '@/features/dial-in/types';

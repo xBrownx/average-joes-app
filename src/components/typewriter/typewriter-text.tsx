@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, Text, TextProps } from 'react-native';
-import { StyleProps } from 'react-native-reanimated';
+import { StyleSheet, Text } from 'react-native';
 
 import { themedColors } from '@/constants/themed-colors';
 

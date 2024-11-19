@@ -1,26 +1,17 @@
-import {
-    Button, Linking,
-    Modal as RNModal,
-    ModalProps as RNModalProps,
-    StyleSheet,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View
-} from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { themedColors } from "@/constants/themed-colors";
 import React from "react";
 
-import { UserBean, UserMachine } from "../../../domain";
+import { UserMachine } from "@/domain";
 import { ThemedText } from "@/components/text/themed-text";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Rating } from "react-native-ratings";
+import { ThemedModal } from "@/components/modal";
+import { ThemedModalProps } from "@/components/modal/types";
+import { globalStyles } from "@/styles/global-styles";
 
 
-type ViewMachineModalProps = RNModalProps & {
-    isOpen: boolean;
-    onClose: () => void;
+type ViewMachineModalProps = ThemedModalProps & {
     selectedMachine: UserMachine | null,
-    withInput?: boolean;
 };
 
 function FieldValue({name, value}: { name: string, value?: string }) {
@@ -36,21 +27,13 @@ function FieldValue({name, value}: { name: string, value?: string }) {
     );
 }
 
-export const ViewMachineModal = ({isOpen, onClose, selectedMachine, withInput, children, ...rest}: ViewMachineModalProps) => {
+export const ViewMachineModal = ({isOpen, onClose, selectedMachine }: ViewMachineModalProps) => {
     if (!selectedMachine) return
 
     return (
-        <RNModal
-            visible={isOpen}
-            transparent
-            animationType="fade"
-            statusBarTranslucent
-            style={styles.container}
-            {...rest}
-        >
-            <TouchableOpacity style={styles.modalOuter} onPress={onClose}>
+        <ThemedModal isOpen={isOpen} onClose={onClose}>
                 <TouchableWithoutFeedback>
-                    <View style={styles.modalInner}>
+                    <View style={globalStyles.innerModal}>
                         <View style={styles.titleContainer}>
                             <ThemedText type={'subtitle'}>
                                 Machine Details
@@ -68,8 +51,7 @@ export const ViewMachineModal = ({isOpen, onClose, selectedMachine, withInput, c
                         <FieldValue name={'Portafilter Size'} value={selectedMachine.model.portafilterSize} />
                     </View>
                 </TouchableWithoutFeedback>
-            </TouchableOpacity>
-        </RNModal>
+        </ThemedModal>
     );
 
 }

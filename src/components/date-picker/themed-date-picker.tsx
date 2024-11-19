@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import DateTimePicker, { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { Pressable, StyleSheet, TextInput } from "react-native";
+import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 type ThemedDatePickerProps = {
     placeholder: string;

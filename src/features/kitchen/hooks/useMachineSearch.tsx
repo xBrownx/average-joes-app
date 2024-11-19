@@ -11,8 +11,6 @@ interface MachineSearch {
 }
 
 export function useMachineSearch(): MachineSearch {
-
-
     const machineMakes = useAppSelector(selectRemoteMachineMake);
     const machineModels = useAppSelector(selectRemoteMachineModel);
     const makeDropdown= remoteMachineMakeToDropdown(machineMakes)

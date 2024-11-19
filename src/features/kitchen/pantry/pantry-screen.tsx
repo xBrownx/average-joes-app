@@ -1,17 +1,14 @@
 import { ThemedText } from "@/components/text/themed-text";
-import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useIsFocused } from "@react-navigation/native";
+import { StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { themedColors } from "@/constants/themed-colors";
 import { PantryItem } from "@/domain";
 import { ThemedCardView } from "@/components/card";
 import { AddPantryModal } from "@/features/kitchen/pantry/modal-add-pantry-item";
-import { TabHeading } from "@/components/tab-heading/tab-heading";
 import { selectUserPantryItems, useAppSelector } from "@/store";
 import { ViewPantryModal } from "@/features/kitchen/pantry/modal-view-pantry-item";
-import { name } from "ts-interface-checker";
-import { useCustomState } from '@/hooks/useCustomState';
+import { useCustomState } from '@/hooks';
 import { KitchenChildProps } from "@/features/kitchen/types";
 import { kitchenStyles } from "@/features/kitchen/styles";
 import { TypeWriterText } from "@/components/typewriter";
@@ -99,7 +96,6 @@ export function KitchenPantry({navBack}: KitchenChildProps) {
                                     </ThemedText >
                                 </View >
                             </View >
-
                         </ThemedCardView >
                     ))
                     }

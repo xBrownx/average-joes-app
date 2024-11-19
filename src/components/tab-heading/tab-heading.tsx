@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { TypeWriterText } from "@/components/typewriter/typewriter-text";
-
 import React from "react";
 
 export function TabHeading({title}: {title: string}) {
