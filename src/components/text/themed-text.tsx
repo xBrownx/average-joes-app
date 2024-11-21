@@ -46,10 +46,11 @@ const styles = StyleSheet.create({
         color: themedColors.primary,
     },
     title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        lineHeight: 40,
+        fontSize: 24,
+        fontWeight: '500',
+        lineHeight: 26,
         fontFamily: 'PoppinsBold',
+        letterSpacing: 0.1,
         color: themedColors.primary,
     },
     subtitle: {
@@ -59,9 +60,10 @@ const styles = StyleSheet.create({
         color: themedColors.tertiary,
     },
     primaryBold: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        fontFamily: 'PoppinsBold',
+        fontSize: 22,
+        fontFamily: 'Poppins',
+        fontWeight: '800',
+
         color: themedColors.primary,
     },
     link: {

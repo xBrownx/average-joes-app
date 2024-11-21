@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIsFocused } from "@react-navigation/native";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, TouchableOpacity, View, Image, Text } from "react-native";
 import auth from '@react-native-firebase/auth';
 import { TypeWriterText } from "@/components/typewriter";
 import { themedColors } from "@/constants/themed-colors";
 import { collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
 import { db } from "@/config/firebase";
 import { ThemedText } from '@/components/text/themed-text';
+
 
 export function ProfileCore() {
     const isFocused = useIsFocused();
@@ -23,11 +24,11 @@ export function ProfileCore() {
     const userCollection = collection(db, 'users');
 
     const fetchUsers = async () => {
-        if(user) {
+        if (user) {
 
             const q = query(userCollection, where("userId", "==", user.uid));
             const data = await getDocs(q);
-            const userD = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            const userD = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
             setUserData(userD[0]);
         } else {
             console.log("No user logged in");
@@ -35,7 +36,7 @@ export function ProfileCore() {
     }
     const addUser = async () => {
         if (user) {
-            await addDoc(userCollection, { joeBucks: 0, userId: user.uid });
+            await addDoc(userCollection, {joeBucks: 0, userId: user.uid});
             await fetchUsers();
         } else {
             console.log("No user logged in");
@@ -44,15 +45,18 @@ export function ProfileCore() {
 
     const updateUser = async (id: string) => {
         const userDoc = doc(db, 'users', id);
-        await updateDoc(userDoc, { joeBucks: userData.joeBucks + 10});
+        await updateDoc(userDoc, {joeBucks: userData.joeBucks + 10});
         fetchUsers();
     }
 
-    const deleteUser = async () => {}
+    const deleteUser = async () => {
+    }
 
     useEffect(() => {
         fetchUsers();
     }, [user])
+
+
 
     return (
         <>
@@ -82,7 +86,6 @@ export function ProfileCore() {
                 </View>
             }
         </>
-
     );
 }
 

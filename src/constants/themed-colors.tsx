@@ -7,6 +7,7 @@ export const themedColors = {
   tertiary: '#841C32',
   background: '#faf9f8',
   backgroundSecondary: '#F0E8E2',
+  backgroundDark: 'rgba(26, 19, 19, 1)',
   white: '#fff',
   placeholder: '#8a8a8a',
 };

@@ -1,5 +1,4 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
@@ -8,10 +7,15 @@ import store, { useAppDispatch } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { AuthModal } from "@/features/auth/auth-modal";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { composeNode } from "yaml/dist/compose/compose-node";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { themedColors } from "@/constants/themed-colors";
+import { BannerLeft, BannerLogo, BannerRight } from "@/components/banner";
+import LandingScreen from "@/app/landing";
+import { createDrawerNavigator, DrawerNavigationOptions } from "@react-navigation/drawer";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
 
 export default function RootLayout() {
     return (
@@ -20,6 +24,20 @@ export default function RootLayout() {
         </Provider>
     );
 }
+
+const Stack = createNativeStackNavigator();
+const screenOptions: DrawerNavigationOptions = {
+    headerStyle: {
+        backgroundColor: themedColors.backgroundDark,
+    },
+    headerTintColor: '#fff',
+    headerLeft: () => <BannerLeft />,
+    headerTitle: () => <BannerLogo />,
+    headerRight: () => <BannerRight />,
+    headerTitleAlign: 'center'
+}
+
+const Drawer = createDrawerNavigator();
 
 function App() {
     const dispatch = useAppDispatch();
@@ -58,18 +76,27 @@ function App() {
     }
 
     return (
-        <>
-            {!user
-                ? <AuthModal
-                    isOpen={isLoginModal}
-                    onClose={() => setLoginModal(false)}
+            <Drawer.Navigator
+                initialRouteName="landing"
+                screenOptions={screenOptions}
+            >
+                <Drawer.Screen
+                    name="landing"
+                    component={LandingScreen}
                 />
-                : <Stack>
-                    <Stack.Screen name="(tabs)" options={{headerShown: false}} />
-                    <Stack.Screen name="+not-found" />
-                </Stack>
-            }
-        </>
+
+            </Drawer.Navigator>
     );
 }
 
+
+// {!user
+//                 ? <AuthModal
+//                     isOpen={isLoginModal}
+//                     onClose={() => setLoginModal(false)}
+//                 />
+//                 : <Stack>
+//                     <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+//                     <Stack.Screen name="+not-found" />
+//                 </Stack>
+//             }
