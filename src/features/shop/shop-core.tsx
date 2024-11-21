@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useIsFocused } from "@react-navigation/native";
-import { StyleSheet, TouchableOpacity, View, Image, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import { TypeWriterText } from "@/components/typewriter";
 
 import { Product } from "@/domain/shopify";

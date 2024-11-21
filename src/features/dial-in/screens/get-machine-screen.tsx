@@ -1,4 +1,4 @@
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { themedColors } from '@/constants/themed-colors';
 import React, { useEffect } from 'react';
 import { CustomTypeWriter } from '@/features/dial-in/components/custom-type-writer';
@@ -6,7 +6,7 @@ import { ThemedText } from '@/components/text/themed-text';
 import { DialInHeading } from '@/features/dial-in/components/dial-in-heading';
 import { AddMachineModal } from '@/features/kitchen/machines/modal-base';
 import { DropdownData, ThemedDropdown } from '@/components/dropdown';
-import { selectMuted, selectUserMachines, useAppSelector } from '@/store';
+import { selectUserMachines, useAppSelector } from '@/store';
 import { useCustomState } from '@/hooks';
 import { userMachinesToDropdown } from '@/usecase';
 import Animated, { LinearTransition, StretchOutY } from 'react-native-reanimated';

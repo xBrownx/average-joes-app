@@ -1,4 +1,4 @@
-import { UserData } from "../../domain";
+import { UserData } from '@/domain';
 import { RemoteData } from "@/domain/remote-data";
 
 export const initEmptyUserData = (): UserData => {
@@ -13,7 +13,8 @@ export const initEmptyUserData = (): UserData => {
 
 export const initEmptyRemoteData = (): RemoteData => {
     return {
-        machineMake: [],
+        machineMakes: [],
+        machineModels: [],
         blends: [],
         roasters: []
     }

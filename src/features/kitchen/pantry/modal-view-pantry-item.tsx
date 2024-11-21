@@ -57,7 +57,7 @@ export function ViewPantryModal({
         </ThemedModal >
 
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {

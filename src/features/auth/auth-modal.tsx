@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import { ThemedModal } from '@/components/modal';
 import { SignIn } from '@/features/auth/sign-in';

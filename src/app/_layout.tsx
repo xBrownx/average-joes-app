@@ -5,17 +5,16 @@ import 'react-native-reanimated';
 import { Provider } from "react-redux";
 import store, { useAppDispatch } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
-import { AuthModal } from "@/features/auth/auth-modal";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { themedColors } from "@/constants/themed-colors";
 import { BannerLeft, BannerLogo, BannerRight } from "@/components/banner";
-import LandingScreen from "@/app/landing";
 import { createDrawerNavigator, DrawerNavigationOptions } from "@react-navigation/drawer";
+import { CustomDrawerContent } from '@/components/drawer';
+import { Dimensions } from 'react-native';
+import LandingScreen from '@/app/landing';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
 
 export default function RootLayout() {
     return (
@@ -25,7 +24,6 @@ export default function RootLayout() {
     );
 }
 
-const Stack = createNativeStackNavigator();
 const screenOptions: DrawerNavigationOptions = {
     headerStyle: {
         backgroundColor: themedColors.backgroundDark,
@@ -34,7 +32,13 @@ const screenOptions: DrawerNavigationOptions = {
     headerLeft: () => <BannerLeft />,
     headerTitle: () => <BannerLogo />,
     headerRight: () => <BannerRight />,
-    headerTitleAlign: 'center'
+    headerTitleAlign: 'center',
+    drawerPosition: 'right',
+    drawerActiveBackgroundColor: themedColors.backgroundSecondary,
+    drawerStyle: {
+        width: Dimensions.get("window").width * 0.85,
+        backgroundColor: themedColors.backgroundSecondary,
+    }
 }
 
 const Drawer = createDrawerNavigator();
@@ -79,6 +83,7 @@ function App() {
             <Drawer.Navigator
                 initialRouteName="landing"
                 screenOptions={screenOptions}
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
             >
                 <Drawer.Screen
                     name="landing"

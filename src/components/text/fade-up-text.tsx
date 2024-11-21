@@ -1,6 +1,6 @@
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 
 type FadeUpTextProps = {
     type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';

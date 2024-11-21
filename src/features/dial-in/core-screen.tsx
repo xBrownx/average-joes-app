@@ -6,7 +6,7 @@ import {
     GetCoffeeScreen,
     GetMachineScreen
 } from "@/features/dial-in/screens";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { useCustomState, useTextToSpeech } from "@/hooks";
 

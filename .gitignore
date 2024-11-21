@@ -12,7 +12,7 @@ npm-debug.*
 *.orig.*
 web-build/
 .env
-local.properties
+android-config/local.properties
 android/local.properties
 # macOS
 .DS_Store

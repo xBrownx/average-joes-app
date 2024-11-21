@@ -1,9 +1,8 @@
 import { Image, StyleSheet, View } from "react-native";
-import { themedColors } from "@/constants/themed-colors";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 const ICON_SIZE = 24;
 

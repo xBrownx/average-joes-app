@@ -1,5 +1,5 @@
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
-import { MachineModel, RemoteMachineMake, RemoteMachineModel, RemoteRoaster, RemoteBlend } from "@/domain";
+import { RemoteMachineMake, RemoteMachineModel, RemoteRoaster, RemoteBlend } from "@/domain";
 
 
 function dtoToKeyValuePair(dto: GoogleSheetsResponseDto) {

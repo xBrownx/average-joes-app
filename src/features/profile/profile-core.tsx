@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useIsFocused } from "@react-navigation/native";
-import { Button, StyleSheet, TouchableOpacity, View, Image, Text } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import auth from '@react-native-firebase/auth';
 import { TypeWriterText } from "@/components/typewriter";
 import { themedColors } from "@/constants/themed-colors";
-import { collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
 import { db } from "@/config/firebase";
 import { ThemedText } from '@/components/text/themed-text';
 

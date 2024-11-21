@@ -28,8 +28,7 @@ export function ThemedDatePicker({placeholder, value, onValueChange}: ThemedDate
     const [date, setDate] = useState<Date | undefined>(new Date(1598051730000));
 
     const onChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
-        const currentDate = selectedDate;
-        setDate(currentDate);
+        setDate(selectedDate);
     };
 
     const showMode = (currentMode: 'date' | 'time') => {

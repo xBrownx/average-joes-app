@@ -1,4 +1,4 @@
-import { ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from "react";
 import { ThemedText } from "@/components/text/themed-text";
 import { themedColors } from "@/constants/themed-colors";

@@ -27,8 +27,7 @@ export function useBlendSearch(): BlendSearch {
     };
 
     const getRoasterWithId = (roasterId: string) => {
-        const r = roasters.find(roaster => roaster.id === roasterId);
-        return r;
+        return roasters.find(roaster => roaster.id === roasterId);
     }
 
     const getBlendWithId = (blendId: string) => {

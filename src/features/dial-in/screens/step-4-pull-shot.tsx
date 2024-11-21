@@ -5,7 +5,7 @@ import { CustomTypeWriter } from "@/features/dial-in/components/custom-type-writ
 import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
 import { Stopwatch } from "@/components/stopwatch";
 import { DialInScreenProps } from "@/features/dial-in/types";
-import Anim, { FadeIn, FadeOut, LinearTransition, StretchOutY } from "react-native-reanimated"
+import Anim, { FadeIn, LinearTransition, StretchOutY } from "react-native-reanimated"
 
 export function DialInPullShot({onNext, onBack, onExit, onShow, speak}: DialInScreenProps) {
     const opacity = React.useState(new Animated.Value(0))[0];

@@ -1,5 +1,5 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes } from "@react-native-google-signin/google-signin";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 const configGoogleSignIn = () => {

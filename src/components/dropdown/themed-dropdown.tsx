@@ -55,7 +55,7 @@ export function ThemedDropdown({placeholder, data, value, onChange}: ThemedDropd
             renderItem={renderItem}
         />
     );
-};
+}
 
 const styles = StyleSheet.create({
     dropdown: {
