@@ -2,8 +2,8 @@ import { Image, StyleSheet, View } from "react-native";
 import { themedColors } from "@/constants/themed-colors";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 const ICON_SIZE = 24;
 
@@ -19,7 +19,7 @@ export function BannerLogo() {
 export function BannerLeft() {
     const navigation = useNavigation<DrawerNavigationProp<any>>();
     return (
-        <View style={styles.bannerIcons}>
+        <View style={[styles.bannerIcons, {paddingLeft: 20}]}>
             <Ionicons
                 name="search"
                 size={ICON_SIZE}
@@ -39,7 +39,7 @@ export function BannerLeft() {
 
 export function BannerRight() {
     return (
-        <View style={styles.bannerIcons}>
+        <View style={[styles.bannerIcons, {paddingRight: 20}]}>
             <Ionicons
                 name="person"
                 size={ICON_SIZE}
@@ -59,10 +59,11 @@ const styles = StyleSheet.create({
         height: 'auto',
         width: 90,
         aspectRatio: 1824 / 934,
+
     },
     bannerIcons: {
         flexDirection: 'row',
-        gap: 8
+        gap: 8,
     },
     icon: {
         padding: 0,

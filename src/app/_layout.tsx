@@ -7,15 +7,12 @@ import store, { useAppDispatch } from "@/store/store";
 import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { AuthModal } from "@/features/auth/auth-modal";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { themedColors } from "@/constants/themed-colors";
-import { BannerLeft, BannerLogo, BannerRight } from "@/components/banner";
+import { CustomDrawerContent, SCREEN_OPTIONS } from "@/components/navigation";
 import LandingScreen from "@/app/landing";
 import { createDrawerNavigator, DrawerNavigationOptions } from "@react-navigation/drawer";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
 
 export default function RootLayout() {
     return (
@@ -23,18 +20,6 @@ export default function RootLayout() {
             <App />
         </Provider>
     );
-}
-
-const Stack = createNativeStackNavigator();
-const screenOptions: DrawerNavigationOptions = {
-    headerStyle: {
-        backgroundColor: themedColors.backgroundDark,
-    },
-    headerTintColor: '#fff',
-    headerLeft: () => <BannerLeft />,
-    headerTitle: () => <BannerLogo />,
-    headerRight: () => <BannerRight />,
-    headerTitleAlign: 'center'
 }
 
 const Drawer = createDrawerNavigator();
@@ -78,7 +63,8 @@ function App() {
     return (
             <Drawer.Navigator
                 initialRouteName="landing"
-                screenOptions={screenOptions}
+                screenOptions={SCREEN_OPTIONS}
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
             >
                 <Drawer.Screen
                     name="landing"
