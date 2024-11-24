@@ -6,10 +6,11 @@ import React, { useEffect, useState } from "react";
 import { Rating } from "react-native-ratings";
 import { useCustomState } from "@/hooks";
 import { ThemedButton } from "@/components/button";
+import { useAppSelector } from "@/store";
+import { selectProductReviews } from "@/store/slice/shopify-slice";
 
 type ShopItemProps = {
     product: Product,
-    reviews: any,
 }
 
 interface ShopItemState {
@@ -20,8 +21,8 @@ interface ShopItemState {
     productRating?: any,
 }
 
-export function ShopItem({product, reviews}: ShopItemProps) {
-
+export function ShopItem({product}: ShopItemProps) {
+    const reviews = useAppSelector(selectProductReviews);
     const {state, updateState} = useCustomState<ShopItemState>({
         productActualPrice: '',
         productDiscountPrice: '',
@@ -40,9 +41,9 @@ export function ShopItem({product, reviews}: ShopItemProps) {
         });
 
         updateState({
-            productDiscountPrice: (product.variants[0].price.amount * 1).toFixed(0),
-            productActualPrice: (product.variants[0].compareAtPrice.amount * 1).toFixed(0),
-            productSavings: product.variants[0].compareAtPrice.amount - product.variants[0].price.amount,
+            productDiscountPrice: ((product.variants[0]?.price?.amount ?? 0) * 1).toFixed(0),
+            productActualPrice: ((product.variants[0]?.compareAtPrice?.amount ?? 0) * 1).toFixed(0),
+            productSavings: (product.variants[0]?.compareAtPrice?.amount ?? 0) - (product.variants[0].price.amount ?? 0),
             productRating: (sum / productRatings.length),
             productReviews: reviews.filter((review: any) => (review['product_handle'] === product.handle))
         })

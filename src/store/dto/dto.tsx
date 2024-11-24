@@ -3,3 +3,11 @@ export interface GoogleSheetsResponseDto {
     majorDimension: string;
     values: string[][];
 }
+
+export interface ShopifyResponseDto {
+
+}
+
+export interface ProductReviewResponseDto {
+
+}

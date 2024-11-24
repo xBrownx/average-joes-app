@@ -6,7 +6,7 @@ import { themedColors } from "@/constants/themed-colors";
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { BannerLeft, BannerLogo, BannerRight } from "@/components/banner";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import LandingScreen from "@/app/landing";
+import LandingScreen from "@/app/shop";
 
 
 

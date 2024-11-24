@@ -1,5 +1,5 @@
 import { selectUser, useAppSelector } from "@/store";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import { useCustomState } from "@/hooks";
@@ -10,7 +10,8 @@ import { TypeWriterText } from "@/components/typewriter";
 import { HelloWave } from "@/components/hello-wave";
 import { ThemedText } from "@/components/text/themed-text";
 import { ThemedButton } from "@/components/button";
-import { openExternalUrl } from "@/util/open-url";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+
 
 type HomeScreenState = {
     focused?: boolean;
@@ -22,6 +23,9 @@ type HomeScreenState = {
 }
 
 export function HomeCore() {
+
+    const navigation= useNavigation<DrawerNavigationProp<any>>();
+
     const username = useAppSelector(selectUser).toUpperCase();
     const focused = useIsFocused();
     const opacity = React.useState(new Animated.Value(0))[0];
@@ -83,15 +87,15 @@ export function HomeCore() {
                     </View>
                     <View style={styles.stepContainer}>
                         <ThemedButton
-                            title={'ABOUT'}
-                            onPress={() => updateState({isAboutModalOpen: true})}
+                            title={'DIAL IN'}
+                            onPress={() => navigation.navigate('dial-in' as never)}
                         />
                         <ThemedButton
                             title={'SHOP'}
-                            onPress={() => openExternalUrl('https://averagejoescoffee.com.au/')}
+                            onPress={() => navigation.navigate('shop' as never)}
                         />
                         <ThemedButton
-                            title={'CONTACT'}
+                            title={'CHAT'}
                             onPress={() => updateState({isContactModalOpen: true})}
                         />
                         <ThemedButton

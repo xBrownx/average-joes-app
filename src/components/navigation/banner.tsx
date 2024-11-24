@@ -1,18 +1,18 @@
-import { Image, StyleSheet, View } from "react-native";
-import { themedColors } from "@/constants/themed-colors";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-
-const ICON_SIZE = 24;
+import Svg, { Circle, Line, Path } from 'react-native-svg';
 
 export function BannerLogo() {
+    const navigation = useNavigation();
     return (
-        <Image
-            style={styles.bannerLogo}
-            source={require('../../assets/images/average_joe_logo_white.png')}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('home' as never)}>
+            <Image
+                style={styles.bannerLogo}
+                source={require('../../assets/images/average_joe_logo_white.png')}
+            />
+        </TouchableOpacity>
     );
 }
 
@@ -20,36 +20,51 @@ export function BannerLeft() {
     const navigation = useNavigation<DrawerNavigationProp<any>>();
     return (
         <View style={[styles.bannerIcons, {paddingLeft: 20}]}>
-            <Ionicons
-                name="search"
-                size={ICON_SIZE}
-                color="#fff"
-            />
-            <Ionicons.Button
-                name="menu"
-                size={ICON_SIZE}
-                color="#fff"
-                backgroundColor={'transparent'}
-                style={styles.icon}
-                onPress={() => navigation.openDrawer()}
-            />
+            <TouchableOpacity>
+                <Svg height="24" width="24" id="svg-icon-search" viewBox="0 0 24 24" fill="none" stroke="white"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <Circle cx="11" cy="11" r="8" />
+                    <Line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </Svg>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Svg height="24" width="24" id="svg-icon-menu" viewBox="0 0 24 24" fill="none" stroke="white"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <Line x1="3" y1="12" x2="21" y2="12" />
+                    <Line x1="3" y1="6" x2="21" y2="6" />
+                    <Line x1="3" y1="18" x2="21" y2="18" />
+                </Svg>
+            </TouchableOpacity>
+
         </View>
     );
 }
 
 export function BannerRight() {
+    const navigation = useNavigation<DrawerNavigationProp<any>>();
     return (
         <View style={[styles.bannerIcons, {paddingRight: 20}]}>
-            <Ionicons
-                name="person"
-                size={ICON_SIZE}
-                color="#fff"
-            />
-            <Ionicons
-                name="storefront"
-                size={ICON_SIZE}
-                color="#fff"
-            />
+            <TouchableOpacity onPress={() => navigation.navigate('profile')}>
+                <Svg height="24" width="24" id="svg-icon-user" viewBox="0 0 24 24" fill="none" stroke="white"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <Path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <Circle cx="12" cy="7" r="4" />
+                </Svg>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+                <Svg height="24" width="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-linecap="round"
+                     stroke-linejoin="round">
+                    <Path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                    <Line x1="3" y1="6" x2="21" y2="6" />
+                    <Path d="M16 10a4 4 0 0 1-8 0" />
+                </Svg>
+            </TouchableOpacity>
+
         </View>
     );
 }

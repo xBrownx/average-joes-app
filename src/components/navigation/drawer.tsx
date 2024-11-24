@@ -48,6 +48,7 @@ export function CustomDrawerContent({ navigation }: DrawerContentComponentProps)
                 style={styles.drawList}
                 layout={LinearTransition}
             >
+                <DrawItem title={'DIAL-IN'} ><ThemedText ></ThemedText ></DrawItem >
                 <DrawItem title={'JOEVEMBER OFFERS'} ><ThemedText ></ThemedText ></DrawItem >
                 <DrawItem title={'BEST SELLERS'} ><ThemedText ></ThemedText ></DrawItem >
                 <DrawItem title={'BUNDLES'} ><ThemedText ></ThemedText ></DrawItem >
@@ -55,7 +56,6 @@ export function CustomDrawerContent({ navigation }: DrawerContentComponentProps)
                 <DrawItem title={'MACHINES'} ><ThemedText ></ThemedText ></DrawItem >
                 <DrawItem title={'COFFEE'} ><ThemedText ></ThemedText ></DrawItem >
                 <DrawItem title={'LEARN'} ><ThemedText ></ThemedText ></DrawItem >
-
                 <Image
                     source={bottomImageUri}
                     style={{

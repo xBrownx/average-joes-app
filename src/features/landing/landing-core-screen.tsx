@@ -1,7 +1,6 @@
-import { AutoScaledImage } from "@/components/image";
+
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ThemedText } from "@/components/text";
-import React from "react";
+import React, { useEffect } from "react";
 import { themedColors } from "@/constants";
 import { WhyBuyFromUs } from "@/features/landing/components/why-buy-from-us";
 import { Banner } from "@/features/landing/components/banner";
@@ -10,8 +9,16 @@ import { JoevemberOffers } from "@/features/landing/components/joevember-offers"
 import { TopSellingBundles } from "@/features/landing/components/top-selling-bundles";
 import { ShopAccessories } from "@/features/landing/components/shop-accessories";
 import { CoffeeRoastedForHomeMachines } from "@/features/landing/components/coffee-roasted-for-home-machines";
+import { loadShopifyData } from "@/store/slice/shopify-slice";
+import { useAppDispatch } from "@/store";
+import { LearningSection } from "@/features/landing/components/learning-section";
+import { InstaFeed } from "@/features/landing/components/insta-feed";
 
 export function LandingCoreScreen() {
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(loadShopifyData())
+    }, []);
 
     return (
         <ScrollView style={styles.scrollViewContainer}>
@@ -22,6 +29,8 @@ export function LandingCoreScreen() {
                 <ShopByCategory />
                 <WhyBuyFromUs />
                 <ShopAccessories />
+                <LearningSection />
+                <InstaFeed />
                 <CoffeeRoastedForHomeMachines />
             </View>
         </ScrollView>

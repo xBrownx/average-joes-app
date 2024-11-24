@@ -11,27 +11,17 @@ import {
 import { ThemedText } from "@/components/text";
 import { ShopItem } from "@/features/shop/shop-item";
 import { Product } from "shopify-buy";
+import { useAppDispatch } from "@/store";
+import { loadShopifyData } from "@/store/slice/shopify-slice";
+import { JOEVEMBER_COLLECTION } from "@/features/shopify/constants";
 
 export function JoevemberOffers() {
     const [products, setProducts] = useState<Product[]>([]);
-    const [productReviews, setProductReviews] = useState<any>([]);
-
-    const collectionId = 'gid://shopify/Collection/487853687097';
     useEffect(() => {
-        fetchSingleCollection(collectionId).then((collection) => {
-            // Do something with the collections
-            setProducts(collection.products)
+        fetchSingleCollection(JOEVEMBER_COLLECTION).then((collection) => {
+            setProducts(collection.products.slice(0,4))
         });
     }, []);
-
-
-    useEffect(() => {
-        console.log(" i am working ")
-        fetchAllProductReviews().then((reviews) => {
-            setProductReviews(reviews);
-        })
-    }, []);
-
 
     return (
         <View style={styles.container}>
@@ -43,7 +33,7 @@ export function JoevemberOffers() {
             <View style={styles.productsContainer}>
                 {products.map((product) => (
                     <View key={product.id} style={styles.shopItem}>
-                        <ShopItem product={product} reviews={productReviews} />
+                        <ShopItem product={product} />
                     </View>
                 ))}
             </View>

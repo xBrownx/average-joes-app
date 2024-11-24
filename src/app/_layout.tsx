@@ -8,8 +8,11 @@ import { loadRemoteData } from "@/store/slice/remote-data-slice";
 import { AuthModal } from "@/features/auth/auth-modal";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { CustomDrawerContent, SCREEN_OPTIONS } from "@/components/navigation";
-import LandingScreen from "@/app/landing";
+import LandingScreen from "@/app/shop";
 import { createDrawerNavigator, DrawerNavigationOptions } from "@react-navigation/drawer";
+import HomeScreen from "@/app/home";
+import DialInScreen from "@/app/dial-in";
+import ProfileScreen from "@/app/profile";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -62,14 +65,30 @@ function App() {
 
     return (
             <Drawer.Navigator
-                initialRouteName="landing"
+                initialRouteName="home"
                 screenOptions={SCREEN_OPTIONS}
                 drawerContent={(props) => <CustomDrawerContent {...props} />}
             >
                 <Drawer.Screen
-                    name="landing"
+                    name="home"
+                    component={HomeScreen}
+                />
+
+                <Drawer.Screen
+                    name="dial-in"
+                    component={DialInScreen}
+                />
+
+                <Drawer.Screen
+                    name="shop"
                     component={LandingScreen}
                 />
+
+                <Drawer.Screen
+                    name="profile"
+                    component={ProfileScreen}
+                />
+
 
             </Drawer.Navigator>
     );
