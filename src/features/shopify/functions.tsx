@@ -1,4 +1,4 @@
-import Client from 'shopify-buy';
+import Client, { CheckoutLineItemInput } from 'shopify-buy';
 import { SHOPIFY_ACCESS_TOKEN } from '@env';
 import { PRODUCT_REVIEW_API } from "@/features/shopify/constants";
 
@@ -49,4 +49,21 @@ export async function fetchProductRating(productHandle: string) {
     const allReviews = await fetchAllProductReviews();
     console.log('ALL REVIEWS LENGTH', allReviews.length);
     return allReviews.filter(review => review.product_handle === productHandle);
+}
+
+export async function createCheckout() {
+    const checkout = await client.checkout.create();
+    return checkout.id;
+}
+
+export async function fetchCheckout(checkoutId: string) {
+    return client.checkout.fetch(checkoutId);
+}
+
+export async function addItem(checkoutId: string, itemId: CheckoutLineItemInput[]) {
+    return client.checkout.addLineItems(checkoutId, itemId);
+}
+
+export async function updateItem(checkoutId: string, lineItemToUpdate: CheckoutLineItemInput[]) {
+    return client.checkout.updateLineItems(checkoutId, lineItemToUpdate);
 }

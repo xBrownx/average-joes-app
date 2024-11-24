@@ -10,7 +10,8 @@ import { useAppSelector } from "@/store";
 import { selectProductReviews } from "@/store/slice/shopify-slice";
 
 type ShopItemProps = {
-    product: Product,
+    product: Product;
+    onProductPress: () => void;
 }
 
 interface ShopItemState {
@@ -21,7 +22,7 @@ interface ShopItemState {
     productRating?: any,
 }
 
-export function ShopItem({product}: ShopItemProps) {
+export function ShopItem({product, onProductPress}: ShopItemProps) {
     const reviews = useAppSelector(selectProductReviews);
     const {state, updateState} = useCustomState<ShopItemState>({
         productActualPrice: '',
@@ -29,7 +30,11 @@ export function ShopItem({product}: ShopItemProps) {
         productRating: 0,
         productReviews: [],
         productSavings: 0
-    })
+    });
+
+    function addProductToCart(productId: string) {
+        console.log('addProductToCart:', productId);
+    }
 
     useEffect(() => {
         console.log('updating')
@@ -53,6 +58,7 @@ export function ShopItem({product}: ShopItemProps) {
         <View>
             <TouchableOpacity
                 style={styles.container}
+                onPress={onProductPress}
             >
                 <Image
                     source={{uri: product.images[0].src}}
@@ -99,7 +105,7 @@ export function ShopItem({product}: ShopItemProps) {
                 <ThemedButton
                     title={'ADD TO CART'}
                     color={themedColors.secondary}
-                    onPress={() => null}
+                    onPress={() => addProductToCart(product.id)}
                 />
             </View>
         </View>

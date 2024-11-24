@@ -5,14 +5,17 @@ import { themedColors } from "@/constants";
 import { WhyBuyFromUs } from "@/features/landing/components/why-buy-from-us";
 import { Banner } from "@/features/landing/components/banner";
 import { ShopByCategory } from "@/features/landing/components/shop-by-category";
-import { JoevemberOffers } from "@/features/landing/components/joevember-offers";
-import { TopSellingBundles } from "@/features/landing/components/top-selling-bundles";
-import { ShopAccessories } from "@/features/landing/components/shop-accessories";
-import { CoffeeRoastedForHomeMachines } from "@/features/landing/components/coffee-roasted-for-home-machines";
 import { loadShopifyData } from "@/store/slice/shopify-slice";
 import { useAppDispatch } from "@/store";
 import { LearningSection } from "@/features/landing/components/learning-section";
 import { InstaFeed } from "@/features/landing/components/insta-feed";
+import { ShopPreviewComponent } from '@/features/shop/shop-preview-component';
+import {
+    ACCESSORIES_COLLECTION,
+    COFFEE_COLLECTION,
+    JOEVEMBER_COLLECTION,
+    TOP_SELLING_BUNDLES_COLLECTION,
+} from '@/features/shopify/constants';
 
 export function LandingCoreScreen() {
     const dispatch = useAppDispatch();
@@ -20,18 +23,45 @@ export function LandingCoreScreen() {
         dispatch(loadShopifyData())
     }, []);
 
+    function onProductPress(productId: string) {
+        console.log('onProductPress:', productId);
+    }
+
+    function onViewAllPress(collectionId: string) {
+        console.log('onViewAllPress:', collectionId);
+    }
+
     return (
         <ScrollView style={styles.scrollViewContainer}>
             <Banner />
             <View style={styles.container}>
-                <JoevemberOffers />
-                <TopSellingBundles />
+                <ShopPreviewComponent
+                    title={"JOEVEMBER OFFERS"}
+                    collectionId={JOEVEMBER_COLLECTION}
+                    onViewAllPress={onViewAllPress}
+                    onProductPress={onProductPress}
+                 />
+                <ShopPreviewComponent
+                    title={"TOP SELLING BUNDLES"}
+                    collectionId={TOP_SELLING_BUNDLES_COLLECTION}
+                    onViewAllPress={onViewAllPress}
+                    onProductPress={onProductPress}
+                />
                 <ShopByCategory />
                 <WhyBuyFromUs />
-                <ShopAccessories />
+                <ShopPreviewComponent
+                    title={"SHOP ACCESSORIES"}
+                    collectionId={ACCESSORIES_COLLECTION}
+                    onViewAllPress={onViewAllPress}
+                    onProductPress={onProductPress}
+                />
                 <LearningSection />
                 <InstaFeed />
-                <CoffeeRoastedForHomeMachines />
+                <ShopPreviewComponent
+                    title={"COFFEE ROASTED FOR HOME MACHINES"}
+                    collectionId={COFFEE_COLLECTION}
+                    onProductPress={onProductPress}
+                />
             </View>
         </ScrollView>
     );

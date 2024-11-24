@@ -30,7 +30,6 @@ export function ShopAccessories() {
                     </View>
                 ))}
             </View>
-
         </View>
     );
 }

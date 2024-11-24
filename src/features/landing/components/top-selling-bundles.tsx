@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { SectionHeader } from "@/features/landing/components/section-header";
 import { Product } from "shopify-buy";
 import { fetchSingleCollection } from "@/features/shopify";
-import { TOP_SELLING_BUNDLES_COLLECTION, JOEVEMBER_COLLECTION } from "@/features/shopify/constants";
+import { TOP_SELLING_BUNDLES_COLLECTION } from "@/features/shopify/constants";
 import { ShopItem } from "@/features/shop/shop-item";
 
 export function TopSellingBundles() {
-     const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
     useEffect(() => {
         fetchSingleCollection(TOP_SELLING_BUNDLES_COLLECTION).then((collection) => {
             console.log(collection.products.length)
