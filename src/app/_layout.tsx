@@ -2,26 +2,26 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
-import { Provider } from "react-redux";
-import store, { useAppDispatch } from "@/store/store";
-import { loadRemoteData } from "@/store/slice/remote-data-slice";
-import { AuthModal } from "@/features/auth/auth-modal";
+import { Provider } from 'react-redux';
+import store, { useAppDispatch } from '@/store/store';
+import { loadRemoteData } from '@/store/slice/remote-data-slice';
+import { AuthModal } from '@/features/auth/auth-modal';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { CustomDrawerContent, SCREEN_OPTIONS } from "@/components/navigation";
-import LandingScreen from "@/app/shop";
-import { createDrawerNavigator, DrawerNavigationOptions } from "@react-navigation/drawer";
-import HomeScreen from "@/app/home";
-import DialInScreen from "@/app/dial-in";
-import ProfileScreen from "@/app/profile";
+import { CustomDrawerContent, SCREEN_OPTIONS } from '@/components/navigation';
+import LandingScreen from '@/app/shop';
+import { createDrawerNavigator, DrawerNavigationOptions } from '@react-navigation/drawer';
+import HomeScreen from '@/app/home';
+import DialInScreen from '@/app/dial-in';
+import ProfileScreen from '@/app/profile';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
     return (
-        <Provider store={store}>
+        <Provider store={store} >
             <App />
-        </Provider>
+        </Provider >
     );
 }
 
@@ -48,7 +48,7 @@ function App() {
     }
 
     useEffect(() => {
-        dispatch(loadRemoteData())
+        dispatch(loadRemoteData());
         if (loaded) {
             SplashScreen.hideAsync();
         }
@@ -64,33 +64,36 @@ function App() {
     }
 
     return (
-            <Drawer.Navigator
-                initialRouteName="home"
-                screenOptions={SCREEN_OPTIONS}
-                drawerContent={(props) => <CustomDrawerContent {...props} />}
-            >
-                <Drawer.Screen
-                    name="home"
-                    component={HomeScreen}
-                />
+        <>
+            {!user ? <AuthModal isOpen={isLoginModal} onClose={() => {}}/> :
+                <Drawer.Navigator
+                    initialRouteName="home"
+                    screenOptions={SCREEN_OPTIONS}
+                    drawerContent={(props) => <CustomDrawerContent {...props} />}
+                >
+                    <Drawer.Screen
+                        name="home"
+                        component={HomeScreen}
+                    />
 
-                <Drawer.Screen
-                    name="dial-in"
-                    component={DialInScreen}
-                />
+                    <Drawer.Screen
+                        name="dial-in"
+                        component={DialInScreen}
+                    />
 
-                <Drawer.Screen
-                    name="shop"
-                    component={LandingScreen}
-                />
+                    <Drawer.Screen
+                        name="shop"
+                        component={LandingScreen}
+                    />
 
-                <Drawer.Screen
-                    name="profile"
-                    component={ProfileScreen}
-                />
+                    <Drawer.Screen
+                        name="profile"
+                        component={ProfileScreen}
+                    />
 
-
-            </Drawer.Navigator>
+                </Drawer.Navigator >
+            }
+        </>
     );
 }
 

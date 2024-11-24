@@ -7,7 +7,9 @@ import { Rating } from "react-native-ratings";
 import { useCustomState } from "@/hooks";
 import { ThemedButton } from "@/components/button";
 import { useAppSelector } from "@/store";
-import { selectProductReviews } from "@/store/slice/shopify-slice";
+import { selectProductReviews, selectUserCartId } from '@/store/slice/shopify-slice';
+import { addItem, fetchCheckout } from '@/features/shopify';
+import { Cart } from '@/domain/shopify';
 
 type ShopItemProps = {
     product: Product;
@@ -23,6 +25,7 @@ interface ShopItemState {
 }
 
 export function ShopItem({product, onProductPress}: ShopItemProps) {
+    const cartId = useAppSelector(selectUserCartId);
     const reviews = useAppSelector(selectProductReviews);
     const {state, updateState} = useCustomState<ShopItemState>({
         productActualPrice: '',
@@ -32,12 +35,38 @@ export function ShopItem({product, onProductPress}: ShopItemProps) {
         productSavings: 0
     });
 
-    function addProductToCart(productId: string) {
-        console.log('addProductToCart:', productId);
+    async function addProductToCart() {
+        console.log('addProductToCart:', product.id);
+        if(!cartId) {
+            console.log('No cartId found');
+            return;
+        }
+        console.log('CART_ID:', cartId);
+
+        const item = {
+            variantId: product.variants[0].id,
+            quantity: parseInt('1'),
+        };
+
+        const ret = await addItem(cartId, item);
+        await updateCart();
+    }
+
+    async function updateCart() {
+        const data = await fetchCheckout(cartId);
+        const newCart: Cart = {
+            id: data.id,
+            items: data.lineItems.map((lineItem: any) => ({
+                id: lineItem.id,
+                title: lineItem.title,
+                quantity: lineItem.quantity,
+            })),
+            price: data.totalPrice.amount,
+        };
+        console.log(newCart);
     }
 
     useEffect(() => {
-        console.log('updating')
         const productReviews = reviews.filter((review: any) => (review['product_handle'] === product.handle));
         const productRatings = productReviews.map((review: any) => (review.rating));
         let sum = 0;
@@ -105,7 +134,7 @@ export function ShopItem({product, onProductPress}: ShopItemProps) {
                 <ThemedButton
                     title={'ADD TO CART'}
                     color={themedColors.secondary}
-                    onPress={() => addProductToCart(product.id)}
+                    onPress={addProductToCart}
                 />
             </View>
         </View>

@@ -25,7 +25,6 @@ export function ProfileCore() {
 
     const fetchUsers = async () => {
         if (user) {
-
             const q = query(userCollection, where("userId", "==", user.uid));
             const data = await getDocs(q);
             const userD = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
@@ -55,8 +54,6 @@ export function ProfileCore() {
     useEffect(() => {
         fetchUsers();
     }, [user])
-
-
 
     return (
         <>

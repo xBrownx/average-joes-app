@@ -1,14 +1,13 @@
-
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useEffect } from "react";
-import { themedColors } from "@/constants";
-import { WhyBuyFromUs } from "@/features/landing/components/why-buy-from-us";
-import { Banner } from "@/features/landing/components/banner";
-import { ShopByCategory } from "@/features/landing/components/shop-by-category";
-import { loadShopifyData } from "@/store/slice/shopify-slice";
-import { useAppDispatch } from "@/store";
-import { LearningSection } from "@/features/landing/components/learning-section";
-import { InstaFeed } from "@/features/landing/components/insta-feed";
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { themedColors } from '@/constants';
+import { WhyBuyFromUs } from '@/features/landing/components/why-buy-from-us';
+import { Banner } from '@/features/landing/components/banner';
+import { ShopByCategory } from '@/features/landing/components/shop-by-category';
+import { loadShopifyData, setUserCartId } from '@/store/slice/shopify-slice';
+import { useAppDispatch } from '@/store';
+import { LearningSection } from '@/features/landing/components/learning-section';
+import { InstaFeed } from '@/features/landing/components/insta-feed';
 import { ShopPreviewComponent } from '@/features/shop/shop-preview-component';
 import {
     ACCESSORIES_COLLECTION,
@@ -16,11 +15,50 @@ import {
     JOEVEMBER_COLLECTION,
     TOP_SELLING_BUNDLES_COLLECTION,
 } from '@/features/shopify/constants';
+import { useFirebase } from '@/firebase';
+import { createCheckout } from '@/features/shopify';
 
 export function LandingCoreScreen() {
     const dispatch = useAppDispatch();
+    const { fetchCollection, addQuery } = useFirebase({ collectionId: 'userCarts' });
+    const [createAttempts, setCreateAttempts] = useState(0);
+
+    const loadUserCarts = async () => {
+        console.log('loading cart...');
+        const data = await fetchCollection();
+        if (data && data.length > 0) {
+            console.log('cart loaded...');
+            console.log(data[0].cartId)
+            dispatch(setUserCartId(data[0].cartId));
+        } else {
+            console.log('No carts found...');
+            await createUserCart();
+        }
+    };
+
+    const createUserCart = async () => {
+        console.log('creating cart...');
+        if(createAttempts > 3 ){
+            console.log('create cart limit reached');
+            return;
+        }
+        setCreateAttempts(prev => prev++);
+        const checkoutId = await createCheckout();
+        const addQry = await addQuery({ cartId: checkoutId });
+        if (addQry) {
+            await loadUserCarts();
+        } else {
+            console.log('error creating cart');
+        }
+    };
+
+
     useEffect(() => {
-        dispatch(loadShopifyData())
+        loadUserCarts();
+    }, []);
+
+    useEffect(() => {
+        dispatch(loadShopifyData());
     }, []);
 
     function onProductPress(productId: string) {
@@ -32,17 +70,17 @@ export function LandingCoreScreen() {
     }
 
     return (
-        <ScrollView style={styles.scrollViewContainer}>
+        <ScrollView style={styles.scrollViewContainer} >
             <Banner />
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <ShopPreviewComponent
-                    title={"JOEVEMBER OFFERS"}
+                    title={'JOEVEMBER OFFERS'}
                     collectionId={JOEVEMBER_COLLECTION}
                     onViewAllPress={onViewAllPress}
                     onProductPress={onProductPress}
-                 />
+                />
                 <ShopPreviewComponent
-                    title={"TOP SELLING BUNDLES"}
+                    title={'TOP SELLING BUNDLES'}
                     collectionId={TOP_SELLING_BUNDLES_COLLECTION}
                     onViewAllPress={onViewAllPress}
                     onProductPress={onProductPress}
@@ -50,7 +88,7 @@ export function LandingCoreScreen() {
                 <ShopByCategory />
                 <WhyBuyFromUs />
                 <ShopPreviewComponent
-                    title={"SHOP ACCESSORIES"}
+                    title={'SHOP ACCESSORIES'}
                     collectionId={ACCESSORIES_COLLECTION}
                     onViewAllPress={onViewAllPress}
                     onProductPress={onProductPress}
@@ -58,12 +96,12 @@ export function LandingCoreScreen() {
                 <LearningSection />
                 <InstaFeed />
                 <ShopPreviewComponent
-                    title={"COFFEE ROASTED FOR HOME MACHINES"}
+                    title={'COFFEE ROASTED FOR HOME MACHINES'}
                     collectionId={COFFEE_COLLECTION}
                     onProductPress={onProductPress}
                 />
-            </View>
-        </ScrollView>
+            </View >
+        </ScrollView >
     );
 }
 

@@ -60,10 +60,10 @@ export async function fetchCheckout(checkoutId: string) {
     return client.checkout.fetch(checkoutId);
 }
 
-export async function addItem(checkoutId: string, itemId: CheckoutLineItemInput[]) {
+export async function addItem(checkoutId: string, itemId: any) {
     return client.checkout.addLineItems(checkoutId, itemId);
 }
 
-export async function updateItem(checkoutId: string, lineItemToUpdate: CheckoutLineItemInput[]) {
+export async function updateItem(checkoutId: string, lineItemToUpdate: any) {
     return client.checkout.updateLineItems(checkoutId, lineItemToUpdate);
 }

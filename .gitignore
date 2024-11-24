@@ -16,5 +16,6 @@ local.properties
 android/local.properties
 # macOS
 .DS_Store
+scripts/
 
 

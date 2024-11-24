@@ -7,3 +7,9 @@ export interface Product {
   priceRange: ProductPriceRange;
   tags: string[]
 }
+
+export interface Cart {
+  id: String;
+  items: [{ title: String; id: String; quantity: Number }];
+  price: Number;
+}
