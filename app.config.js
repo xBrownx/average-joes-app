@@ -37,10 +37,15 @@ module.exports = {
                 "expo-font",
                 {
                     "fonts": [
-                        "./src/assets/fonts/Poppins-Regular.ttf",
-                        "./src/assets/fonts/Poppins-Bold.ttf",
-                        "./src/assets/fonts/Poppins-SemiBold.ttf",
-                        "./src/assets/fonts/Poppins-ExtraBold.ttf"
+                        "node_modules/@expo-google-fonts/poppins/Poppins_100Thin.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_200ExtraLight.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_300Light.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_400Regular.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_500Medium.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_600SemiBold.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_700Bold.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_800ExtraBold.ttf",
+                        "node_modules/@expo-google-fonts/poppins/Poppins_900Black.ttf",
                     ]
                 }
 

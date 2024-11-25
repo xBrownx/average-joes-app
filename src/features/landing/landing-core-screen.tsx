@@ -17,7 +17,7 @@ import {
 } from '@/features/shopify/constants';
 import { useFirebase } from '@/firebase';
 import { createCheckout } from '@/features/shopify';
-import { ShopAllCollection } from "@/features/shop/all-from-collection/shop-all-collection";
+import { ShopAllCollection } from "@/features/shop/shop-all-collection";
 
 
 export function LandingCoreScreen() {

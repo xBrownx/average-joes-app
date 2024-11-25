@@ -1,14 +1,15 @@
 import { GoogleSignin, GoogleSigninButton, statusCodes } from "@react-native-google-signin/google-signin";
 import React, { useEffect, useState } from "react";
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { StyleSheet } from 'react-native';
 
-const configGoogleSignIn = () => {
+export const configGoogleSignIn = () => {
     GoogleSignin.configure({
         webClientId: '214804884671-nqe2q8li9mnqk5voj5o8miuamhj3kskq.apps.googleusercontent.com'
     });
 };
 
-async function onGoogleButtonPress() {
+export async function onGoogleButtonPress() {
     try {
         await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
         const signInResult = await GoogleSignin.signIn();
@@ -65,11 +66,21 @@ export function CustomGoogleSignIn({setSignInResult}: GoogleSignInProps) {
 
     return (
         <GoogleSigninButton
-            style={{alignSelf: 'center'}}
-            size={GoogleSigninButton.Size.Icon}
+            size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
             onPress={signIn}
             disabled={false}
+            style={styles.btn}
+
         />
     );
 }
+
+const styles = StyleSheet.create({
+    btn: {
+        width: '100%',
+        alignItems: 'center',
+        borderRadius: 32,
+        overflow: 'hidden',
+    }
+})

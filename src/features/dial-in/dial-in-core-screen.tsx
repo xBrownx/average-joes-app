@@ -1,26 +1,35 @@
-import { ModalBegin } from "@/features/dial-in/components";
+import { ModalBegin } from '@/features/dial-in/components';
 import {
     DialInLanding,
     DialInPrepare, DialInProcess, DialInPullShot,
     DialInRecipe,
     GetCoffeeScreen,
-    GetMachineScreen
-} from "@/features/dial-in/screens";
-import React, { useEffect, useState } from "react";
-import { useIsFocused } from "@react-navigation/native";
-import { useCustomState, useTextToSpeech } from "@/hooks";
+    GetMachineScreen,
+} from '@/features/dial-in/screens';
+import React, { useEffect, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { useCustomState, useTextToSpeech } from '@/hooks';
+import { Image, StyleSheet } from 'react-native';
 
-type CurrentStep = 'landing' | 'coffee-select' | 'portafilter-select' | 'prepare' | 'recipe' | 'process' | 'pull-shot' | '';
+type CurrentStep =
+    'landing'
+    | 'coffee-select'
+    | 'portafilter-select'
+    | 'prepare'
+    | 'recipe'
+    | 'process'
+    | 'pull-shot'
+    | '';
 
 interface DialInState {
     isStartModalOpen?: boolean;
-    currentStep?: CurrentStep
+    currentStep?: CurrentStep;
 }
 
-export function DialInCore() {
+export default function DialInCoreScreen() {
     const focused = useIsFocused();
     const tts = useTextToSpeech();
-    const {state, updateState} = useCustomState<DialInState>({
+    const { state, updateState } = useCustomState<DialInState>({
         isStartModalOpen: false,
         currentStep: 'landing',
     });
@@ -28,33 +37,40 @@ export function DialInCore() {
     const closeModal = () => {
         updateState({
             isStartModalOpen: false,
-            currentStep: 'coffee-select'
+            currentStep: 'coffee-select',
         });
-    }
+    };
 
     const navTo = (page: CurrentStep) => {
         tts.stop();
         updateState({
-            currentStep: page
+            currentStep: page,
         });
     };
 
     const speak = (thingsToSay: string | string[]) => {
         tts.speak(thingsToSay);
-    }
+    };
 
     useEffect(() => {
         if (!focused) navTo('landing');
     }, [focused]);
 
     return (
-        <>
+        <ParallaxScrollView
+            headerBackgroundColor={{ light: '#F0E8E2', dark: '#ce2127' }}
+            headerImage={
+                <Image
+                    source={require('@/assets/images/avatar.png')}
+                    style={styles.headerImage}
+                />
+            } >
             <ModalBegin isOpen={state.isStartModalOpen ?? false} onClose={closeModal} />
             {
                 {
                     'landing':
                         <DialInLanding
-                            onStart={() => updateState({isStartModalOpen: true})}
+                            onStart={() => updateState({ isStartModalOpen: true })}
                             onSkip={() => navTo('pull-shot')}
                         />,
 
@@ -107,8 +123,20 @@ export function DialInCore() {
                             speak={speak}
                         />,
                     '': <></>,
-                }[state.currentStep?? 'landing']
+                }[state.currentStep ?? 'landing']
             }
-        </>
+        </ParallaxScrollView >
     );
 }
+
+const styles = StyleSheet.create({
+    headerImage: {
+        height: '70%',
+        width: '100%',
+        bottom: 0,
+        marginBottom: '5%',
+        position: 'absolute',
+        objectFit: 'contain',
+        alignSelf: 'center',
+    },
+});

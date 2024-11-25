@@ -43,16 +43,16 @@ export default function ParallaxScrollView(
     return (
 
         <View style={styles.container} >
-            <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} >
+            <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} style={{ backgroundColor: '#1A1313'}}  >
                 <Animated.View
                     style={[
                         styles.header,
-                        { backgroundColor: themedColors.backgroundSecondary },
+                        { backgroundColor: '#1A1313' },
                         headerAnimatedStyle,
                     ]} >
                     {headerImage}
                 </Animated.View >
-                <View style={{ height: '100%', backgroundColor: themedColors.background }} >
+                <View style={{ backgroundColor: '#1A1313'}} >
                     {children}
                 </View >
             </Animated.ScrollView >

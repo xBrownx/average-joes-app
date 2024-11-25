@@ -1,10 +1,1 @@
-import React from "react";
-import { LandingCoreScreen } from "@/features/landing";
-
-export default function LandingScreen() {
-
-    return (
-        <LandingCoreScreen />
-    );
-}
-
+import ShopCoreScreen from '@/features/shop/shop-core-screen';export default ShopCoreScreen;

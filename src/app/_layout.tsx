@@ -1,24 +1,62 @@
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { Provider } from 'react-redux';
 import store, { useAppDispatch } from '@/store/store';
 import { loadRemoteData } from '@/store/slice/remote-data-slice';
-import { AuthModal } from '@/features/auth/auth-modal';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { CustomDrawerContent, SCREEN_OPTIONS } from '@/components/navigation';
-import LandingScreen from '@/app/shop';
-import { createDrawerNavigator, DrawerNavigationOptions } from '@react-navigation/drawer';
-import HomeScreen from '@/app/home';
-import DialInScreen from '@/app/dial-in';
-import ProfileScreen from '@/app/profile';
-import CartScreen from "@/app/cart";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import ShopCoreScreen from '@/features/shop/shop-core-screen';
+import HomeCoreScreen from '@/features/home/home-core-screen';
+import DialInCoreScreen from '@/features/dial-in/dial-in-core-screen';
+import CartModal from '@/features/shop/components/cart-modal';
+import ProfileCoreScreen from '@/features/profile/profile-core';
+import AuthCoreScreen from '@/features/auth/auth-core-screen';
+
+import {
+    Poppins_100Thin,
+    Poppins_200ExtraLight,
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+    Poppins_800ExtraBold,
+    Poppins_900Black,
+    useFonts,
+} from '@expo-google-fonts/poppins';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+    const [loaded, error] = useFonts({
+        Poppins_100Thin,
+        Poppins_200ExtraLight,
+        Poppins_300Light,
+        Poppins_400Regular,
+        Poppins_500Medium,
+        Poppins_600SemiBold,
+        Poppins_700Bold,
+        Poppins_800ExtraBold,
+        Poppins_900Black,
+        'Poppins-Thin': require('@/assets/fonts/Poppins-Thin.ttf'),
+        PoppinsSemiBold: require('@/assets/fonts/Poppins-SemiBold.ttf'),
+        PoppinsBold: require('@/assets/fonts/Poppins-Bold.ttf'),
+    });
+
+    useEffect(() => {
+        if (loaded || error) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded, error]);
+
+
+    if (!loaded && !error) {
+        return null;
+    }
+
     return (
         <Provider store={store} >
             <App />
@@ -30,16 +68,8 @@ const Drawer = createDrawerNavigator();
 
 function App() {
     const dispatch = useAppDispatch();
-    const [isLoginModal, setLoginModal] = useState(true);
     const [initializing, setInitializing] = useState(true); // may need to change this to true
     const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-
-    const [loaded] = useFonts({
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-        Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
-        PoppinsSemiBold: require('../assets/fonts/Poppins-SemiBold.ttf'),
-        PoppinsBold: require('../assets/fonts/Poppins-Bold.ttf'),
-    });
 
     // Handle user state changes
     function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
@@ -50,23 +80,20 @@ function App() {
 
     useEffect(() => {
         dispatch(loadRemoteData());
-        if (loaded) {
-            SplashScreen.hideAsync();
-        }
-    }, [loaded]);
+    }, []);
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
     }, []);
 
-    if (!loaded || initializing) {
+    if (initializing) {
         return null;
     }
 
     return (
         <>
-            {!user ? <AuthModal isOpen={isLoginModal} onClose={() => {}}/> :
+            {!user ? <AuthCoreScreen /> :
                 <Drawer.Navigator
                     initialRouteName="home"
                     screenOptions={SCREEN_OPTIONS}
@@ -74,27 +101,27 @@ function App() {
                 >
                     <Drawer.Screen
                         name="home"
-                        component={HomeScreen}
+                        component={HomeCoreScreen}
                     />
 
                     <Drawer.Screen
                         name="dial-in"
-                        component={DialInScreen}
+                        component={DialInCoreScreen}
                     />
 
                     <Drawer.Screen
                         name="shop"
-                        component={LandingScreen}
+                        component={ShopCoreScreen}
                     />
 
                     <Drawer.Screen
                         name="profile"
-                        component={ProfileScreen}
+                        component={ProfileCoreScreen}
                     />
 
                     <Drawer.Screen
                         name="cart"
-                        component={CartScreen}
+                        component={CartModal}
                     />
 
                 </Drawer.Navigator >

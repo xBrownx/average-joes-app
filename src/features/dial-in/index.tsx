@@ -1,1 +1,1 @@
-export * from './core-screen';
+export * from './dial-in-core-screen';

@@ -1,1 +1,1 @@
-export * from './home-core';
+export * from './home-core-screen';
