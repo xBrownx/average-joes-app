@@ -60,7 +60,6 @@ export function ThemedDropdown({placeholder, data, value, onChange}: ThemedDropd
 const styles = StyleSheet.create({
     dropdown: {
         margin: 0,
-        height: 50,
         backgroundColor: 'white',
         borderRadius: 12,
         padding: 12,

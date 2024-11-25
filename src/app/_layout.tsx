@@ -13,6 +13,7 @@ import { createDrawerNavigator, DrawerNavigationOptions } from '@react-navigatio
 import HomeScreen from '@/app/home';
 import DialInScreen from '@/app/dial-in';
 import ProfileScreen from '@/app/profile';
+import CartScreen from "@/app/cart";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -89,6 +90,11 @@ function App() {
                     <Drawer.Screen
                         name="profile"
                         component={ProfileScreen}
+                    />
+
+                    <Drawer.Screen
+                        name="cart"
+                        component={CartScreen}
                     />
 
                 </Drawer.Navigator >

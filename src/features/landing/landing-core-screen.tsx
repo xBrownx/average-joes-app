@@ -8,7 +8,7 @@ import { loadShopifyData, setUserCartId } from '@/store/slice/shopify-slice';
 import { useAppDispatch } from '@/store';
 import { LearningSection } from '@/features/landing/components/learning-section';
 import { InstaFeed } from '@/features/landing/components/insta-feed';
-import { ShopPreviewComponent } from '@/features/shop/shop-preview-component';
+import { ShopPreviewComponent } from '@/features/shop/components/shop-preview-component';
 import {
     ACCESSORIES_COLLECTION,
     COFFEE_COLLECTION,
@@ -17,11 +17,16 @@ import {
 } from '@/features/shopify/constants';
 import { useFirebase } from '@/firebase';
 import { createCheckout } from '@/features/shopify';
+import { ShopAllCollection } from "@/features/shop/all-from-collection/shop-all-collection";
+
 
 export function LandingCoreScreen() {
     const dispatch = useAppDispatch();
-    const { fetchCollection, addQuery } = useFirebase({ collectionId: 'userCarts' });
+    const {fetchCollection, addQuery} = useFirebase({collectionId: 'userCarts'});
     const [createAttempts, setCreateAttempts] = useState(0);
+    const [isViewAll, setViewAll] = useState(false);
+
+    const [viewAllCollectionId, setViewAllCollectionId] = useState<string | null>(null);
 
     const loadUserCarts = async () => {
         console.log('loading cart...');
@@ -38,13 +43,13 @@ export function LandingCoreScreen() {
 
     const createUserCart = async () => {
         console.log('creating cart...');
-        if(createAttempts > 3 ){
+        if (createAttempts > 3) {
             console.log('create cart limit reached');
             return;
         }
         setCreateAttempts(prev => prev++);
         const checkoutId = await createCheckout();
-        const addQry = await addQuery({ cartId: checkoutId });
+        const addQry = await addQuery({cartId: checkoutId});
         if (addQry) {
             await loadUserCarts();
         } else {
@@ -66,43 +71,52 @@ export function LandingCoreScreen() {
     }
 
     function onViewAllPress(collectionId: string) {
-        console.log('onViewAllPress:', collectionId);
+        setViewAllCollectionId(collectionId);
+        setViewAll(true);
     }
 
     return (
-        <ScrollView style={styles.scrollViewContainer} >
-            <Banner />
-            <View style={styles.container} >
-                <ShopPreviewComponent
-                    title={'JOEVEMBER OFFERS'}
-                    collectionId={JOEVEMBER_COLLECTION}
-                    onViewAllPress={onViewAllPress}
-                    onProductPress={onProductPress}
+        <ScrollView style={styles.scrollViewContainer}>
+            {isViewAll && viewAllCollectionId?
+                <ShopAllCollection
+                    collectionId={viewAllCollectionId}
                 />
-                <ShopPreviewComponent
-                    title={'TOP SELLING BUNDLES'}
-                    collectionId={TOP_SELLING_BUNDLES_COLLECTION}
-                    onViewAllPress={onViewAllPress}
-                    onProductPress={onProductPress}
-                />
-                <ShopByCategory />
-                <WhyBuyFromUs />
-                <ShopPreviewComponent
-                    title={'SHOP ACCESSORIES'}
-                    collectionId={ACCESSORIES_COLLECTION}
-                    onViewAllPress={onViewAllPress}
-                    onProductPress={onProductPress}
-                />
-                <LearningSection />
-                <InstaFeed />
-                <ShopPreviewComponent
-                    title={'COFFEE ROASTED FOR HOME MACHINES'}
-                    collectionId={COFFEE_COLLECTION}
-                    onProductPress={onProductPress}
-                />
-            </View >
-        </ScrollView >
-    );
+                : <>
+                    <Banner />
+                    <View style={styles.container}>
+                        <ShopPreviewComponent
+                            title={'JOEVEMBER OFFERS'}
+                            collectionId={JOEVEMBER_COLLECTION}
+                            onViewAllPress={onViewAllPress}
+                            onProductPress={onProductPress}
+                        />
+                        <ShopPreviewComponent
+                            title={'TOP SELLING BUNDLES'}
+                            collectionId={TOP_SELLING_BUNDLES_COLLECTION}
+                            onViewAllPress={onViewAllPress}
+                            onProductPress={onProductPress}
+                        />
+                        <ShopByCategory />
+                        <WhyBuyFromUs />
+                        <ShopPreviewComponent
+                            title={'SHOP ACCESSORIES'}
+                            collectionId={ACCESSORIES_COLLECTION}
+                            onViewAllPress={onViewAllPress}
+                            onProductPress={onProductPress}
+                        />
+                        <LearningSection />
+                        <InstaFeed />
+                        <ShopPreviewComponent
+                            title={'COFFEE ROASTED FOR HOME MACHINES'}
+                            collectionId={COFFEE_COLLECTION}
+                            onProductPress={onProductPress}
+                        />
+                    </View>
+                </>
+            }
+        </ScrollView>
+    )
+        ;
 }
 
 const styles = StyleSheet.create({

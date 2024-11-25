@@ -47,17 +47,18 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: '500',
+        fontWeight: 700,
         lineHeight: 26,
-        fontFamily: 'PoppinsBold',
+        fontFamily: 'PoppinsBold, sans-serif',
         letterSpacing: 0.1,
-        color: themedColors.primary,
+        color: '#ce2127',
     },
     subtitle: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
-        fontFamily: 'PoppinsBold',
+        fontFamily: 'PoppinsBold, sans-serif',
         color: themedColors.tertiary,
+        opacity: 0.8
     },
     primaryBold: {
         fontSize: 22,

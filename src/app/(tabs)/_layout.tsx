@@ -1,17 +1,5 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Image } from 'react-native';
-import { TabBarIcon } from '@/components/navigation/tab-bar-icon';
-import { themedColors } from "@/constants/themed-colors";
-import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import { BannerLeft, BannerLogo, BannerRight } from "@/components/banner";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import LandingScreen from "@/app/shop";
-
-
-
-
-
 
 export default function TabLayout() {
     return (

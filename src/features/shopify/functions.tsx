@@ -16,6 +16,7 @@ export async function fetchSingleProduct(productId: string) {
     return client.product.fetch(productId);
 }
 
+
 export async function fetchAllCollections() {
     return client.collection.fetchAllWithProducts();
 }

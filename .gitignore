@@ -16,6 +16,6 @@ local.properties
 android/local.properties
 # macOS
 .DS_Store
-scripts/
+scripts/run-avd.js
 
 
