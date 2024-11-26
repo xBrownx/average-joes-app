@@ -1,13 +1,32 @@
 import { ActionReducerMapBuilder, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchAllProductReviews } from "@/features/shopify";
+import { createCheckout, fetchAllProductReviews, fetchCheckout } from "@/shopify";
 import { RootState } from "@/store/reducers";
-import { Cart } from '@/domain/shopify';
+import { initShopifyRemoteData, ShopifyRemoteData } from "@/domain/shopify";
+import { useFirebase } from "@/firebase";
+import { ProductReviewBody } from "@/store/dto/dto";
+import { shopifyCheckoutToCart } from "@/store/dto/transform";
 
 export const loadShopifyData = createAsyncThunk<any, void, { rejectValue: string }>(
-    "shopifyData/loadShopifyData",
+    "shopifyData/loadShopifyReviews",
     async (_, thunkAPI) => {
+        const {fetchCollection, addQuery} = useFirebase({collectionId: 'userCarts'});
         try {
-            return await fetchAllProductReviews();
+            const userCarts = await fetchCollection();
+            const checkoutId = (userCarts && userCarts.length > 0)
+                ? userCarts[0].cartId
+                : await createCheckout();
+            const cart = await fetchCheckout(checkoutId);
+            const allReviews: ProductReviewBody[] = await fetchAllProductReviews();
+
+            const shopifyData: ShopifyRemoteData = {
+                checkoutId,
+                cart: shopifyCheckoutToCart(cart),
+                allReviews,
+            }
+
+            await addQuery({cartId: shopifyData.checkoutId});
+            return shopifyData;
+
         } catch (error) {
             return thunkAPI.rejectWithValue("Failed to fetch server data.");
         }
@@ -15,17 +34,13 @@ export const loadShopifyData = createAsyncThunk<any, void, { rejectValue: string
 );
 
 interface ShopifyState {
-    data: any;
-    cartId: string;
-    cart: Cart | null,
+    data: ShopifyRemoteData;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: ShopifyState = {
-    data: [],
-    cartId: "",
-    cart: null,
+    data: initShopifyRemoteData(),
     loading: false,
     error: null,
 };
@@ -35,10 +50,7 @@ export const shopifySlice = createSlice({
     initialState,
     reducers: {
         setUserCartId: (state, action: PayloadAction<string>) => {
-            state.cartId = action.payload;
-        },
-        setUserCart: (state, action: PayloadAction<Cart>) => {
-            state.cart = action.payload;
+            state.data.checkoutId = action.payload;
         },
     },
     extraReducers: (builder:  ActionReducerMapBuilder<ShopifyState>) => {
@@ -54,14 +66,17 @@ export const shopifySlice = createSlice({
             .addCase(loadShopifyData.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Something went wrong';
-            });
+            })
     }
 });
 
-export const { setUserCartId, setUserCart } = shopifySlice.actions;
+export const { setUserCartId} = shopifySlice.actions;
 
-export const selectProductReviews = (state: RootState) => state.shopify.data;
+export const selectProductReviews = (state: RootState) => state.shopify.data.allReviews;
 
-export const selectUserCartId = (state: RootState) => state.shopify.cartId;
+export const selectUserCartId = (state: RootState) => state.shopify.data.checkoutId;
+
+export const selectUserCart = (state: RootState) => state.shopify.data.cart;
+
 
 export default shopifySlice.reducer;

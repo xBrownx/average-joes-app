@@ -36,33 +36,32 @@ const styles = StyleSheet.create({
     default: {
         fontSize: 16,
         lineHeight: 24,
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins_400Regular',
     },
     defaultSemiBold: {
         fontSize: 16,
         lineHeight: 24,
         fontWeight: '600',
-        fontFamily: 'PoppinsSemiBold',
+        fontFamily: 'Poppins_600SemiBold, sans-serif',
         color: themedColors.primary,
     },
     title: {
         fontSize: 24,
-        fontWeight: 700,
         lineHeight: 26,
-        fontFamily: 'PoppinsBold, sans-serif',
+        fontFamily: 'Poppins_700Bold, sans-serif',
         letterSpacing: 0.1,
         color: '#ce2127',
     },
     subtitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        fontFamily: 'PoppinsBold, sans-serif',
+        fontSize: 18,
+        fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold, sans-serif',
         color: themedColors.tertiary,
         opacity: 0.8
     },
     primaryBold: {
         fontSize: 22,
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins_400Regular',
         fontWeight: '800',
 
         color: themedColors.primary,
@@ -71,6 +70,6 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         fontSize: 16,
         color: themedColors.primary,
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins_400Regular',
     },
 });

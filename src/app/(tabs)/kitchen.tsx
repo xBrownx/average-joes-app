@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         height: "70%",
         width: "60%",
         bottom: 0,
-        marginBottom: '5%',
+        marginBottom: '10%',
         position: 'absolute',
         objectFit: "contain",
         alignSelf: 'center',

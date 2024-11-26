@@ -1,5 +1,7 @@
 import { GoogleSheetsResponseDto } from "@/store/dto/dto";
-import { MachineModel, RemoteMachineMake, RemoteMachineModel, RemoteRoaster, RemoteBlend } from "@/domain";
+import { RemoteBlend, RemoteMachineMake, RemoteMachineModel, RemoteRoaster } from "@/domain";
+import { Checkout } from "shopify-buy";
+import { CartLineItem, CustomCheckout } from "@/domain/shopify";
 
 
 function dtoToKeyValuePair(dto: GoogleSheetsResponseDto) {
@@ -81,3 +83,24 @@ export function dtoToServerBlends(dto: GoogleSheetsResponseDto): RemoteBlend[] {
     return blends;
 }
 
+export function shopifyCheckoutToCart(checkout: Checkout): CustomCheckout {
+    const lineItems = checkout.lineItems.map((lineItem) => {
+        const cartLineItem: CartLineItem = {
+            quantity: lineItem.quantity,
+            title: lineItem.title,
+            variant: {
+                title: lineItem.variant?.title,
+                price: lineItem.variant?.price.amount,
+                compareAtPrice: lineItem.variant?.compareAtPrice.amount,
+                image: lineItem.variant?.image.src,
+            },
+            id: lineItem.id
+        }
+        return cartLineItem;
+    });
+
+    return {
+        subtotalPrice: checkout.subtotalPrice.amount,
+        lineItems: lineItems,
+    };
+}

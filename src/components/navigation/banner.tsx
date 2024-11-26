@@ -3,8 +3,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import Svg, { Circle, Line, Path } from 'react-native-svg';
-import { AuthModal } from '@/features/auth/auth-modal';
-import CartModal from '@/features/shop/components/cart-modal';
+import ShopCartModal from '@/features/shop/shop-cart-modal';
 
 export function BannerLogo() {
     const navigation = useNavigation();
@@ -51,7 +50,7 @@ export function BannerRight() {
     const [open, setOpen] = React.useState(false);
     return (
         <>
-            <CartModal isOpen={open} onClose={() => setOpen(false)} />
+            <ShopCartModal isOpen={open} onClose={() => setOpen(false)} />
             <View style={[styles.bannerIcons, { paddingRight: 20 }]} >
                 <TouchableOpacity onPress={() => navigation.navigate('profile' as any)} >
                     <Svg height="24" width="24" id="svg-icon-user" viewBox="0 0 24 24" fill="none" stroke="white"

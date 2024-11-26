@@ -17,7 +17,8 @@ export function useMachineSearch(): MachineSearch {
     const [modelDropdown, setModelDropdown] = useState<DropdownData[]>([]);
 
     const filterModels = (makeId: string) => {
-        const filteredModels = machineModels.filter(model => model.id === makeId);
+        const filteredModels = machineModels.filter(model => model.makeId === makeId);
+        console.log(filteredModels);
         setModelDropdown(
             remoteMachineModelToDropdown(filteredModels)
         )

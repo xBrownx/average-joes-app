@@ -13,7 +13,7 @@ import { ThemedText } from '@/components/text/themed-text';
 import { themedColors } from '@/constants/themed-colors';
 import { UserMachine } from '@/domain';
 import { FormState, portafilterOptions } from '@/features/kitchen/machines/types';
-import { addUserMachine, useAppDispatch } from '@/store';
+import { addUserMachine, setDefaultUserMachine, useAppDispatch } from '@/store';
 import { StateType } from '@/hooks';
 import uuid from 'react-native-uuid';
 
@@ -38,6 +38,7 @@ export function AddMachine({parentState, updateParentState, close, onSaveCallbac
             },
         };
         dispatch(addUserMachine(userMachine));
+        dispatch(setDefaultUserMachine(userMachine));
         if (onSaveCallback)
             onSaveCallback(userMachine.id);
         close();

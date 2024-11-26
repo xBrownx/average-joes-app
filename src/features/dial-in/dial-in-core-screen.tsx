@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { useCustomState, useTextToSpeech } from '@/hooks';
 import { Image, StyleSheet } from 'react-native';
+import ParallaxScrollView from "@/components/parallax-scroll-view";
 
 type CurrentStep =
     'landing'
@@ -29,7 +30,7 @@ interface DialInState {
 export default function DialInCoreScreen() {
     const focused = useIsFocused();
     const tts = useTextToSpeech();
-    const { state, updateState } = useCustomState<DialInState>({
+    const {state, updateState} = useCustomState<DialInState>({
         isStartModalOpen: false,
         currentStep: 'landing',
     });
@@ -58,19 +59,19 @@ export default function DialInCoreScreen() {
 
     return (
         <ParallaxScrollView
-            headerBackgroundColor={{ light: '#F0E8E2', dark: '#ce2127' }}
+            headerBackgroundColor={{light: '#F0E8E2', dark: '#ce2127'}}
             headerImage={
                 <Image
                     source={require('@/assets/images/avatar.png')}
                     style={styles.headerImage}
                 />
-            } >
+            }>
             <ModalBegin isOpen={state.isStartModalOpen ?? false} onClose={closeModal} />
             {
                 {
                     'landing':
                         <DialInLanding
-                            onStart={() => updateState({ isStartModalOpen: true })}
+                            onStart={() => updateState({isStartModalOpen: true})}
                             onSkip={() => navTo('pull-shot')}
                         />,
 
@@ -125,7 +126,7 @@ export default function DialInCoreScreen() {
                     '': <></>,
                 }[state.currentStep ?? 'landing']
             }
-        </ParallaxScrollView >
+        </ParallaxScrollView>
     );
 }
 

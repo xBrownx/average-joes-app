@@ -10,7 +10,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ShopCoreScreen from '@/features/shop/shop-core-screen';
 import HomeCoreScreen from '@/features/home/home-core-screen';
 import DialInCoreScreen from '@/features/dial-in/dial-in-core-screen';
-import CartModal from '@/features/shop/components/cart-modal';
 import ProfileCoreScreen from '@/features/profile/profile-core';
 import AuthCoreScreen from '@/features/auth/auth-core-screen';
 
@@ -26,6 +25,9 @@ import {
     Poppins_900Black,
     useFonts,
 } from '@expo-google-fonts/poppins';
+import CheckoutCoreScreen from "@/features/shop/shop-checkout";
+import { loadShopifyData } from "@/store/slice/shopify-slice";
+import Kitchen from "@/app/(tabs)/kitchen";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -58,9 +60,9 @@ export default function RootLayout() {
     }
 
     return (
-        <Provider store={store} >
+        <Provider store={store}>
             <App />
-        </Provider >
+        </Provider>
     );
 }
 
@@ -80,6 +82,7 @@ function App() {
 
     useEffect(() => {
         dispatch(loadRemoteData());
+        dispatch(loadShopifyData());
     }, []);
 
     useEffect(() => {
@@ -120,11 +123,16 @@ function App() {
                     />
 
                     <Drawer.Screen
-                        name="cart"
-                        component={CartModal}
+                        name="checkout"
+                        component={CheckoutCoreScreen}
                     />
 
-                </Drawer.Navigator >
+                    <Drawer.Screen
+                        name="kitchen"
+                        component={Kitchen}
+                    />
+
+                </Drawer.Navigator>
             }
         </>
     );

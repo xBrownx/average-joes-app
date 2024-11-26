@@ -25,6 +25,9 @@ export const localDataSlice = createSlice({
         addUserMachine: (state, action: PayloadAction<UserMachine>) => {
             state.data.machines = [...state.data.machines, action.payload]
         },
+        setDefaultUserMachine: (state, action: PayloadAction<UserMachine>) => {
+            state.data.defaultMachine = action.payload;
+        },
         addUserRecipe: (state, action: PayloadAction<UserRecipe>) => {
             state.data.recipes = [...state.data.recipes, action.payload]
         },
@@ -34,13 +37,21 @@ export const localDataSlice = createSlice({
     },
 });
 
-export const { setUserName, addUserMachine, addUserRecipe, addUserPantryItem } = localDataSlice.actions;
+export const {
+    setUserName,
+    addUserMachine,
+    setDefaultUserMachine,
+    addUserRecipe,
+    addUserPantryItem
+} = localDataSlice.actions;
 
 export const selectUser = (state: RootState) => state.localData.data.username;
 
 export const selectAppData = (state: RootState) => state.localData.data;
 
 export const selectUserMachines = (state: RootState) => state.localData.data.machines;
+
+export const selectDefaultMachine = (state: RootState) => state.localData.data.defaultMachine;
 
 export const selectUserRecipes = (state: RootState) => state.localData.data.recipes;
 

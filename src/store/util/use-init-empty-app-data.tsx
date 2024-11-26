@@ -6,6 +6,7 @@ export const initEmptyUserData = (): UserData => {
         recipes: [],
         email: "",
         machines: [],
+        defaultMachine: undefined,
         username: "",
         pantryItems: []
     }
@@ -13,7 +14,8 @@ export const initEmptyUserData = (): UserData => {
 
 export const initEmptyRemoteData = (): RemoteData => {
     return {
-        machineMake: [],
+        machineMakes: [],
+        machineModels: [],
         blends: [],
         roasters: []
     }

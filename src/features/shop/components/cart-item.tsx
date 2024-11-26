@@ -1,7 +1,5 @@
-import { CheckoutLineItem, Product, ProductVariant } from "shopify-buy";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
-import { fetchSingleProduct } from "@/features/shopify";
 import { CartLineItem } from "@/domain/shopify";
 import Svg, { Path } from "react-native-svg";
 
@@ -23,18 +21,25 @@ function BinIcon({onPress}: { onPress: () => void }) {
     );
 }
 
-export function CartItem({lineItem}: { lineItem: CheckoutLineItem }) {
+export function CartItem({lineItem}: { lineItem: CartLineItem }) {
     useEffect(() => {
-        console.log('--------------------------------------------------------------------')
-        console.log(lineItem.variant);
     }, [lineItem]);
     return (
         <>
             {lineItem &&
                 <View style={styles.container}>
-                    <Image source={{uri: lineItem.variant!.image.src}} style={styles.image} />
-                    <Text style={styles.productTitle}>{lineItem.title ?? ''}</Text>
-                    <BinIcon onPress={() => null} />
+                    <Image source={{uri: lineItem.variant!.image}} style={styles.image} />
+                    <View style={{flex: 1}}>
+                        <View style={styles.topLine}>
+                            <Text style={styles.productTitle}>{lineItem.title ?? ''}</Text>
+                            <BinIcon onPress={() => null} />
+                        </View>
+                        <View style={styles.bottomLine}>
+                            <Text style={styles.productTitle}>
+                                ${lineItem.variant?.price ?? ''}
+                            </Text>
+                        </View>
+                    </View>
                 </View>
             }
         </>
@@ -55,8 +60,18 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 8,
     },
+    topLine: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+    },
     productTitle: {
         fontSize: 16,
         fontWeight: 'bold',
     },
+    bottomLine: {
+        flex: 1,
+        justifyContent: 'flex-end'
+    }
+
 })

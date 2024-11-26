@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/text";
 import React from "react";
-import { SectionHeader } from "@/features/landing/components/section-header";
+import { SectionHeader } from "@/features/shop/components/section-header";
 
 export function WhyBuyFromUs() {
     return (

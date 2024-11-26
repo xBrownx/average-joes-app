@@ -13,7 +13,9 @@ module.exports = {
             "backgroundColor": "#ffffff"
         },
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.xbrownx.AverageJoes",
+            "googleServicesFile": "./GoogleService-Info.plist",
         },
         "android": {
             "adaptiveIcon": {
@@ -50,7 +52,13 @@ module.exports = {
                 }
 
             ],
-            "expo-build-properties"
+            ["expo-build-properties",
+                {
+                    "ios": {
+                        "useFrameworks": "static"
+                    }
+                }
+            ]
         ],
         "experiments": {},
         "extra": {

@@ -20,7 +20,6 @@ export const loadRemoteData = createAsyncThunk<RemoteData, void, { rejectValue: 
             const roasterResponse = await fetch(API_URL('roasters'));
             const blendResponse = await fetch(API_URL('blends'));
 
-
             const makeDto: GoogleSheetsResponseDto = await makeResponse.json();
             const modelDto: GoogleSheetsResponseDto = await modelResponse.json();
             const roasterDto: GoogleSheetsResponseDto = await roasterResponse.json();

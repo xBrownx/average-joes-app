@@ -8,8 +8,7 @@ import { useCustomState } from "@/hooks";
 import { ThemedButton } from "@/components/button";
 import { useAppSelector } from "@/store";
 import { selectProductReviews, selectUserCartId } from '@/store/slice/shopify-slice';
-import { addItem, fetchCheckout } from '@/features/shopify';
-import { Cart } from '@/domain/shopify';
+import { addItem, fetchCheckout } from '../../../shopify';
 
 type ShopItemProps = {
     product: Product;
@@ -36,12 +35,10 @@ export function ShopItem({product, onProductPress}: ShopItemProps) {
     });
 
     async function addProductToCart() {
-        console.log('addProductToCart:', product.id);
         if(!cartId) {
             console.log('No cartId found');
             return;
         }
-        console.log('CART_ID:', cartId);
 
         const item = {
             variantId: product.variants[0].id,
@@ -54,16 +51,16 @@ export function ShopItem({product, onProductPress}: ShopItemProps) {
 
     async function updateCart() {
         const data = await fetchCheckout(cartId);
-        const newCart: Cart = {
-            id: data.id,
-            items: data.lineItems.map((lineItem: any) => ({
-                id: lineItem.id,
-                title: lineItem.title,
-                quantity: lineItem.quantity,
-            })),
-            price: data.totalPrice.amount,
-        };
-        console.log(newCart);
+        // const newCart: Cart = {
+        //     id: data.id,
+        //     items: data.lineItems.map((lineItem: any) => ({
+        //         id: lineItem.id,
+        //         title: lineItem.title,
+        //         quantity: lineItem.quantity,
+        //     })),
+        //     price: data.totalPrice.amount,
+        // };
+        // console.log(newCart);
     }
 
     useEffect(() => {

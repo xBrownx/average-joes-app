@@ -1,13 +1,10 @@
-import { Button, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { ThemedText } from '@/components/text/themed-text';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { themedColors } from '@/constants/themed-colors';
 import React, { useState } from 'react';
 import { useAppDispatch } from '@/store';
 import { setUserName } from '@/store';
-import { ThemedInput } from '@/components/input';
-import { globalStyles } from '@/styles/global-styles';
 import auth from '@react-native-firebase/auth';
-import Animated, { LinearTransition, SlideInRight, SlideOutRight } from "react-native-reanimated";
+import Animated, { SlideInRight, SlideOutRight } from "react-native-reanimated";
 
 
 interface SignUpState {
@@ -18,8 +15,11 @@ interface SignUpState {
     confirmPassword: string;
 }
 
+type SignUpProps = {
+    setScreen: (screen: 'main' | 'sign-in-with-email' | 'sign-up') => void
+}
 
-export const SignUp = ({setSignIn}: { setSignIn: () => void }) => {
+export const SignUp = ({setScreen}: SignUpProps) => {
     const dispatch = useAppDispatch();
 
     const [state, setState] = useState<SignUpState>({
@@ -53,63 +53,84 @@ export const SignUp = ({setSignIn}: { setSignIn: () => void }) => {
     }
 
     return (
-        <TouchableWithoutFeedback>
-            <Animated.View
-                entering={SlideInRight.delay(50)}
-                exiting={SlideOutRight}
-                layout={LinearTransition}
-                style={[globalStyles.innerModal, styles.container]}
-            >
-                <View>
-                    <ThemedText type={'default'}>
-                        Sign Up
-                    </ThemedText>
-                </View>
-                <ThemedInput
-                    onValueChange={(value) => onTextChange("firstName", value)}
-                    placeholder="First Name"
+
+            <Animated.View entering={SlideInRight} exiting={SlideOutRight}>
+                <View style={styles.titleContainer}>
+                <Text style={styles.titleText}>
+                    SIGN IN WITH YOUR EMAIL
+                </Text>
+            </View>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => onTextChange('email', value)}
+                    placeholder={"First Name"}
                     value={state.firstName}
                 />
-                <ThemedInput
-                    onValueChange={(value) => onTextChange("lastName", value)}
-                    placeholder="Last Name"
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => onTextChange('lastName', value)}
+                    placeholder={"Last Name"}
                     value={state.lastName}
                 />
-                <ThemedInput
-                    onValueChange={(value) => onTextChange("email", value)}
-                    placeholder="Email"
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => onTextChange('email', value)}
+                    placeholder={"Email"}
                     value={state.email}
                 />
-                <ThemedInput
-                    onValueChange={(value) => onTextChange("password", value)}
-                    placeholder="Password"
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => onTextChange('password', value)}
+                    placeholder={"Password"}
                     value={state.password}
                 />
-                <ThemedInput
-                    onValueChange={(value) => onTextChange("confirmPassword", value)}
-                    placeholder="Confirm Password"
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(value) => onTextChange('confirmPassword', value)}
+                    placeholder={"Confirm Password"}
                     value={state.confirmPassword}
                 />
 
                 <Button
-                    title={'SIGN UP'}
+                    title={'SIGN UP' +
+                        ''}
                     color={themedColors.primary}
                     onPress={onSignUp}
                 />
-                <ThemedText type={'default'}>
-                    Already have an account? Sign in{' '}
-                    <ThemedText type={'defaultSemiBold'} onPress={setSignIn}>
-                        here.
-                    </ThemedText>
-                </ThemedText>
+
+            </View>
             </Animated.View>
-        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    titleContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        borderBottomColor: themedColors.primary,
+        marginHorizontal: 32,
+    },
+    titleText: {
+        fontSize: 24,
+        fontFamily: 'Poppins_700Bold',
+        color: themedColors.primary
+    },
+    inputContainer: {
+        margin: 32,
         gap: 16,
     },
-    linkText: {}
+    input: {
+        height: 50,
+        borderWidth: 1,
+        paddingLeft: 16,
+        paddingTop: 3,
+        borderRadius: 8,
+        fontSize: 16,
+        fontFamily: 'Poppins_400Regular',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white'
+    },
 });

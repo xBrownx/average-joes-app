@@ -9,6 +9,15 @@ import { ThemedCardView } from "@/components/card";
 
 const menuItems = [
     {
+        id: 'pantry',
+        title: 'STOCK',
+        icon:
+            <Image
+                source={require('@/assets/icons/pantry-tertiary.png')}
+                style={{width: 32, height: 32,}}
+            />,
+    },
+    {
         id: 'recipes',
         title: 'RECIPES',
         icon:
@@ -19,24 +28,16 @@ const menuItems = [
                 color={themedColors.tertiary}
             />,
     },
-    {
-        id: 'machines',
-        title: 'MACHINES',
-        icon:
-            <Image
-                source={require('@/assets/icons/coffee-machine-tertiary.png')}
-                style={{ width: 32, height: 32, }}
-            />,
-    },
-    {
-        id: 'pantry',
-        title: 'PANTRY',
-        icon:
-            <Image
-                source={require('@/assets/icons/pantry-tertiary.png')}
-                style={{ width: 32, height: 32, }}
-            />,
-    },
+    // {
+    //     id: 'machines',
+    //     title: 'MACHINES',
+    //     icon:
+    //         <Image
+    //             source={require('@/assets/icons/coffee-machine-tertiary.png')}
+    //             style={{ width: 32, height: 32, }}
+    //         />,
+    // },
+
 ];
 
 type RecipeLandingProps = {
@@ -48,42 +49,43 @@ export function KitchenLanding({navForward}: RecipeLandingProps) {
     const focused = useIsFocused();
     return (
         <>{focused &&
-        <View style={styles.container}>
-            <View style={styles.container} >
-                <View style={styles.titleContainer} >
-                    <TypeWriterText type={'title'} textArr={["RECIPES"]} />
-                </View >
-                <View >
-                    <ThemedText type="default" >
-                        Checkout your recipes, add/edit your machine profiles and keep an eye on what's in your pantry.
-                    </ThemedText >
-                </View >
-            </View >
-            {menuItems.map(item => (
+            <View style={styles.container}>
+                <View style={styles.container}>
+                    <View style={styles.titleContainer}>
+                        <TypeWriterText type={'title'} textArr={["PANTRY"]} />
+                    </View>
+                    <View>
+                        <ThemedText type="default">
+                            Checkout your recipes, add/edit your machine profiles and keep an eye on what's in your
+                            pantry.
+                        </ThemedText>
+                    </View>
+                </View>
+                {menuItems.map(item => (
                     <ThemedCardView
                         key={item.id}
                         id={item.id}
                         onPress={() => navForward(item.id)}
                         icon={item.icon}
                     >
-                        <View style={styles.cardContents} >
+                        <View style={styles.cardContents}>
                             <ThemedText
                                 style={styles.cardText}
                                 type={'defaultSemiBold'}
                             >
                                 {item.title}
-                            </ThemedText >
+                            </ThemedText>
                             <Ionicons
                                 name="arrow-forward"
                                 size={32}
                                 backgroundColor={'transparent'}
                                 color={themedColors.tertiary}
                             />
-                        </View >
-                    </ThemedCardView >
+                        </View>
+                    </ThemedCardView>
 
                 ))}
-        </View >
+            </View>
         }
         </>
     );

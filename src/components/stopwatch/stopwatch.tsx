@@ -14,12 +14,9 @@ const orange: Colour = '#F7B801';
 const yellow: Colour = '#EEFF00';
 const green: Colour = '#00FF00';
 
+const underColours:CF = [red, orange, green, yellow, green];
 
-
-const underColours:CF = [red, red, orange, yellow, green];
-const overColours: CF = ['#0000ff', '#0000ff', '#ffffff', '#ff00ff', red];
-
-const underTimeColours: TimeColour = [30, 15, 10, 5, 0];
+const underTimeColours: TimeColour = [45, 25, 15, 10, 0];
 
 interface StopWatchState {
     key?: number;
@@ -40,8 +37,8 @@ export function Stopwatch({onStart, onStop}: StopwatchProps) {
         key: 0,
         isPlaying: false,
         isPause: false,
-        isGrowing: false,
-        rotation: 'clockwise',
+        isGrowing: true,
+        rotation: 'counterclockwise',
         colours: underColours,
     });
 
@@ -63,7 +60,7 @@ export function Stopwatch({onStart, onStop}: StopwatchProps) {
 
     const resetStopwatch = () => {
         updateState({
-            rotation: 'clockwise',
+            rotation: 'counterclockwise',
             isGrowing: false,
             isPlaying: false,
             isPause: false,
@@ -76,7 +73,7 @@ export function Stopwatch({onStart, onStop}: StopwatchProps) {
         console.log()
         updateState({
             isGrowing: !state.isGrowing,
-            rotation: !state.isGrowing ? 'counterclockwise' : 'clockwise',
+            rotation: !state.isGrowing ? 'counterclockwise' : 'counterclockwise',
             colours: !state.isGrowing ? underColours : underColours,
             key: Math.random(),
         });
@@ -88,17 +85,17 @@ export function Stopwatch({onStart, onStop}: StopwatchProps) {
             <CountdownCircleTimer
                 key={state.key}
                 isPlaying={state.isPlaying?? false}
-                duration={30}
+                duration={45}
                 colors={state.colours!}
                 colorsTime={underTimeColours}
-                isGrowing={state.isGrowing!}
+                isGrowing={true}
                 rotation={state.rotation!}
                 isSmoothColorTransition
                 onComplete={() => {
                     onOvertime()
                 }}
             >
-                {({remainingTime}) => <ThemedText type='subtitle'>{state.isGrowing ? `${30 + remainingTime}` : remainingTime}</ThemedText>}
+                {({remainingTime}) => <ThemedText type='subtitle'>{state.isGrowing ? `${45 - remainingTime}` : remainingTime}</ThemedText>}
             </CountdownCircleTimer>
 
             <View style={styles.buttonContainer}>
