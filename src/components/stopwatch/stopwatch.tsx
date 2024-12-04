@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/text/themed-text";
 import { useCustomState } from "@/hooks";
 import { themedColors } from "@/constants/themed-colors";
 
-type CF = ({0: `#${string}`; } & {1: `#${string}`; } & `#${string}`[])
+type CF = ({ 0: `#${string}`; } & { 1: `#${string}`; } & `#${string}`[])
 type Colour = `#${string}`
 type TimeColour = { 0: number; } & { 1: number; } & number[];
 
@@ -14,17 +14,14 @@ const orange: Colour = '#F7B801';
 const yellow: Colour = '#EEFF00';
 const green: Colour = '#00FF00';
 
-const underColours:CF = [red, orange, green, yellow, green];
 
-const underTimeColours: TimeColour = [45, 25, 15, 10, 0];
+const TIME_LIMIT = 45;
 
 interface StopWatchState {
     key?: number;
     isPlaying?: boolean;
     isPause?: boolean;
-    isGrowing?: boolean;
-    rotation?: 'clockwise' | 'counterclockwise'
-    colours?: CF;
+    remainingTime?: number;
 }
 
 type StopwatchProps = {
@@ -37,9 +34,7 @@ export function Stopwatch({onStart, onStop}: StopwatchProps) {
         key: 0,
         isPlaying: false,
         isPause: false,
-        isGrowing: true,
-        rotation: 'counterclockwise',
-        colours: underColours,
+        remainingTime: 45,
     });
 
     const startStopwatch = () => {
@@ -60,59 +55,53 @@ export function Stopwatch({onStart, onStop}: StopwatchProps) {
 
     const resetStopwatch = () => {
         updateState({
-            rotation: 'counterclockwise',
-            isGrowing: false,
             isPlaying: false,
             isPause: false,
-            colours: underColours,
-            key: Math.random()
+            key: Math.random(),
+            remainingTime: 45,
         });
     }
 
     const onOvertime = () => {
         console.log()
-        updateState({
-            isGrowing: !state.isGrowing,
-            rotation: !state.isGrowing ? 'counterclockwise' : 'counterclockwise',
-            colours: !state.isGrowing ? underColours : underColours,
-            key: Math.random(),
-        });
-
     }
 
     return (
         <View style={styles.container}>
             <CountdownCircleTimer
                 key={state.key}
-                isPlaying={state.isPlaying?? false}
-                duration={45}
-                colors={state.colours!}
-                colorsTime={underTimeColours}
-                isGrowing={true}
-                rotation={state.rotation!}
-                isSmoothColorTransition
-                onComplete={() => {
-                    onOvertime()
-                }}
+                isPlaying={state.isPlaying ?? false}
+                duration={TIME_LIMIT}
+                colors={[red, orange, green, yellow, orange, red]}
+                colorsTime={[45, 22, 20, 15, 10, 0]}  // 0 20 25 30 35 45
+                initialRemainingTime={state.remainingTime}
+                onUpdate={(remainingTime: number) => {updateState({remainingTime: remainingTime})}}
             >
-                {({remainingTime}) => <ThemedText type='subtitle'>{state.isGrowing ? `${45 - remainingTime}` : remainingTime}</ThemedText>}
+                {() => {
+                    return (
+                        <TouchableOpacity
+                            style={[styles.button, state.isPlaying ? styles.buttonPause : state.isPause ? styles.buttonReset : styles.buttonPlay]}
+                            onPress={state.isPlaying ? pauseStopwatch : (state.isPause ? resetStopwatch : startStopwatch)}
+                        >
+                            <ThemedText
+                                type='primaryBold'
+                                style={styles.buttonText}
+                            >
+                                {state.isPlaying ? 'STOP' : (state.isPause ? 'RESET' : 'START')}
+                            </ThemedText>
+                        </TouchableOpacity>
+                    );
+                }}
             </CountdownCircleTimer>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    style={[styles.button, state.isPlaying ? styles.buttonPause : state.isPause ? styles.buttonReset : styles.buttonPlay ]}
-                    onPress={state.isPlaying ? pauseStopwatch : (state.isPause ? resetStopwatch : startStopwatch)}
-                >
-                    <ThemedText
-                        type='primaryBold'
-                        style={styles.buttonText}
-                    >
-                        {state.isPlaying ? 'STOP' : (state.isPause ? 'RESET' : 'START')}
-                    </ThemedText>
-                </TouchableOpacity>
+                <ThemedText type='subtitle'>
+                    {TIME_LIMIT - state.remainingTime!}
+                </ThemedText>
             </View>
         </View>
-    );
+    )
+        ;
 }
 
 const styles = StyleSheet.create({

@@ -10,42 +10,30 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ShopCoreScreen from '@/features/shop/shop-core-screen';
 import HomeCoreScreen from '@/features/home/home-core-screen';
 import DialInCoreScreen from '@/features/dial-in/dial-in-core-screen';
-import ProfileCoreScreen from '@/features/profile/profile-core';
+import ProfileCoreScreen from '@/features/profile/profile-core-screen';
 import AuthCoreScreen from '@/features/auth/auth-core-screen';
+import QuizCoreScreen from "@/features/quiz/quiz-core-screen";
+import CheckoutCoreScreen from "@/features/shop/shop-checkout";
 
 import {
-    Poppins_100Thin,
-    Poppins_200ExtraLight,
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-    Poppins_800ExtraBold,
-    Poppins_900Black,
+    Kalam_300Light,
+    Kalam_400Regular,
+    Kalam_700Bold,
     useFonts,
-} from '@expo-google-fonts/poppins';
-import CheckoutCoreScreen from "@/features/shop/shop-checkout";
+} from '@expo-google-fonts/kalam';
+
 import { loadShopifyData } from "@/store/slice/shopify-slice";
 import Kitchen from "@/app/(tabs)/kitchen";
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
     const [loaded, error] = useFonts({
-        Poppins_100Thin,
-        Poppins_200ExtraLight,
-        Poppins_300Light,
-        Poppins_400Regular,
-        Poppins_500Medium,
-        Poppins_600SemiBold,
-        Poppins_700Bold,
-        Poppins_800ExtraBold,
-        Poppins_900Black,
-        'Poppins-Thin': require('@/assets/fonts/Poppins-Thin.ttf'),
-        PoppinsSemiBold: require('@/assets/fonts/Poppins-SemiBold.ttf'),
-        PoppinsBold: require('@/assets/fonts/Poppins-Bold.ttf'),
+        Kalam_300Light,
+        Kalam_400Regular,
+        Kalam_700Bold,
     });
 
     useEffect(() => {
@@ -96,7 +84,7 @@ function App() {
 
     return (
         <>
-            {!user ? <AuthCoreScreen /> :
+            {!user ? <QuizCoreScreen /> :
                 <Drawer.Navigator
                     initialRouteName="home"
                     screenOptions={SCREEN_OPTIONS}

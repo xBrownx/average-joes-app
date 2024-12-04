@@ -20,10 +20,13 @@ import { AddMachineModal } from "@/features/kitchen/machines/modal-base";
 import { machineIdToUserMachine } from "@/features/kitchen/machines/usecase";
 import { UserMachine } from "@/domain";
 import { ThemedText } from "@/components/text";
+import { DropdownWithLabel } from "@/features/profile/components/dropdown-with-label";
 
 interface ProfileCoreState {
     selectedMachine?: string;
+    selectedGrinder?: string;
     addMachineModal?: boolean;
+    addGrinderModal?: boolean;
 }
 
 const ADD_NEW = {label: 'ADD NEW', value: 'add'}
@@ -37,12 +40,24 @@ export default function ProfileCoreScreen() {
 
     const {state, updateState} = useCustomState<ProfileCoreState>({
         selectedMachine: defaultMachine?.model.name ?? 'Tap to add',
+        selectedGrinder: defaultMachine?.model.name ?? 'Tap to add',
         addMachineModal: false,
+        addGrinderModal: false,
     });
 
     const onSelectUserMachine = (value: string) => {
         if (value === 'add') {
             updateState({addMachineModal: true});
+        } else {
+            const userMachine = machineIdToUserMachine(value, userMachines);
+            if (userMachine)
+                dispatch(setDefaultUserMachine(userMachine));
+        }
+    }
+
+    const onSelectUserGrinder = (value: string) => {
+        if (value === 'add') {
+            updateState({addGrinderModal: true});
         } else {
             const userMachine = machineIdToUserMachine(value, userMachines);
             if (userMachine)
@@ -77,32 +92,23 @@ export default function ProfileCoreScreen() {
                             <TypeWriterText type={'title'} textArr={['PROFILE']} />
                         </View>
 
-                        <ThemedText>
-                            Default Machine:
-                        </ThemedText>
-                        <Dropdown
-                            style={styles.filter}
-                            placeholder={'Tap to add'}
+                        <DropdownWithLabel
+                            label={'Default Machine'}
                             data={userMachineData}
                             value={defaultMachine ? defaultMachine.model.name : 'Tap to add'}
                             onChange={value => onSelectUserMachine(value.value)}
-                            labelField={"label"}
-                            valueField={"label"}
-                            fontFamily={'Poppins_400Regular, sans-serif'}
-                            itemTextStyle={{color: 'black'}}
-                            selectedTextStyle={{color: themedColors.tertiary, fontWeight: 'bold'}}
-                            renderRightIcon={() => (
-                                <Ionicons.Button
-                                    name={userMachines.length ? 'chevron-down' : 'add'}
-                                    size={24} color={themedColors.tertiary}
-                                    style={{marginRight: 8}}
-                                    backgroundColor={'transparent'}
-                                    onPress={userMachines.length ? undefined : () => updateState({addMachineModal: true})}
-                                    iconStyle={{marginRight: 0}}
-                                />
-                            )}
-                            disable={!userMachines.length}
+                            onAddPress={() => updateState({addMachineModal: true})}
+                            isDisabled={userMachines.length}
                         />
+                        <DropdownWithLabel
+                            label={'Default Grinder'}
+                            data={userMachineData}
+                            value={defaultMachine ? defaultMachine.model.name : 'Tap to add'}
+                            onChange={value => onSelectUserGrinder(value.value)}
+                            onAddPress={() => updateState({addGrinderModal: true})}
+                            isDisabled={userMachines.length}
+                        />
+
                         <Button
                             title={'LOGOUT'}
                             color={themedColors.primary}
@@ -136,12 +142,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 8,
     },
-    filter: {
-        backgroundColor: '#FFF',
-        flex: 1,
-        height: 40,
-        paddingLeft: 8,
-        color: themedColors.tertiary,
-        fontWeight: 'bold'
-    }
+
 });

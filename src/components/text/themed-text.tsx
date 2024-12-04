@@ -1,18 +1,18 @@
 import { Text, type TextProps, StyleSheet } from 'react-native';
 import { themedColors } from '@/constants/themed-colors';
+import { Kalam_400Regular } from "@expo-google-fonts/kalam";
 
 export type ThemedTextProps = TextProps & {
-    lightColor?: string;
-    darkColor?: string;
+    light?: boolean;
     type?: 'default' | 'title' | 'defaultSemiBold' | 'primaryBold' | 'subtitle' | 'link';
+    color?: 'light' | 'dark';
 };
 
 export function ThemedText(
     {
-        style,
-        lightColor,
-        darkColor,
         type = 'default',
+        color = 'dark',
+        style,
         ...rest
     }: ThemedTextProps) {
 
@@ -25,6 +25,8 @@ export function ThemedText(
                 type === 'primaryBold' ? styles.primaryBold : undefined,
                 type === 'subtitle' ? styles.subtitle : undefined,
                 type === 'link' ? styles.link : undefined,
+                color === 'dark' ? styles.dark : undefined,
+                color === 'light' ? styles.light : undefined,
                 style,
             ]}
             {...rest}
@@ -34,42 +36,45 @@ export function ThemedText(
 
 const styles = StyleSheet.create({
     default: {
-        fontSize: 16,
+        fontSize: 18.37,
         lineHeight: 24,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Kalam_400Regular',
+        color: '#FFF',
     },
     defaultSemiBold: {
         fontSize: 16,
         lineHeight: 24,
         fontWeight: '600',
-        fontFamily: 'Poppins_600SemiBold, sans-serif',
+        fontFamily: 'Kalam_400Regular, sans-serif',
         color: themedColors.primary,
     },
     title: {
-        fontSize: 24,
-        lineHeight: 26,
-        fontFamily: 'Poppins_700Bold, sans-serif',
-        letterSpacing: 0.1,
-        color: '#ce2127',
+        fontSize: 40,
+        lineHeight: 50,
+        fontFamily: 'Kalam_400Regular',
+        color: '#FFF',
     },
     subtitle: {
         fontSize: 18,
         fontWeight: '600',
-        fontFamily: 'Poppins_600SemiBold, sans-serif',
+        fontFamily: 'Kalam_400Regular, sans-serif',
         color: themedColors.tertiary,
         opacity: 0.8
     },
     primaryBold: {
         fontSize: 22,
-        fontFamily: 'Poppins_400Regular',
-        fontWeight: '800',
-
-        color: themedColors.primary,
+        fontFamily: 'Kalam_700Bold',
     },
     link: {
         lineHeight: 30,
         fontSize: 16,
         color: themedColors.primary,
-        fontFamily: 'Poppins_400Regular',
+        fontFamily: 'Kalam_400Regular',
     },
+    light: {
+        color: '#FFF',
+    },
+    dark: {
+        color: '#000',
+    }
 });

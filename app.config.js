@@ -4,13 +4,13 @@ module.exports = {
         "slug": "AverageJoes",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./src/assets/images/icon.png",
+        "icon": "./src/assets/images/favicon.png",
         "scheme": "average-joes",
         "userInterfaceStyle": "automatic",
         "splash": {
-            "image": "./src/assets/images/small-logo.png",
+            "image": "./src/assets/images/splash.png",
             "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "backgroundColor": "#000000"
         },
         "ios": {
             "supportsTablet": true,
@@ -19,7 +19,7 @@ module.exports = {
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./src/assets/images/adaptive-icon.png",
+                "foregroundImage": "./src/assets/images/favicon.png",
                 "backgroundColor": "#ffffff"
             },
             "googleServicesFile": process.env.GOOGLE_SERVICES_JSON || "./google-services.json",
@@ -39,15 +39,9 @@ module.exports = {
                 "expo-font",
                 {
                     "fonts": [
-                        "node_modules/@expo-google-fonts/poppins/Poppins_100Thin.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_200ExtraLight.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_300Light.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_400Regular.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_500Medium.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_600SemiBold.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_700Bold.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_800ExtraBold.ttf",
-                        "node_modules/@expo-google-fonts/poppins/Poppins_900Black.ttf",
+                        "node_modules/@expo-google-fonts/kalam/Kalam_300Light.ttf",
+                        "node_modules/@expo-google-fonts/kalam/Kalam_400Regular.ttf",
+                        "node_modules/@expo-google-fonts/kalam/Kalam_700Bold.ttf",
                     ]
                 }
 
@@ -58,7 +52,14 @@ module.exports = {
                         "useFrameworks": "static"
                     }
                 }
-            ]
+            ],
+            ["expo-camera",
+                {
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+                    "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+                    "recordAudioAndroid": true,
+                },
+            ],
         ],
         "experiments": {},
         "extra": {

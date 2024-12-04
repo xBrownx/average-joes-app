@@ -1,1 +1,1 @@
-export * from './profile-core';
+export * from './profile-core-screen';

@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 24,
-        fontFamily: 'Poppins_700Bold',
+        fontFamily: 'Kalam_700Bold',
         color: themedColors.primary
     },
     buttonContainer: {

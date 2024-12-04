@@ -1,0 +1,19 @@
+command to run for cmake errors from cmd line:
+
+$Env:CMAKE_VERSION = '3.31.0'
+
+to add to top level build.gradle:
+
+maven {
+    ...
+    --- // expo-camera bundles a custom com.google.android:cameraview
+    --- url "$rootDir/../node_modules/expo-camera/android/maven"
+}
+
+app level build.gradle:
+
+dependencies {
+    ...
+    // i added these
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+}

@@ -3,9 +3,10 @@ import { themedColors } from "@/constants/themed-colors";
 import React, { useEffect, useState } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/custom-type-writer";
 import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
-import { Stopwatch } from "@/components/stopwatch";
+import { NewStopwatch } from "@/components/stopwatch/new-stopwatch";
 import { DialInScreenProps } from "@/features/dial-in/types";
 import Anim, { FadeIn, FadeOut, LinearTransition, StretchOutY } from "react-native-reanimated"
+import { OnComplete } from "@/components/stopwatch/use-timer";
 
 export function DialInPullShot({onNext, onBack, onExit, onShow, speak}: DialInScreenProps) {
     const opacity = React.useState(new Animated.Value(0))[0];
@@ -68,23 +69,20 @@ export function DialInPullShot({onNext, onBack, onExit, onShow, speak}: DialInSc
                         entering={FadeIn.duration(500).delay(500)}
                         layout={LinearTransition.delay(0)}
                     >
-                        <Stopwatch
-                            onStart={onStartStopwatch}
-                            onStop={onStopStopwatch}
-                        />
+                        <NewStopwatch />
                     </Anim.View>
                 }
-                {showResult &&
-                    <Anim.View>
-                        <CustomTypeWriter
-                            text={["Holy fucking shit, that was mad! I have a raging robot boner right now. If I wasn't stuck in this shitty phone, I'd come over to your house and water your plants.", "I mean.. Good job"]}
-                            type={'default'}
-                            speed={30}
-                            isShow={show}
-                            onComplete={() => setShowStopwatch(true)}
-                        />
-                    </Anim.View>
-                }
+                {/*{showResult &&*/}
+                {/*    <Anim.View>*/}
+                {/*        <CustomTypeWriter*/}
+                {/*            text={["Holy fucking shit, that was mad! I have a raging robot boner right now. If I wasn't stuck in this shitty phone, I'd come over to your house and water your plants.", "I mean.. Good job"]}*/}
+                {/*            type={'default'}*/}
+                {/*            speed={30}*/}
+                {/*            isShow={show}*/}
+                {/*            onComplete={() => setShowStopwatch(true)}*/}
+                {/*        />*/}
+                {/*    </Anim.View>*/}
+                {/*}*/}
             </Anim.View>
         </Anim.View>
     )

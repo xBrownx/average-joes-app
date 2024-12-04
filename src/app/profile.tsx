@@ -1,1 +1,1 @@
-import ProfileCoreScreen from '@/features/profile/profile-core';export default ProfileCoreScreen;
+import ProfileCoreScreen from '@/features/profile/profile-core-screen';export default ProfileCoreScreen;
