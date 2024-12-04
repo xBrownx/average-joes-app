@@ -14,7 +14,7 @@ web-build/
 .env
 local.properties
 android/local.properties
-scripts/run-avd.js
+scripts/
 # macOS
 .DS_Store
 

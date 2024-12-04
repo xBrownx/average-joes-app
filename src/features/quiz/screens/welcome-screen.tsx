@@ -1,32 +1,34 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { ThemedText } from "@/components/text";
-import React from "react";
-import { themedColors } from "@/constants";
-import Logo from "@/assets/svg/bb-logo.svg";
-import { useQuizScreenContext } from "@/features/quiz/context/quiz-screen-context";
-import { ThemedButton } from "@/components/button";
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ThemedText } from '@/components/text';
+import React from 'react';
+import { themedColors } from '@/constants';
+import Logo from '@/assets/svg/bb-logo.svg';
+import { useQuizScreenContext } from '@/features/quiz/context/quiz-screen-context';
+import { ThemedButton } from '@/components/button';
 
 export function WelcomeScreen() {
     const { setScreen } = useQuizScreenContext();
     return (
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
+        <View style={styles.container} >
+            <View style={styles.imageContainer} >
                 <Logo />
-            </View>
-            <View style={styles.content}>
-                <View style={{alignItems: 'center', gap: 0}}>
-                    <ThemedText type={'title'}>
+            </View >
+            <View style={styles.content} >
+                <View style={styles.textContainer} >
+                    <ThemedText type={'title'} color={'light'}>
                         WELCOME MARK!
-                    </ThemedText>
-                    <ThemedText type={'default'}>
+                    </ThemedText >
+                    <ThemedText type={'default'} color={'light'}>
                         Let’s build your custom interface.
-                    </ThemedText>
-                </View>
-                <ThemedButton onPress={() => setScreen('select-machine')}>
-                    LET'S JOE!
-                </ThemedButton>
-            </View>
-        </View>
+                    </ThemedText >
+                </View >
+                <View style={styles.buttonContainer} >
+                    <ThemedButton onPress={() => setScreen('select-machine')} >
+                        LET'S JOE!
+                    </ThemedButton >
+                </View >
+            </View >
+        </View >
     );
 }
 
@@ -50,21 +52,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 16,
     },
-    buttonContainer: {
-        width: 273,
-        height: 33,
+    textContainer: {
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: themedColors.tertiary,
-        borderRadius: 4,
-        borderColor: '#FFF',
-        borderWidth: 1,
     },
-    buttonText: {
-        color: '#000',
-        fontSize: 18,
-        lineHeight: 36,
-        fontFamily: 'Kalam_700Bold'
-    },
+    buttonContainer: {
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: 60,
+    }
 
 });

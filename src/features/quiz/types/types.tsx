@@ -1,1 +1,1 @@
-export type QuizScreen = 'welcome' | 'select-machine' | 'select-grinder' | 'select-roast' | 'select-coffee' | 'loading'
+export type QuizScreen = 'welcome' | 'select-machine' | 'select-grinder' | 'select-roast' | 'select-coffee' | 'select-help' | 'loading'

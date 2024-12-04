@@ -24,6 +24,7 @@ function QuizCore() {
                     'select-grinder': <SelectGrinderScreen />,
                     'select-roast': <SelectRoastScreen />,
                     'select-coffee': <SelectCoffeeScreen />,
+                    'select-help': <></>,
                     'loading': <LoadingScreen />,
                 }[screen]}
             </SafeAreaView>
@@ -59,21 +60,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 16,
     },
-    buttonContainer: {
-        width: 273,
-        height: 33,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: themedColors.tertiary,
-        borderRadius: 4,
-        borderColor: '#FFF',
-        borderWidth: 1,
-    },
-    buttonText: {
-        color: '#000',
-        fontSize: 18,
-        lineHeight: 36,
-        fontFamily: 'Kalam_700Bold'
-    },
-
 });
