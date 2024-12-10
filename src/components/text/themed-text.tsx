@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         lineHeight: 50,
-        fontFamily: 'Kalam_400Regular',
+        fontFamily: 'Kalam_700Bold',
         color: '#FFF',
     },
     subtitle: {

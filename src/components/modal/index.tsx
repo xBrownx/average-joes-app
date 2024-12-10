@@ -1,1 +1,1 @@
-export * from './themed-modal';export * from './tip-modal';
+export * from './_themed-modal';export * from './tip-modal';

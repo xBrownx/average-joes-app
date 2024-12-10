@@ -12,7 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import { CartItem } from '@/features/shop/components/cart-item';
 import { Cart, Checkout } from 'shopify-buy';
 import { ThemedModalProps } from '@/components/modal/types';
-import { ThemedModal } from '@/components/modal';
+import { _themedModal } from '@/components/modal';
 import { ThemedText } from "@/components/text";
 import { THEME_COLOURS } from "@/constants";
 import { openExternalUrl } from "@/util/open-url";

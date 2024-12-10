@@ -1,4 +1,4 @@
-import { ThemedScreen } from "@/components/layout/Themed-Screen";
+import { ThemedScreen } from "@/components/layout/themed-screen";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/text";
 import { THEME_COLOURS } from "@/constants";
@@ -8,20 +8,11 @@ import { BrewTimer } from "@/features/brew/components/timer";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 
-export default function BrewCoreScreen() {
-    const navigation = useNavigation<DrawerNavigationProp<any>>();
+export default function BrewCoreScreen({ route }) {
+    const { enterDir } = route.params;
+
     return (
-        <ThemedScreen>
-            <View style={styles.exitContainer}>
-                {/*<TouchableOpacity*/}
-                {/*    style={styles.exitEllipse}*/}
-                {/*    onPress={() => navigation.goBack()}*/}
-                {/*>*/}
-                {/*    <ThemedText style={{color: 'black'}}>*/}
-                {/*        {'<'}*/}
-                {/*    </ThemedText>*/}
-                {/*</TouchableOpacity>*/}
-            </View>
+        <ThemedScreen enterDir={enterDir}>
             <View style={styles.container}>
                 <View style={styles.textWrapper}>
                     <ThemedText type={'subtitle'} style={styles.title}>

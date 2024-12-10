@@ -7,13 +7,7 @@ import { loadRemoteData } from '@/store/slice/remote-data-slice';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { CustomDrawerContent, SCREEN_OPTIONS } from '@/components/navigation';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import ShopCoreScreen from '@/features/shop/shop-core-screen';
-import HomeCoreScreen from '@/features/home/home-core-screen';
-import DialInCoreScreen from '@/features/dial-in/dial-in-core-screen';
-import ProfileCoreScreen from '@/features/profile/profile-core-screen';
-import AuthCoreScreen from '@/features/auth/auth-core-screen';
-import QuizCoreScreen from "@/features/quiz/quiz-core-screen";
-import CheckoutCoreScreen from "@/features/shop/shop-checkout";
+
 
 import {
     Kalam_300Light,
@@ -23,10 +17,11 @@ import {
 } from '@expo-google-fonts/kalam';
 
 import { loadShopifyData } from "@/store/slice/shopify-slice";
-import Kitchen from "@/app/(tabs)/kitchen";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import PantryCoreScreen from "@/features/pantry/pantry-core-screen";
+import HomeCoreScreen from '@/features/home/home-core-screen';
 import BrewCoreScreen from "@/features/brew/brew-core-screen";
+import PantryCoreScreen from "@/features/pantry/pantry-core-screen";
+import LearnCoreScreen from '@/features/learn';
+
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -96,36 +91,25 @@ function App() {
                     <Drawer.Screen
                         name="home"
                         component={HomeCoreScreen}
-                    />
-
-                    <Drawer.Screen
-                        name="dial-in"
-                        component={DialInCoreScreen}
+                        initialParams={{enterDir: 'left'}}
                     />
 
                     <Drawer.Screen
                         name={'brew'}
                         component={BrewCoreScreen}
-                        />
-
-                    <Drawer.Screen
-                        name="shop"
-                        component={ShopCoreScreen}
+                        initialParams={{enterDir: 'right'}}
                     />
 
                     <Drawer.Screen
-                        name="profile"
-                        component={ProfileCoreScreen}
-                    />
-
-                    <Drawer.Screen
-                        name="checkout"
-                        component={CheckoutCoreScreen}
-                    />
-
-                    <Drawer.Screen
-                        name="pantry"
+                        name={'pantry'}
                         component={PantryCoreScreen}
+                        initialParams={{enterDir: 'right'}}
+                    />
+
+                    <Drawer.Screen
+                        name={'learn'}
+                        component={LearnCoreScreen}
+                        initialParams={{enterDir: 'right'}}
                     />
 
                 </Drawer.Navigator>

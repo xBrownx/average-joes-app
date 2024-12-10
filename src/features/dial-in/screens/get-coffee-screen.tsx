@@ -6,7 +6,6 @@ import { useAppSelector } from '@/store/store';
 import { ThemedDropdown } from '@/components/dropdown';
 import { selectUserRecipes, selectUserPantryItems } from '@/store';
 import { useCustomState } from '@/hooks';
-import { AddRecipeModal } from '@/features/kitchen';
 import { pantryItemsToDropdown, userRecipesToDropdown } from '@/usecase';
 import { ThemedText } from '@/components/text/themed-text';
 import Animated, {
@@ -54,11 +53,11 @@ export function GetCoffeeScreen({ onNext, onBack, onExit, onShow, speak }: DialI
 
     return (
         <View >
-            <AddRecipeModal
-                isOpen={state.isAddModalOpen?? false}
-                onClose={() => updateState({ isAddModalOpen: false })}
-                onSaveCallback={onSelectUserRecipe}
-            />
+            {/*<AddRecipeModal*/}
+            {/*    isOpen={state.isAddModalOpen?? false}*/}
+            {/*    onClose={() => updateState({ isAddModalOpen: false })}*/}
+            {/*    onSaveCallback={onSelectUserRecipe}*/}
+            {/*/>*/}
             <DialInHeading
                 onBack={onBack}
                 onShow={onShowPressed}

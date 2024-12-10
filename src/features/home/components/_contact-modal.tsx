@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/text/themed-text";
 import { THEME_COLOURS } from "@/constants/theme-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModalProps } from "@/components/modal/types";
-import { ThemedModal } from "@/components/modal";
+import { _themedModal } from "@/components/modal";
 import { globalStyles } from "@/styles/global-styles";
 
 
@@ -24,7 +24,7 @@ export function ContactModal({isOpen, onClose}: ThemedModalProps) {
     }
 
     return (
-        <ThemedModal
+        <_themedModal
             isOpen={isOpen}
             onClose={onClose}
         >
@@ -65,7 +65,7 @@ export function ContactModal({isOpen, onClose}: ThemedModalProps) {
                 </View>
             </View>
 
-        </ThemedModal>
+        </_themedModal>
     );
 }
 

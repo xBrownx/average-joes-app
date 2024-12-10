@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { CustomTypeWriter } from '@/features/dial-in/components/custom-type-writer';
 import { ThemedText } from '@/components/text/themed-text';
 import { DialInHeading } from '@/features/dial-in/components/dial-in-heading';
-import { AddMachineModal } from '@/features/kitchen/machines/modal-base';
 import { DropdownData, ThemedDropdown } from '@/components/dropdown';
 import { selectMuted, selectUserMachines, useAppSelector } from '@/store';
 import { useCustomState } from '@/hooks';
@@ -51,11 +50,11 @@ export function GetMachineScreen({ onNext, onBack, onExit, onShow, speak }: Dial
 
     return (
         <Animated.View >
-            <AddMachineModal
-                isOpen={state.isAddModalOpen ?? false}
-                onClose={() => updateState({ isAddModalOpen: false })}
-                onSaveCallback={onSelectUserMachine}
-            />
+            {/*<AddMachineModal*/}
+            {/*    isOpen={state.isAddModalOpen ?? false}*/}
+            {/*    onClose={() => updateState({ isAddModalOpen: false })}*/}
+            {/*    onSaveCallback={onSelectUserMachine}*/}
+            {/*/>*/}
             <DialInHeading
                 onBack={onBack}
                 onShow={onShowPressed}

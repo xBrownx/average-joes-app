@@ -1,0 +1,1 @@
+import { LearnCoreScreen } from './learn-core-screen';export default LearnCoreScreen;

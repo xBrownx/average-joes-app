@@ -1,23 +1,29 @@
 import { Image, StyleSheet, View } from "react-native";
-import { THEME_COLOURS } from "@/constants";
-import { ThemedText } from "@/components/text";
 import { MenuItem } from "@/components/menu-item/menu-item";
-import iconBrew from '../assets/rating.svg'
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { ConfirmModal } from '@/features/brew/confirm-modal';
+import { useState } from 'react';
 
 export function Menu() {
     const navigation = useNavigation<DrawerNavigationProp<any>>();
+    const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+
+    const onCloseConfirmModal = () => {
+        setConfirmModalOpen(false);
+    }
+
     const onMenuItemPress = (itemId: string) => {
         console.log(itemId, 'pressed');
     }
 
     return (
         <View style={styles.container}>
+            <ConfirmModal isOpen={confirmModalOpen} onClose={onCloseConfirmModal}/>
             <View style={styles.row}>
                 <MenuItem
                     heading={'BREW'}
-                    onPress={() => navigation.navigate('brew' as never)}
+                    onPress={() => setConfirmModalOpen(true)}
                 >
                     <Image
                         source={require('../assets/icon-brew.png')}
@@ -26,7 +32,7 @@ export function Menu() {
                 </MenuItem>
                 <MenuItem
                     heading={'PANTRY'}
-                    onPress={() => navigation.navigate('pantry' as never)}
+                    onPress={() => navigation.navigate('pantry' as never, { enterDir: 'right' } as any)}
                 >
                     <Image
                         source={require('../assets/icon-pantry.png')}
@@ -37,7 +43,7 @@ export function Menu() {
             <View style={styles.row}>
                 <MenuItem
                     heading={'LEARN'}
-                    onPress={() => onMenuItemPress('learn')}
+                    onPress={() => navigation.navigate('learn' as never)}
                 >
                     <Image
                         source={require('../assets/icon-learn.png')}

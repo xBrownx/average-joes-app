@@ -2,7 +2,7 @@ import { Button, ModalProps as RNModalProps, StyleSheet, View } from 'react-nati
 import { ThemedText } from '@/components/text/themed-text';
 import { THEME_COLOURS } from '@/constants/theme-colors';
 import React from 'react';
-import { ThemedModal } from '@/components/modal';
+import { _themedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
 
 type ModalProps = RNModalProps & {
@@ -17,7 +17,7 @@ export function ModalConfirmExit({ isOpen, onClose }: ModalProps) {
     }
 
     return (
-        <ThemedModal isOpen={isOpen} onClose={onCloseCustom} >
+        <_themedModal isOpen={isOpen} onClose={onCloseCustom} >
             <View style={globalStyles.innerModal} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >
@@ -30,7 +30,7 @@ export function ModalConfirmExit({ isOpen, onClose }: ModalProps) {
                     <Button title={'YEP'} color={THEME_COLOURS.primary} onPress={() => onClose(true)} />
                 </View >
             </View >
-        </ThemedModal >
+        </_themedModal >
     );
 }
 

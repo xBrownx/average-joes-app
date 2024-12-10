@@ -1,1 +1,0 @@
-export interface FormState {    isSearch?: boolean;    roaster?: string;    blendName?: string;    tastingNotes?: string;    dose?: string;    yield?: string;    time?: string;    rating?: number;}

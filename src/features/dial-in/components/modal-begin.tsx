@@ -2,7 +2,7 @@ import { Button, ModalProps as RNModalProps, StyleSheet, View } from 'react-nati
 import { ThemedText } from '@/components/text/themed-text';
 import { THEME_COLOURS } from '@/constants/theme-colors';
 import React from 'react';
-import { ThemedModal } from '@/components/modal';
+import { _themedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
 import { ExternalLink } from '@/components/external-link';
 
@@ -13,7 +13,7 @@ type ModalProps = RNModalProps & {
 
 export function ModalBegin({ isOpen, onClose }: ModalProps) {
     return (
-        <ThemedModal isOpen={isOpen} onClose={onClose} >
+        <_themedModal isOpen={isOpen} onClose={onClose} >
             <View style={globalStyles.innerModal} >
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >
@@ -59,7 +59,7 @@ export function ModalBegin({ isOpen, onClose }: ModalProps) {
                     <Button title={'OK I\'m Ready'} color={THEME_COLOURS.primary} onPress={onClose} />
                 </View >
             </View >
-        </ThemedModal >
+        </_themedModal >
     );
 }
 

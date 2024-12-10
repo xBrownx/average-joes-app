@@ -1,0 +1,1 @@
+import { StyleSheet, View } from 'react-native';import { ThemedText } from '@/components/text';export function LearnMainScreen() {    return (        <View style={styles.container}>            <ThemedText type={'title'}>                LEARN            </ThemedText>        </View>    )}const styles = StyleSheet.create({    container: {    }})

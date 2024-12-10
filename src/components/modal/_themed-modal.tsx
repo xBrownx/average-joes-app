@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { ThemedModalProps } from "@/components/modal/types";
 
-export function ThemedModal({noExit, isOpen, onClose, children}: ThemedModalProps) {
+export function _themedModal({noExit, isOpen, onClose, children}: ThemedModalProps) {
     return (
         <RNModal
             visible={isOpen}

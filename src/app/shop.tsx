@@ -1,1 +1,0 @@
-import ShopCoreScreen from '@/features/shop/shop-core-screen';export default ShopCoreScreen;

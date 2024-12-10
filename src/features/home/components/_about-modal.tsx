@@ -3,14 +3,14 @@ import React from "react";
 import { ThemedText } from "@/components/text/themed-text";
 import { THEME_COLOURS } from "@/constants/theme-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { ThemedModal } from "@/components/modal";
+import { _themedModal } from "@/components/modal";
 import { globalStyles } from "@/styles/global-styles";
 import { ThemedModalProps } from "@/components/modal/types";
 
 export function AboutModal({isOpen, onClose }: ThemedModalProps) {
 
     return (
-        <ThemedModal isOpen={isOpen} onClose={onClose} >
+        <_themedModal isOpen={isOpen} onClose={onClose} >
             <View style={globalStyles.innerModal}>
                 <View style={styles.titleContainer} >
                     <ThemedText type={'subtitle'} >
@@ -23,7 +23,7 @@ export function AboutModal({isOpen, onClose }: ThemedModalProps) {
                     quality coffee into their home.
                 </ThemedText >
             </View >
-        </ThemedModal >
+        </_themedModal >
     );
 }
 

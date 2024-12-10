@@ -1,0 +1,1 @@
+export type LearnScreens = 'main' | 'dial-in' | 'milk' | 'beans';

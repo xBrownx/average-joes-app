@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/text/themed-text";
 import { THEME_COLOURS } from "@/constants/theme-colors";
 import { Rating } from 'react-native-ratings';
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { ThemedModal } from "@/components/modal";
+import { _themedModal } from "@/components/modal";
 import { globalStyles } from "@/styles/global-styles";
 import { ThemedModalProps } from "@/components/modal/types";
 
@@ -28,7 +28,7 @@ export function RateModal({isOpen, onClose}: ThemedModalProps) {
     }
 
     return (
-        <ThemedModal
+        <_themedModal
             isOpen={isOpen}
             onClose={onClose}
         >
@@ -66,7 +66,7 @@ export function RateModal({isOpen, onClose}: ThemedModalProps) {
                     />
                 </View>
             </View>
-        </ThemedModal>
+        </_themedModal>
     );
 }
 

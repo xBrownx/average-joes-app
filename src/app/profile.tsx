@@ -1,1 +1,0 @@
-import ProfileCoreScreen from '@/features/profile/profile-core-screen';export default ProfileCoreScreen;

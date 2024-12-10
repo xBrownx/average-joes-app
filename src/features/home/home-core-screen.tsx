@@ -16,7 +16,7 @@ import { THEME_COLOURS } from "@/constants";
 import { AutoScaledImage } from "@/components/image";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Rewards } from "@/features/home/components/rewards";
-import { ThemedScreen } from "@/components/layout/Themed-Screen";
+import { ThemedScreen } from "@/components/layout/themed-screen";
 import { Menu } from "@/features/home/components/menu";
 import { FeaturedBeans } from "@/features/home/components/featured-beans";
 
@@ -28,11 +28,9 @@ type HomeScreenState = {
     wave?: boolean;
 }
 
-export default function HomeCoreScreen() {
-
-
+export default function HomeCoreScreen({ route }) {
     const username = useAppSelector(selectUser).toUpperCase();
-
+    const { enterDir } = route.params;
     const {state, updateState} = useCustomState<HomeScreenState>({
         isAboutModalOpen: false,
         isContactModalOpen: false,
@@ -41,7 +39,7 @@ export default function HomeCoreScreen() {
     });
 
     return (
-        <ThemedScreen>
+        <ThemedScreen enterDir={enterDir} >
             <View style={styles.container}>
                 <View style={styles.title}>
                     <TypeWriterText type={'title'} textArr={[`WELCOME ${username?.toUpperCase() ?? 'STRANGER'}!`]} />
