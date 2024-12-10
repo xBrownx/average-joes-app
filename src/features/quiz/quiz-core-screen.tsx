@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from '@/assets/svg/bb-logo.svg'
 import React, { PropsWithChildren, useState } from "react";
 import { ThemedText } from "@/components/text";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { SelectMachineScreen } from "@/features/quiz/screens/select-machine-screen";
 import { QuizScreen } from "@/features/quiz/types/types";
 import { WelcomeScreen } from "@/features/quiz/screens/welcome-screen";
@@ -12,6 +12,7 @@ import { SelectGrinderScreen } from "@/features/quiz/screens/select-grinder-scre
 import { SelectRoastScreen } from "@/features/quiz/screens/select-roast-screen";
 import { SelectCoffeeScreen } from "@/features/quiz/screens/select-coffee-screen";
 import { LoadingScreen } from "@/features/quiz/screens/loading-screen";
+import { SelectHelpScreen } from "@/features/quiz/screens/select-help-screen";
 
 function QuizCore() {
     const {screen} = useQuizScreenContext();
@@ -24,7 +25,7 @@ function QuizCore() {
                     'select-grinder': <SelectGrinderScreen />,
                     'select-roast': <SelectRoastScreen />,
                     'select-coffee': <SelectCoffeeScreen />,
-                    'select-help': <></>,
+                    'select-help': <SelectHelpScreen />,
                     'loading': <LoadingScreen />,
                 }[screen]}
             </SafeAreaView>

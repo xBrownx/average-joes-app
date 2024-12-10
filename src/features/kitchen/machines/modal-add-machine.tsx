@@ -10,7 +10,7 @@ import Animated, { SlideInLeft, SlideOutLeft } from 'react-native-reanimated';
 
 import { ThemedInput } from '@/components/input';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import { UserMachine } from '@/domain';
 import { FormState, portafilterOptions } from '@/features/kitchen/machines/types';
 import { addUserMachine, setDefaultUserMachine, useAppDispatch } from '@/store';
@@ -59,7 +59,7 @@ export function AddMachine({parentState, updateParentState, close, onSaveCallbac
                             name="search"
                             size={24}
                             backgroundColor={'transparent'}
-                            color={themedColors.tertiary}
+                            color={THEME_COLOURS.tertiary}
                             onPress={() => updateParentState({isSearch: true})}
                         />
                     </View>
@@ -113,7 +113,7 @@ export function AddMachine({parentState, updateParentState, close, onSaveCallbac
                         </View>
                         <Button
                             title={'SAVE'}
-                            color={themedColors.primary}
+                            color={THEME_COLOURS.primary}
                             onPress={onSave}
                         />
                     </View>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         width: 22,
         height: 22,
         borderRadius: 11,
-        backgroundColor: themedColors.primary,
+        backgroundColor: THEME_COLOURS.primary,
     },
     singleOptionContainer: {
         flexDirection: 'row',

@@ -1,5 +1,5 @@
 import { StyleSheet, Animated } from "react-native";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import React, { useEffect, useState } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/custom-type-writer";
 import { DialInHeading } from "@/features/dial-in/components/dial-in-heading";
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 32,
         paddingVertical: 32,
-        backgroundColor: themedColors.background,
+        backgroundColor: THEME_COLOURS.background,
         gap: 32,
     },
     stopwatchContainer: {

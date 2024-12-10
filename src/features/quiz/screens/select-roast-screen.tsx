@@ -28,10 +28,10 @@ export function SelectRoastScreen() {
                     heading={'ROAST'}
                     options={['LIGHT', 'MEDIUM', 'DARK']}
                 />
-                {/*<RoastSlider*/}
-                {/*    heading={'FLAVOUR'}*/}
-                {/*    options={['FRUITY', 'BALANCED', 'DARK CHOC']}*/}
-                {/*/>*/}
+                <RoastSlider
+                    heading={'FLAVOUR'}
+                    options={['FRUITY', 'BALANCED', 'DARK CHOC']}
+                />
             </View >
             <View style={styles.footerContainer} >
                 <ThemedButton textType={'small'} >

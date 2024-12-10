@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ThemedCardView } from '@/components/card';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import { UserMachine } from '@/domain';
 import { AddMachineModal } from '@/features/kitchen/machines/modal-base';
 import { ViewMachineModal } from '@/features/kitchen/machines/modal-view-machine';
@@ -83,7 +83,7 @@ export function KitchenMachines({navBack}: KitchenChildProps) {
                             name="arrow-back"
                             size={24}
                             backgroundColor={'transparent'}
-                            color={themedColors.primary}
+                            color={THEME_COLOURS.primary}
                             onPress={navBack}
                         />
                         <TypeWriterText type="title" textArr={["YOUR MACHINES"]} />
@@ -101,7 +101,7 @@ export function KitchenMachines({navBack}: KitchenChildProps) {
                                 <Ionicons
                                     name={'information-circle-outline'}
                                     size={32}
-                                    color={themedColors.tertiary}
+                                    color={THEME_COLOURS.tertiary}
                                 />
                             }
                             onPress={() => openViewModal(card.id)}
@@ -120,7 +120,7 @@ export function KitchenMachines({navBack}: KitchenChildProps) {
                             <Ionicons
                                 name={'add'}
                                 size={32}
-                                color={themedColors.tertiary}
+                                color={THEME_COLOURS.tertiary}
                             />
                         }
                         onPress={() => updateState({isAddModalOpen: true})}

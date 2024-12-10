@@ -3,7 +3,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { Button, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { TypeWriterText } from '@/components/typewriter';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { Dropdown } from "react-native-element-dropdown";
 import { useCustomState } from "@/hooks";
@@ -111,7 +111,7 @@ export default function ProfileCoreScreen() {
 
                         <Button
                             title={'LOGOUT'}
-                            color={themedColors.primary}
+                            color={THEME_COLOURS.primary}
                             onPress={signOut}
                         />
                     </View>

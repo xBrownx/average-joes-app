@@ -1,5 +1,5 @@
 import { Text, type TextProps, StyleSheet } from 'react-native';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import { Kalam_400Regular } from "@expo-google-fonts/kalam";
 
 export type ThemedTextProps = TextProps & {
@@ -11,7 +11,7 @@ export type ThemedTextProps = TextProps & {
 export function ThemedText(
     {
         type = 'default',
-        color = 'dark',
+        color = 'light',
         style,
         ...rest
     }: ThemedTextProps) {
@@ -42,11 +42,10 @@ const styles = StyleSheet.create({
         color: '#FFF',
     },
     defaultSemiBold: {
-        fontSize: 16,
-        lineHeight: 24,
-        fontWeight: '600',
-        fontFamily: 'Kalam_400Regular, sans-serif',
-        color: themedColors.primary,
+        fontSize: 18.37,
+        lineHeight: 30,
+        fontFamily: 'Kalam_700Bold',
+        color: THEME_COLOURS.primary,
     },
     title: {
         fontSize: 40,
@@ -55,11 +54,10 @@ const styles = StyleSheet.create({
         color: '#FFF',
     },
     subtitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        fontFamily: 'Kalam_400Regular, sans-serif',
-        color: themedColors.tertiary,
-        opacity: 0.8
+        fontSize: 22,
+        fontWeight: '400',
+        color: THEME_COLOURS.white,
+        opacity: 1
     },
     primaryBold: {
         fontSize: 22,
@@ -68,7 +66,7 @@ const styles = StyleSheet.create({
     link: {
         lineHeight: 30,
         fontSize: 16,
-        color: themedColors.primary,
+        color: THEME_COLOURS.primary,
         fontFamily: 'Kalam_400Regular',
     },
     light: {

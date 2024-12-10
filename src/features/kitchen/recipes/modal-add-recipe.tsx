@@ -10,7 +10,7 @@ import { Rating } from 'react-native-ratings';
 import Animated, { FadeIn, FadeOut, LinearTransition, SlideInLeft, SlideOutLeft } from 'react-native-reanimated';
 import { ThemedInput } from '@/components/input';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import { UserRecipe } from '@/domain';
 import { FormState } from '@/features/kitchen/recipes/types';
 import { addUserRecipe, useAppDispatch } from '@/store';
@@ -83,7 +83,7 @@ export function AddRecipe({ parentState, updateParentState, close, onSaveCallbac
                             name="search"
                             size={24}
                             backgroundColor={'transparent'}
-                            color={themedColors.tertiary}
+                            color={THEME_COLOURS.tertiary}
                             style={{ padding: 0, margin: 0 }}
                             onPress={() => updateParentState({ 'isSearch': true })}
                         />
@@ -171,7 +171,7 @@ export function AddRecipe({ parentState, updateParentState, close, onSaveCallbac
                         <Animated.View layout={LinearTransition.delay(200)} >
                             <Button
                                 title={'SAVE'}
-                                color={themedColors.primary}
+                                color={THEME_COLOURS.primary}
                                 onPress={onSave}
                             />
                         </Animated.View >

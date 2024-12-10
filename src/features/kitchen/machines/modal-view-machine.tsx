@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import React from "react";
 
 import { UserMachine } from "@/domain";
@@ -17,7 +17,7 @@ type ViewMachineModalProps = ThemedModalProps & {
 function FieldValue({name, value}: { name: string, value?: string }) {
     return (
         <View style={{marginTop: 8}}>
-            <ThemedText type={'defaultSemiBold'} style={{color: themedColors.tertiary}}>
+            <ThemedText type={'defaultSemiBold'} style={{color: THEME_COLOURS.tertiary}}>
                 {name}:
             </ThemedText>
             {value && <ThemedText type={'default'}>
@@ -42,7 +42,7 @@ export const ViewMachineModal = ({isOpen, onClose, selectedMachine }: ViewMachin
                                 name="close"
                                 size={24}
                                 backgroundColor={'transparent'}
-                                color={themedColors.tertiary}
+                                color={THEME_COLOURS.tertiary}
                                 onPress={onClose}
                             />
                         </View>

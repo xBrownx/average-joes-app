@@ -24,6 +24,9 @@ import {
 
 import { loadShopifyData } from "@/store/slice/shopify-slice";
 import Kitchen from "@/app/(tabs)/kitchen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import PantryCoreScreen from "@/features/pantry/pantry-core-screen";
+import BrewCoreScreen from "@/features/brew/brew-core-screen";
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -84,7 +87,7 @@ function App() {
 
     return (
         <>
-            {!user ? <QuizCoreScreen /> :
+            {/*{!user ? <QuizCoreScreen /> :*/}
                 <Drawer.Navigator
                     initialRouteName="home"
                     screenOptions={SCREEN_OPTIONS}
@@ -99,6 +102,11 @@ function App() {
                         name="dial-in"
                         component={DialInCoreScreen}
                     />
+
+                    <Drawer.Screen
+                        name={'brew'}
+                        component={BrewCoreScreen}
+                        />
 
                     <Drawer.Screen
                         name="shop"
@@ -116,12 +124,12 @@ function App() {
                     />
 
                     <Drawer.Screen
-                        name="kitchen"
-                        component={Kitchen}
+                        name="pantry"
+                        component={PantryCoreScreen}
                     />
 
                 </Drawer.Navigator>
-            }
+            {/*}*/}
         </>
     );
 }

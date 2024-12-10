@@ -11,7 +11,7 @@ export function BannerLogo() {
         <TouchableOpacity onPress={() => navigation.navigate('home' as never)} >
             <Image
                 style={styles.bannerLogo}
-                source={require('../../assets/images/average_joe_logo_white.png')}
+                source={require('../../assets/images/bb-logo.png')}
             />
         </TouchableOpacity >
     );
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     bannerLogo: {
         height: 'auto',
         width: 90,
-        aspectRatio: 1824 / 934,
+        aspectRatio: 202 / 97,
 
     },
     bannerIcons: {

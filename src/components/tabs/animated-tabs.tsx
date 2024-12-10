@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Animated, { LinearTransition, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import { useCustomState } from '@/hooks';
 
 interface AnimatedTabState {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: themedColors.tertiary,
+        borderColor: THEME_COLOURS.tertiary,
         elevation: 3,
         backgroundColor: 'white',
         marginBottom: 10,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         height: 50,
         flexDirection: 'row',
-        backgroundColor: themedColors.backgroundSecondary,
+        backgroundColor: THEME_COLOURS.backgroundSecondary,
         alignItems: 'center',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     tabText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontSize: 16,
     },
     activeTabText: {
-        color: themedColors.primary,
+        color: THEME_COLOURS.primary,
         fontWeight: 'bold',
         fontSize: 16,
     },

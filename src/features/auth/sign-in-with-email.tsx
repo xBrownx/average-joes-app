@@ -3,7 +3,7 @@ import Animated, { SlideInRight, SlideOutLeft, SlideOutRight, useSharedValue } f
 import { SignInButton } from "@/features/auth/sign-in-with-button";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { useAppDispatch } from "@/store";
 import auth from "@react-native-firebase/auth";
 import { ThemedInput } from "@/components/input";
@@ -73,7 +73,7 @@ export function SignInWithEmail({setScreen}: SignInMainProps) {
                 <Button
                     title={'SIGN IN' +
                         ''}
-                    color={themedColors.primary}
+                    color={THEME_COLOURS.primary}
                     onPress={handleOk}
                 />
                 <View style={styles.footer}>
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomWidth: 2,
-        borderBottomColor: themedColors.primary,
+        borderBottomColor: THEME_COLOURS.primary,
         marginHorizontal: 32,
     },
     titleText: {
         fontSize: 24,
         fontFamily: 'Poppins_700Bold',
-        color: themedColors.primary
+        color: THEME_COLOURS.primary
     },
     inputContainer: {
         margin: 32,
@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
     footerLink: {
         fontSize: 16,
         fontFamily: 'Poppins_700Bold',
-        color: themedColors.primary
+        color: THEME_COLOURS.primary
     },
 })

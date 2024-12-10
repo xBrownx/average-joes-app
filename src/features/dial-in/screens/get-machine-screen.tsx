@@ -1,5 +1,5 @@
 import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React, { useEffect } from 'react';
 import { CustomTypeWriter } from '@/features/dial-in/components/custom-type-writer';
 import { ThemedText } from '@/components/text/themed-text';
@@ -95,7 +95,7 @@ export function GetMachineScreen({ onNext, onBack, onExit, onShow, speak }: Dial
 
                         <Animated.View exiting={StretchOutY} layout={LinearTransition} >
                             <Button
-                                color={themedColors.primary}
+                                color={THEME_COLOURS.primary}
                                 title={state.selectedMachine
                                     ? 'NEXT'
                                     : 'ADD NEW'
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
     },
 });

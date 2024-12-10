@@ -1,0 +1,1 @@
+export type PantryScreens = 'main' | 'add-with-photo' | 'add-manual';

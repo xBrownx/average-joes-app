@@ -14,7 +14,7 @@ import { Cart, Checkout } from 'shopify-buy';
 import { ThemedModalProps } from '@/components/modal/types';
 import { ThemedModal } from '@/components/modal';
 import { ThemedText } from "@/components/text";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { openExternalUrl } from "@/util/open-url";
 
 
@@ -116,7 +116,7 @@ export default function ShopCartModal({isOpen, onClose}: ThemedModalProps) {
                             <ThemedText type='title' style={styles.noItemsText}>
                                 CART IS EMPTY
                             </ThemedText>
-                            <Button color={themedColors.primary} title={'VISIT SHOP'} />
+                            <Button color={THEME_COLOURS.primary} title={'VISIT SHOP'} />
                         </View>
                     }
                 </SafeAreaView>

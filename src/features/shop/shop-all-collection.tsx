@@ -5,7 +5,7 @@ import { Collection, Product, Shop } from "shopify-buy";
 import { fetchSingleCollection } from "../../shopify";
 import { SectionHeader } from "@/features/shop/components/section-header";
 import { ShopItem } from "@/features/shop/components/shop-item";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { AutoScaledImage } from "@/components/image";
 
 type ShopAllCollectionProps = {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: themedColors.backgroundSecondary,
+        backgroundColor: THEME_COLOURS.backgroundSecondary,
         paddingHorizontal: 16,
         paddingVertical: 26,
         gap: 16,

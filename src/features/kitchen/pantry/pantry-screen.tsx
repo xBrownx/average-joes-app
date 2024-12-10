@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/text/themed-text";
 import { StyleSheet, View } from "react-native";
 import React, { useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import { PantryItem } from "@/domain";
 import { ThemedCardView } from "@/components/card";
 import { AddPantryModal } from "@/features/kitchen/pantry/modal-add-pantry-item";
@@ -62,7 +62,7 @@ export function KitchenPantry({navBack}: KitchenChildProps) {
                             name="arrow-back"
                             size={24}
                             backgroundColor={'transparent'}
-                            color={themedColors.primary}
+                            color={THEME_COLOURS.primary}
                             onPress={navBack}
                         />
                         <TypeWriterText type="title" textArr={["PANTRY"]} />
@@ -106,7 +106,7 @@ export function KitchenPantry({navBack}: KitchenChildProps) {
                                 name="add"
                                 size={32}
                                 backgroundColor={'transparent'}
-                                color={themedColors.tertiary}
+                                color={THEME_COLOURS.tertiary}
                             />
                         }
                         style={{ paddingVertical: 16 }}
@@ -152,6 +152,6 @@ const styles = StyleSheet.create({
     expiryText: {
         fontSize: 12,
         lineHeight: 14,
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
     }
 });

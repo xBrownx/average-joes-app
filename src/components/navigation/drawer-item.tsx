@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { themedColors } from '@/constants';
+import { THEME_COLOURS } from '@/constants';
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
@@ -64,7 +64,7 @@ export function DrawItem({ children, title }: PropsWithChildren & { title: strin
                 <Ionicons
                     name={isOpen ? 'chevron-up' : 'chevron-down-outline'}
                     size={20}
-                    color={themedColors.tertiary}
+                    color={THEME_COLOURS.tertiary}
                 />
             </TouchableOpacity >
 
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 
     },
     headingText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontFamily: 'PoppinsBold',
         fontSize: 18,
         lineHeight: 20,

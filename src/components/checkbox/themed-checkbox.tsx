@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import { ThemedText } from "@/components/text/themed-text";
 
 export function ThemedCheckbox({checked, setChecked, label}: {
@@ -18,7 +18,7 @@ export function ThemedCheckbox({checked, setChecked, label}: {
                 style={[styles.checkboxBase, checked && styles.checkboxChecked]}
                 onPress={setChecked}
             >
-                {checked && <Ionicons name="checkmark" size={20} color={themedColors.white} />}
+                {checked && <Ionicons name="checkmark" size={20} color={THEME_COLOURS.white} />}
             </Pressable >
             <ThemedText type={'default'} style={styles.checkboxLabel} >
                 {label}
@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 4,
         borderWidth: 2,
-        borderColor: themedColors.tertiary,
+        borderColor: THEME_COLOURS.tertiary,
         backgroundColor: 'transparent',
     },
     checkboxChecked: {
-        backgroundColor: themedColors.primary,
+        backgroundColor: THEME_COLOURS.primary,
     },
     checkboxLabel: {
         paddingTop: 2,

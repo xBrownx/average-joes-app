@@ -1,5 +1,5 @@
 import { Button, StyleSheet, View } from 'react-native';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React, { useEffect } from 'react';
 import { CustomTypeWriter, DialInHeading } from '@/features/dial-in/components';
 import { useAppSelector } from '@/store/store';
@@ -115,7 +115,7 @@ export function GetCoffeeScreen({ onNext, onBack, onExit, onShow, speak }: DialI
                         }
                         <Animated.View exiting={StretchOutY} layout={LinearTransition} >
                             <Button
-                                color={themedColors.primary}
+                                color={THEME_COLOURS.primary}
                                 title={state.selectedBlend || state.selectedPantryItem
                                     ? 'NEXT'
                                     : 'ADD NEW'
@@ -151,6 +151,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
     },
 });

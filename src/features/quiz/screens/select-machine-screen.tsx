@@ -1,6 +1,6 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import React, { useState } from 'react';
-import { View, StyleSheet, Button, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Button, Text } from "react-native";
 import Logo from "@/assets/svg/bb-logo.svg";
 import { ThemedButton } from "@/components/button";
 import { MachineCameraOverlay } from "@/features/quiz/components/machine-camera-overlay";

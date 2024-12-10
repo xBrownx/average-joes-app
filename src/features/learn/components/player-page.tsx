@@ -2,7 +2,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import React, { useState } from "react";
 import { Dimensions, StyleSheet, ActivityIndicator, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import { ThemedText } from "@/components/text/themed-text";
 
 const {width} = Dimensions.get('window');
@@ -28,7 +28,7 @@ export function LearnPlayerPage({title, videoId, navBack}: {
                     name="arrow-back"
                     size={24}
                     backgroundColor={'transparent'}
-                    color={themedColors.primary}
+                    color={THEME_COLOURS.primary}
                     onPress={navigateBack}
                 />
                 <ThemedText type="subtitle">
@@ -40,7 +40,7 @@ export function LearnPlayerPage({title, videoId, navBack}: {
                     <ActivityIndicator
                         style={styles.spinner}
                         size="large"
-                        color={themedColors.primary}
+                        color={THEME_COLOURS.primary}
                     />
                 }
                 <YoutubePlayer

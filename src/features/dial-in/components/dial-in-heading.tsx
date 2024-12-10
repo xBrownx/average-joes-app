@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React, { useState } from 'react';
 import { selectMuted, setMuted, useAppDispatch, useAppSelector } from '@/store';
 import { ModalConfirmExit } from "@/features/dial-in/components/modal-confirm-exit";
@@ -37,7 +37,7 @@ export function DialInHeading({onBack, onShow, onExit}: DialInHeadingProps) {
                         name={'arrow-back'}
                         size={24}
                         backgroundColor={'transparent'}
-                        color={themedColors.tertiary}
+                        color={THEME_COLOURS.tertiary}
                         style={{padding: 0, margin: 0}}
                         onPress={onBack}
                     />
@@ -45,7 +45,7 @@ export function DialInHeading({onBack, onShow, onExit}: DialInHeadingProps) {
                         name={muted ? 'volume-mute' : 'volume-high'}
                         size={24}
                         backgroundColor={'transparent'}
-                        color={themedColors.tertiary}
+                        color={THEME_COLOURS.tertiary}
                         style={{padding: 0, margin: 0}}
                         onPress={toggleMute ?? undefined}
                     />
@@ -53,7 +53,7 @@ export function DialInHeading({onBack, onShow, onExit}: DialInHeadingProps) {
                         name={'eye'}
                         size={24}
                         backgroundColor={'transparent'}
-                        color={themedColors.tertiary}
+                        color={THEME_COLOURS.tertiary}
                         style={{padding: 0, margin: 0}}
                         onPress={onShow}
                     />
@@ -63,7 +63,7 @@ export function DialInHeading({onBack, onShow, onExit}: DialInHeadingProps) {
                         name={'close'}
                         size={24}
                         backgroundColor={'transparent'}
-                        color={themedColors.tertiary}
+                        color={THEME_COLOURS.tertiary}
                         style={{padding: 0, margin: 0}}
                         onPress={onExitPressed}
                     />
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingTop: 16,
-        backgroundColor: themedColors.background,
+        backgroundColor: THEME_COLOURS.background,
     },
     config: {
         flexDirection: 'row',

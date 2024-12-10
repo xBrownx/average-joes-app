@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 
 type TypeWriterProps = {
     textArr: string[];
@@ -154,31 +154,31 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         fontWeight: '600',
         fontFamily: 'PoppinsSemiBold',
-        color: themedColors.primary,
+        color: THEME_COLOURS.primary,
     },
     title: {
         fontSize: 32,
         fontWeight: 'bold',
         lineHeight: 40,
         fontFamily: 'PoppinsBold',
-        color: themedColors.primary,
+        color: THEME_COLOURS.primary,
     },
     primaryBold: {
          fontSize: 20,
         fontWeight: 'bold',
         fontFamily: 'PoppinsBold',
-        color: themedColors.primary,
+        color: THEME_COLOURS.primary,
     },
     subtitle: {
         fontSize: 20,
         fontWeight: 'bold',
         fontFamily: 'PoppinsBold',
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
     },
     link: {
         lineHeight: 30,
         fontSize: 16,
-        color: themedColors.primary,
+        color: THEME_COLOURS.primary,
         fontFamily: 'Poppins',
     },
 });

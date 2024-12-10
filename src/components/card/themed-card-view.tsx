@@ -1,6 +1,6 @@
 import { View, StyleSheet, TouchableOpacity, ViewProps } from 'react-native';
 import React from "react";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 type CardViewProps = ViewProps & {
     id: string;
     onPress?: () => void;
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     container: {
         elevation: 1,
         borderRadius: 10,
-        backgroundColor: themedColors.backgroundSecondary,
+        backgroundColor: THEME_COLOURS.backgroundSecondary,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

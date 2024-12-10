@@ -1,7 +1,7 @@
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import React from "react";
 import { ThemedText } from "@/components/text/themed-text";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import { Rating } from 'react-native-ratings';
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModal } from "@/components/modal";
@@ -38,7 +38,7 @@ export function RateModal({isOpen, onClose}: ThemedModalProps) {
                         <ThemedText type={'subtitle'}>
                             RATE US!
                         </ThemedText>
-                        <Ionicons name={'close'} size={30} color={themedColors.tertiary} onPress={handleClose} />
+                        <Ionicons name={'close'} size={30} color={THEME_COLOURS.tertiary} onPress={handleClose} />
                     </View>
                     <ThemedText type={'default'}>
                         Your feedback helps us grow and give the people what they want.
@@ -61,7 +61,7 @@ export function RateModal({isOpen, onClose}: ThemedModalProps) {
                 <View>
                     <Button
                         title={'OK'}
-                        color={themedColors.primary}
+                        color={THEME_COLOURS.primary}
                         onPress={handleOk}
                     />
                 </View>

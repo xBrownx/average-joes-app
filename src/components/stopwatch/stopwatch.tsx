@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { ThemedText } from "@/components/text/themed-text";
 import { useCustomState } from "@/hooks";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 
 type CF = ({ 0: `#${string}`; } & { 1: `#${string}`; } & `#${string}`[])
 type Colour = `#${string}`
@@ -137,13 +137,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonPlay: {
-        backgroundColor: themedColors.secondary
+        backgroundColor: THEME_COLOURS.secondary
     },
     buttonPause: {
-        backgroundColor: themedColors.primary
+        backgroundColor: THEME_COLOURS.primary
     },
     buttonReset: {
-        backgroundColor: themedColors.tertiary
+        backgroundColor: THEME_COLOURS.tertiary
     },
     buttonText: {
         color: 'white',

@@ -5,7 +5,7 @@ type ThemedInputProps = {
     type?: 'single-line' | 'multi-line';
     placeholder: string;
     value: string;
-    onValueChange: (value: string) => void;
+    onValueChange: ((value: string) => void) | undefined;
 }
 
 export function ThemedInput({type, placeholder, value, onValueChange}: ThemedInputProps) {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         borderRadius: 8,
         fontSize: 16,
-        fontFamily: 'Poppins',
+        fontFamily: 'Kalam_400Regular',
         justifyContent: 'center',
         alignItems: 'center',
     },

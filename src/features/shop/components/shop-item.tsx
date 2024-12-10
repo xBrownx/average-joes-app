@@ -1,7 +1,7 @@
 import { Button, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "@/components/text";
 import { Product } from "shopify-buy";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import React, { useEffect, useState } from "react";
 import { Rating } from "react-native-ratings";
 import { useCustomState } from "@/hooks";
@@ -100,7 +100,7 @@ export function ShopItem({product, onProductPress}: ShopItemProps) {
                     <Rating
                         type={'custom'}
                         ratingCount={5}
-                        tintColor={themedColors.backgroundSecondary}
+                        tintColor={THEME_COLOURS.backgroundSecondary}
                         // ratingColor={themedColors.primary}
                         ratingBackgroundColor={'white'}
                         imageSize={16}
@@ -130,7 +130,7 @@ export function ShopItem({product, onProductPress}: ShopItemProps) {
             <View style={{justifyContent: 'flex-end'}}>
                 <ThemedButton
                     title={'ADD TO CART'}
-                    color={themedColors.secondary}
+                    color={THEME_COLOURS.secondary}
                     onPress={addProductToCart}
                 />
             </View>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     ratingText: {
         fontSize: 10,
         lineHeight: 12,
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
     },
     priceTag: {
         flexDirection: 'row',
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontSize: 18,
         fontWeight: '700',
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontFamily: 'PoppinsBold',
     }
 })

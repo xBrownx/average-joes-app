@@ -6,7 +6,7 @@ import Animated, { SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight } from
 import { setUserName, useAppDispatch } from "@/store";
 import { myGoogleSignIn } from "@/features/auth/sign-in-with-google";
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 
 type SignInMainProps = {
     setScreen: (screen: 'main' | 'sign-in-with-email' | 'sign-up') => void
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomWidth: 2,
-        borderBottomColor: themedColors.primary,
+        borderBottomColor: THEME_COLOURS.primary,
         marginHorizontal: 32,
     },
     titleText: {
         fontSize: 24,
         fontFamily: 'Kalam_700Bold',
-        color: themedColors.primary
+        color: THEME_COLOURS.primary
     },
     buttonContainer: {
         margin: 32,

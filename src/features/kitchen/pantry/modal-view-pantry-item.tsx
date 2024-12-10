@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React from 'react';
 import { ThemedText } from '@/components/text/themed-text';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -15,7 +15,7 @@ type ViewBeanModalProps = ThemedModalProps & {
 function FieldValue({ name, value }: { name: string, value?: string }) {
     return (
         <View style={{ marginTop: 8 }} >
-            <ThemedText type={'defaultSemiBold'} style={{ color: themedColors.tertiary }} >
+            <ThemedText type={'defaultSemiBold'} style={{ color: THEME_COLOURS.tertiary }} >
                 {name}:
             </ThemedText >
             {value && <ThemedText type={'default'} >
@@ -45,7 +45,7 @@ export function ViewPantryModal({
                         name="close"
                         size={24}
                         backgroundColor={'transparent'}
-                        color={themedColors.tertiary}
+                        color={THEME_COLOURS.tertiary}
                         onPress={onClose}
                     />
                 </View >

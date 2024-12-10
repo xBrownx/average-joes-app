@@ -1,6 +1,6 @@
 import { Button, ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React from 'react';
 import { ThemedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
@@ -56,7 +56,7 @@ export function ModalBegin({ isOpen, onClose }: ModalProps) {
                     </ThemedText >
                 </View >
                 <View style={styles.stepContainer} >
-                    <Button title={'OK I\'m Ready'} color={themedColors.primary} onPress={onClose} />
+                    <Button title={'OK I\'m Ready'} color={THEME_COLOURS.primary} onPress={onClose} />
                 </View >
             </View >
         </ThemedModal >

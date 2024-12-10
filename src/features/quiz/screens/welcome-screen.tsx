@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '@/components/text';
 import React from 'react';
-import { themedColors } from '@/constants';
+import { THEME_COLOURS } from '@/constants';
 import Logo from '@/assets/svg/bb-logo.svg';
 import { useQuizScreenContext } from '@/features/quiz/context/quiz-screen-context';
 import { ThemedButton } from '@/components/button';

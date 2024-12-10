@@ -10,7 +10,7 @@ import {
 
 import { Rating } from 'react-native-ratings';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import { UserRecipe } from '@/domain';
 import { ThemedModalProps } from "@/components/modal/types";
 import { ThemedModal } from "@/components/modal";
@@ -25,7 +25,7 @@ function FieldValue({name, value}: { name: string; value?: string }) {
         <View style={{marginTop: 8}}>
             <ThemedText
                 type={'defaultSemiBold'}
-                style={{color: themedColors.tertiary}}
+                style={{color: THEME_COLOURS.tertiary}}
             >
                 {name}:
             </ThemedText>
@@ -99,7 +99,7 @@ export const ViewRecipeModal = (
                             name="close"
                             size={24}
                             backgroundColor={'transparent'}
-                            color={themedColors.tertiary}
+                            color={THEME_COLOURS.tertiary}
                             onPress={onClose}
                         />
                     </View>
@@ -136,7 +136,7 @@ export const ViewRecipeModal = (
                     {selectedRecipe && (
                         <Button
                             title={'BUY MORE'}
-                            color={themedColors.primary}
+                            color={THEME_COLOURS.primary}
                             onPress={() =>
                                 openExternalUrl(selectedRecipe.buyLink)
                             }

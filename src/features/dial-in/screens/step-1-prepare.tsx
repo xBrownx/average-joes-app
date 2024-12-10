@@ -1,5 +1,5 @@
 import { Button, StyleSheet, View, Animated, TouchableOpacity } from "react-native";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import React, { useEffect } from "react";
 import { CustomTypeWriter } from "@/features/dial-in/components/custom-type-writer";
 import { FadeUpText } from "@/components/text/fade-up-text";
@@ -73,7 +73,7 @@ export function DialInPrepare({onNext, onBack, onExit, onShow, speak}: DialInScr
                             <Animated.View
                                 style={[{opacity}, styles.buttonWrapper]}
                             >
-                                <Button title={'Next'} color={themedColors.primary} onPress={onNext} />
+                                <Button title={'Next'} color={THEME_COLOURS.primary} onPress={onNext} />
                             </Animated.View>
                         </View>
                     </CustomTypeWriter>

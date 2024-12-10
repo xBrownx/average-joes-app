@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React from 'react';
 import { useAppDispatch } from '@/store/store';
 import { addUserPantryItem } from '@/store/slice/local-data-slice';
@@ -72,7 +72,7 @@ export const AddPantryModal = ({isOpen, onClose}: ThemedModalProps) => {
                         size={24}
                         backgroundColor={'transparent'}
                         style={styles.searchIcon}
-                        color={themedColors.tertiary}
+                        color={THEME_COLOURS.tertiary}
                         onPress={() => {
                         }}
                     />
@@ -113,7 +113,7 @@ export const AddPantryModal = ({isOpen, onClose}: ThemedModalProps) => {
                     />
                     <Button
                         title={'SAVE'}
-                        color={themedColors.primary}
+                        color={THEME_COLOURS.primary}
                         onPress={onSave}
                     />
                 </View>

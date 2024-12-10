@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "@/components/text/themed-text";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { TypeWriterText } from "@/components/typewriter";
 import { useIsFocused } from "@react-navigation/native";
@@ -69,7 +69,7 @@ export function LearnLandingPage({navToVideo}: {
                                 name="arrow-forward"
                                 size={24}
                                 backgroundColor={'transparent'}
-                                color={themedColors.tertiary}
+                                color={THEME_COLOURS.tertiary}
                             />
                         </View>
                     </TouchableOpacity>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     cardContainer: {
         elevation: 1,
         borderRadius: 10,
-        backgroundColor: themedColors.backgroundSecondary,
+        backgroundColor: THEME_COLOURS.backgroundSecondary,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
 
     },
     cardText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontSize: 18
     },
 });

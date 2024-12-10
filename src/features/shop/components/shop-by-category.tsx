@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "@/components/text";
 import React from "react";
 import { SectionHeader } from "@/features/shop/components/section-header";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { AutoScaledImage } from "@/components/image";
 
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         gap: 16,
     },
     catText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontSize: 18,
         fontWeight: "bold",
         fontFamily: "Poppins",

@@ -1,12 +1,12 @@
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { BannerLeft, BannerLogo, BannerRight } from "@/components/navigation/banner";
 import React from "react";
 import { Dimensions } from "react-native";
 
 export const SCREEN_OPTIONS: DrawerNavigationOptions = {
     headerStyle: {
-        backgroundColor: themedColors.backgroundDark,
+        backgroundColor: THEME_COLOURS.tertiaryBlack,
     },
     headerTintColor: '#fff',
     headerLeft: () => <BannerLeft />,
@@ -14,9 +14,9 @@ export const SCREEN_OPTIONS: DrawerNavigationOptions = {
     headerRight: () => <BannerRight />,
     headerTitleAlign: 'center',
     drawerPosition: 'right',
-    drawerActiveBackgroundColor: themedColors.backgroundSecondary,
+    drawerActiveBackgroundColor: THEME_COLOURS.backgroundSecondary,
     drawerStyle: {
         width: Dimensions.get("window").width * 0.85,
-        backgroundColor: themedColors.backgroundSecondary,
+        backgroundColor: THEME_COLOURS.backgroundSecondary,
     }
 };

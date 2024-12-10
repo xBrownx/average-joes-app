@@ -1,7 +1,7 @@
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import React from "react";
 import { ThemedText } from "@/components/text/themed-text";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModalProps } from "@/components/modal/types";
 import { ThemedModal } from "@/components/modal";
@@ -34,7 +34,7 @@ export function ContactModal({isOpen, onClose}: ThemedModalProps) {
                         <ThemedText type={'subtitle'}>
                             GET IN TOUCH
                         </ThemedText>
-                        <Ionicons name={'close'} size={30} color={themedColors.tertiary} onPress={handleClose} />
+                        <Ionicons name={'close'} size={30} color={THEME_COLOURS.tertiary} onPress={handleClose} />
                     </View>
                     <ThemedText type={'default'}>
                         Need extra help, or just want to say g'day? Shoot us an email and we'll get back to you
@@ -61,7 +61,7 @@ export function ContactModal({isOpen, onClose}: ThemedModalProps) {
                     multiline={true}
                 />
                 <View >
-                    <Button title={'SEND'} color={themedColors.primary} onPress={handleOk} />
+                    <Button title={'SEND'} color={THEME_COLOURS.primary} onPress={handleOk} />
                 </View>
             </View>
 

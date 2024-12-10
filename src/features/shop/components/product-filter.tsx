@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Product } from "shopify-buy";
 import { ThemedText } from "@/components/text";
 import { useState } from "react";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { Dropdown } from "react-native-element-dropdown";
 
 type ProductFilterProps = {
@@ -38,7 +38,7 @@ export function ProductFilter({products}: ProductFilterProps) {
                     valueField={"label"}
                     fontFamily={'Poppins, sans-serif'}
                     itemTextStyle={{color: 'black'}}
-                    selectedTextStyle={{color: themedColors.tertiary, fontWeight: 'bold'}}
+                    selectedTextStyle={{color: THEME_COLOURS.tertiary, fontWeight: 'bold'}}
                 />
             </View>
         </View>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 40,
         paddingLeft: 8,
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontWeight: 'bold'
     }
 })

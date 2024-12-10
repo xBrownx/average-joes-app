@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React, { useState } from 'react';
 import { useAppDispatch } from '@/store';
 import { setUserName } from '@/store';
@@ -95,7 +95,7 @@ export const SignUp = ({setScreen}: SignUpProps) => {
                 <Button
                     title={'SIGN UP' +
                         ''}
-                    color={themedColors.primary}
+                    color={THEME_COLOURS.primary}
                     onPress={onSignUp}
                 />
 
@@ -109,13 +109,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomWidth: 2,
-        borderBottomColor: themedColors.primary,
+        borderBottomColor: THEME_COLOURS.primary,
         marginHorizontal: 32,
     },
     titleText: {
         fontSize: 24,
         fontFamily: 'Poppins_700Bold',
-        color: themedColors.primary
+        color: THEME_COLOURS.primary
     },
     inputContainer: {
         margin: 32,

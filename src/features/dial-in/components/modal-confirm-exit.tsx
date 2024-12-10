@@ -1,6 +1,6 @@
 import { Button, ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import React from 'react';
 import { ThemedModal } from '@/components/modal';
 import { globalStyles } from '@/styles/global-styles';
@@ -26,8 +26,8 @@ export function ModalConfirmExit({ isOpen, onClose }: ModalProps) {
                 </View >
 
                 <View style={styles.stepContainer} >
-                    <Button title={'NOPE'} color={themedColors.primary} onPress={() => onClose(false)} />
-                    <Button title={'YEP'} color={themedColors.primary} onPress={() => onClose(true)} />
+                    <Button title={'NOPE'} color={THEME_COLOURS.primary} onPress={() => onClose(false)} />
+                    <Button title={'YEP'} color={THEME_COLOURS.primary} onPress={() => onClose(true)} />
                 </View >
             </View >
         </ThemedModal >

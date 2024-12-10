@@ -1,7 +1,7 @@
 import { ModalProps as RNModalProps, StyleSheet, View } from 'react-native';
 import React from "react";
 import { ThemedText } from "@/components/text/themed-text";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedModal } from "@/components/modal";
 import { globalStyles } from "@/styles/global-styles";
@@ -16,7 +16,7 @@ export function AboutModal({isOpen, onClose }: ThemedModalProps) {
                     <ThemedText type={'subtitle'} >
                         WHO IS JOE?
                     </ThemedText >
-                    <Ionicons name={'close'} size={30} color={themedColors.tertiary} onPress={onClose} />
+                    <Ionicons name={'close'} size={30} color={THEME_COLOURS.tertiary} onPress={onClose} />
                 </View >
                 <ThemedText type={'default'} >
                     Average Joe's is just a couple of industry guys trying to help as many people as we can bring cafe

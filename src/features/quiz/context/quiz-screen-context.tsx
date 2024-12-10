@@ -17,7 +17,7 @@ export const useQuizScreenContext = () => {
 };
 
 export const QuizScreenContextProvider = ({ children }: PropsWithChildren) => {
-    const [screen, setScreen] = useState<QuizScreen>('welcome');
+    const [screen, setScreen] = useState<QuizScreen>('select-coffee');
 
     return (
         <QuizScreenContext.Provider value={{screen, setScreen}}>

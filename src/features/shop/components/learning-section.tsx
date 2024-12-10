@@ -1,6 +1,6 @@
 import { Button, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { AutoScaledImage } from "@/components/image";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 
 
 export function LearningSection() {
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         gap: 16
     },
     headingText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontSize: 26,
         fontWeight: 'bold',
         fontFamily: 'PoppinsBold',
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
     paragraphText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontSize: 14,
         fontWeight: 'normal',
         fontFamily: 'Poppins',

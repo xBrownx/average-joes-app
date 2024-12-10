@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/text/themed-text";
 import { StyleSheet, View, Image } from "react-native";
 import React from "react";
-import { themedColors } from "@/constants/themed-colors";
+import { THEME_COLOURS } from "@/constants/theme-colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useIsFocused } from "@react-navigation/native";
 import { TypeWriterText } from "@/components/typewriter";
@@ -25,7 +25,7 @@ const menuItems = [
                 name="book-outline"
                 size={32}
                 backgroundColor={'transparent'}
-                color={themedColors.tertiary}
+                color={THEME_COLOURS.tertiary}
             />,
     },
     // {
@@ -79,7 +79,7 @@ export function KitchenLanding({navForward}: RecipeLandingProps) {
                                 name="arrow-forward"
                                 size={32}
                                 backgroundColor={'transparent'}
-                                color={themedColors.tertiary}
+                                color={THEME_COLOURS.tertiary}
                             />
                         </View>
                     </ThemedCardView>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     cardText: {
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontSize: 18
     },
 });

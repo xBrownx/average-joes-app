@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { ThemedCardView } from '@/components/card';
 import { ThemedText } from '@/components/text/themed-text';
-import { themedColors } from '@/constants/themed-colors';
+import { THEME_COLOURS } from '@/constants/theme-colors';
 import { UserRecipe } from '@/domain';
 import { AddRecipeModal } from '@/features/kitchen/recipes/modal-recipe-base';
 import { ViewRecipeModal } from '@/features/kitchen/recipes/modal-view-recipe';
@@ -92,7 +92,7 @@ export function KitchenRecipes({navBack}: KitchenChildProps) {
                             name="arrow-back"
                             size={24}
                             backgroundColor={'transparent'}
-                            color={themedColors.primary}
+                            color={THEME_COLOURS.primary}
                             onPress={navBack}
                         />
                         <TypeWriterText type="title" textArr={["YOUR RECIPES"]} />
@@ -111,7 +111,7 @@ export function KitchenRecipes({navBack}: KitchenChildProps) {
                                 <Ionicons
                                     name={'information-circle-outline'}
                                     size={32}
-                                    color={themedColors.tertiary}
+                                    color={THEME_COLOURS.tertiary}
                                 />
                             }
                             onPress={() => openViewModal(card.id)}
@@ -130,7 +130,7 @@ export function KitchenRecipes({navBack}: KitchenChildProps) {
                             <Ionicons
                                 name={'add'}
                                 size={32}
-                                color={themedColors.tertiary}
+                                color={THEME_COLOURS.tertiary}
                             />
                         }
                         style={{paddingVertical: 16}}

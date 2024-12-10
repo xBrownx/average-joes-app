@@ -3,33 +3,48 @@ import Logo from '@/assets/svg/bb-logo.svg';
 import React from 'react';
 import { ThemedText } from '@/components/text';
 import { useQuizScreenContext } from '@/features/quiz/context/quiz-screen-context';
-import { Dnd } from '@/components/drag-drop/cont';
-import Target from '@/components/drag-drop/taget';
-import Selection from '@/components/drag-drop/selection';
+import { DragDrop } from "@/features/quiz/drag-drop/drag-drop-core";
+import { ThemedButton } from "@/components/button";
+import { DragDropContextProvider } from "@/features/quiz/drag-drop/context";
 
 
 export function SelectCoffeeScreen() {
-    const { setScreen } = useQuizScreenContext();
+    const {setScreen} = useQuizScreenContext();
+    const [isComplete, setComplete] = React.useState(false);
+
     return (
-        <View style={styles.container} >
-            <View style={styles.imageContainer} >
+
+        <View style={styles.container}>
+            <View style={styles.imageContainer}>
                 <Logo width={133} height={64} />
-            </View >
-            <View style={styles.headerContainer} >
-                <Text style={styles.heading} >
+            </View>
+            <View style={styles.headerContainer}>
+                <Text style={styles.heading}>
                     WHAT'S YOUR COFFEE PREFERENCE?
-                </Text >
-                <ThemedText style={styles.subheading} >
+                </Text>
+                <ThemedText style={styles.subheading}>
                     ORDER THEM 1 - 5
-                </ThemedText >
-            </View >
+                </ThemedText>
+            </View>
             <View style={styles.dndContainer}>
-                <Dnd >
-                    <Target />
-                    <Selection />
-                </Dnd >
-            </View >
-        </View >
+                <DragDropContextProvider>
+                <DragDrop
+                    options={['CAPPUCCINO','LATTE','ESPRESSO','LONG BLACK','ICED LATE']}
+                    setComplete={setComplete}
+                />
+                </DragDropContextProvider>
+            </View>
+            <View style={styles.footerContainer}>
+                {isComplete &&
+                    <ThemedButton
+                        textType={'small'}
+                        onPress={() => setScreen('select-help')}
+                    >
+                        CONTINUE
+                    </ThemedButton>
+                }
+            </View>
+        </View>
     );
 }
 

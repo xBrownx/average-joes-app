@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/text";
-import { themedColors } from "@/constants";
+import { THEME_COLOURS } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
 import { Dropdown } from "react-native-element-dropdown";
 import { DropdownData } from "@/components/dropdown";
@@ -31,11 +31,11 @@ export function DropdownWithLabel({label, data, value, onChange, isDisabled, onA
                 valueField={"label"}
                 fontFamily={'Poppins_400Regular, sans-serif'}
                 itemTextStyle={{color: 'black'}}
-                selectedTextStyle={{color: themedColors.tertiary, fontWeight: 'bold'}}
+                selectedTextStyle={{color: THEME_COLOURS.tertiary, fontWeight: 'bold'}}
                 renderRightIcon={() => (
                     <Ionicons.Button
                         name={isDisabled ? 'chevron-down' : 'add'}
-                        size={24} color={themedColors.tertiary}
+                        size={24} color={THEME_COLOURS.tertiary}
                         style={{marginRight: 8}}
                         backgroundColor={'transparent'}
                         onPress={isDisabled ? undefined : onAddPress}
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 40,
         paddingLeft: 8,
-        color: themedColors.tertiary,
+        color: THEME_COLOURS.tertiary,
         fontWeight: 'bold'
     }
 })
