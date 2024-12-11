@@ -1,18 +1,35 @@
 import { ThemedScreen } from "@/components/layout/themed-screen";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { ThemedText } from "@/components/text";
-import { THEME_COLOURS } from "@/constants";
 import { TargetYield } from "@/features/brew/components/target-yield";
 import { ThemedButton } from "@/components/button";
 import { BrewTimer } from "@/features/brew/components/timer";
-import { useNavigation } from "@react-navigation/native";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { BrewProps } from "@/navigation/types/nav-types";
+import { ConfirmBeanModal } from "@/features/brew/modal/confirm-bean-modal-core";
+import { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function BrewCoreScreen({ route }) {
+export default function BrewCoreScreen({ route, navigation }: BrewProps) {
     const { enterDir } = route.params;
+    const focused = useIsFocused();
+    const [confirmBeanModal, setConfirmBeanModal] = useState(false);
+
+    function onConfirmBeanModalClose() {
+        setConfirmBeanModal(false);
+    }
+
+    useEffect(() => {
+        if(focused) {
+            setTimeout(() => setConfirmBeanModal(true), 1000);
+        }
+    }, [focused]);
 
     return (
         <ThemedScreen enterDir={enterDir}>
+            <ConfirmBeanModal
+                isOpen={confirmBeanModal}
+                onClose={onConfirmBeanModalClose}
+            />
             <View style={styles.container}>
                 <View style={styles.textWrapper}>
                     <ThemedText type={'subtitle'} style={styles.title}>

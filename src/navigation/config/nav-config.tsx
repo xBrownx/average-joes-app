@@ -1,6 +1,6 @@
 import { DrawerNavigationOptions } from "@react-navigation/drawer";
 import { THEME_COLOURS } from "@/constants";
-import { BannerLeft, BannerLogo, BannerRight } from "@/components/navigation/banner";
+import { BannerLeft, BannerLogo, BannerRight } from "@/navigation/components/banner";
 import React from "react";
 import { Dimensions } from "react-native";
 

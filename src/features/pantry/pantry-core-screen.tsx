@@ -5,8 +5,10 @@ import { PantryAddWithPhoto } from "@/features/pantry/screens/pantry-add-with-ph
 import { PantryAddManual } from "@/features/pantry/screens/pantry-add-manual";
 import { PantryScreenContextProvider, usePantryScreenContext } from "@/features/pantry/context/pantry-screen-context";
 import { ThemedScreen } from "@/components/layout/themed-screen";
+import { RouteProp } from "@react-navigation/core";
+import { PantryProps, RootStackParamList } from "@/navigation/types";
 
-export default function PantryCoreScreen({ route }) {
+export default function PantryCoreScreen({ route, navigation }: PantryProps) {
     return (
         <PantryScreenContextProvider>
             <PantryCore route={route}/>
@@ -14,7 +16,7 @@ export default function PantryCoreScreen({ route }) {
     )
 }
 
-function PantryCore({ route }) {
+function PantryCore({ route }:  {route: RouteProp<RootStackParamList, 'pantry'>}) {
     const { screen } = usePantryScreenContext();
     const { enterDir } = route.params;
     return (

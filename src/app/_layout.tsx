@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store, { useAppDispatch } from '@/store/store';
 import { loadRemoteData } from '@/store/slice/remote-data-slice';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
-import { CustomDrawerContent, SCREEN_OPTIONS } from '@/components/navigation';
+import { CustomDrawerContent, SCREEN_OPTIONS } from '@/navigation/components';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
@@ -21,6 +21,7 @@ import HomeCoreScreen from '@/features/home/home-core-screen';
 import BrewCoreScreen from "@/features/brew/brew-core-screen";
 import PantryCoreScreen from "@/features/pantry/pantry-core-screen";
 import LearnCoreScreen from '@/features/learn';
+import { MainNav } from "@/navigation/main-nav";
 
 
 
@@ -52,8 +53,6 @@ export default function RootLayout() {
     );
 }
 
-const Drawer = createDrawerNavigator();
-
 function App() {
     const dispatch = useAppDispatch();
     const [initializing, setInitializing] = useState(true); // may need to change this to true
@@ -62,7 +61,6 @@ function App() {
     // Handle user state changes
     function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
         setUser(user);
-        console.log(user);
         if (initializing) setInitializing(false);
     }
 
@@ -83,49 +81,9 @@ function App() {
     return (
         <>
             {/*{!user ? <QuizCoreScreen /> :*/}
-                <Drawer.Navigator
-                    initialRouteName="home"
-                    screenOptions={SCREEN_OPTIONS}
-                    drawerContent={(props) => <CustomDrawerContent {...props} />}
-                >
-                    <Drawer.Screen
-                        name="home"
-                        component={HomeCoreScreen}
-                        initialParams={{enterDir: 'left'}}
-                    />
-
-                    <Drawer.Screen
-                        name={'brew'}
-                        component={BrewCoreScreen}
-                        initialParams={{enterDir: 'right'}}
-                    />
-
-                    <Drawer.Screen
-                        name={'pantry'}
-                        component={PantryCoreScreen}
-                        initialParams={{enterDir: 'right'}}
-                    />
-
-                    <Drawer.Screen
-                        name={'learn'}
-                        component={LearnCoreScreen}
-                        initialParams={{enterDir: 'right'}}
-                    />
-
-                </Drawer.Navigator>
+                <MainNav />
             {/*}*/}
         </>
     );
 }
 
-
-// {!user
-//                 ? <AuthModal
-//                     isOpen={isLoginModal}
-//                     onClose={() => setLoginModal(false)}
-//                 />
-//                 : <Stack>
-//                     <Stack.Screen name="(tabs)" options={{headerShown: false}} />
-//                     <Stack.Screen name="+not-found" />
-//                 </Stack>
-//             }

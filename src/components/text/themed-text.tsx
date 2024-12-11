@@ -4,7 +4,7 @@ import { Kalam_400Regular } from "@expo-google-fonts/kalam";
 
 export type ThemedTextProps = TextProps & {
     light?: boolean;
-    type?: 'default' | 'title' | 'defaultSemiBold' | 'primaryBold' | 'subtitle' | 'link';
+    type?: 'default' | 'primary-light' | 'title' | 'defaultSemiBold' | 'primaryBold' | 'subtitle' | 'link';
     color?: 'light' | 'dark';
 };
 
@@ -20,6 +20,7 @@ export function ThemedText(
         <Text
             style={[
                 type === 'default' ? styles.default : undefined,
+                type === 'primary-light' ? styles.primaryLight : undefined,
                 type === 'title' ? styles.title : undefined,
                 type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
                 type === 'primaryBold' ? styles.primaryBold : undefined,
@@ -41,8 +42,13 @@ const styles = StyleSheet.create({
         fontFamily: 'Kalam_400Regular',
         color: '#FFF',
     },
+    primaryLight: {
+        fontSize: 18,
+        lineHeight: 30,
+        fontFamily: 'Kalam_300Light',
+    },
     defaultSemiBold: {
-        fontSize: 18.37,
+        fontSize: 18,
         lineHeight: 30,
         fontFamily: 'Kalam_700Bold',
         color: THEME_COLOURS.primary,

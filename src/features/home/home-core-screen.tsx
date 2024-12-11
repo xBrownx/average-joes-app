@@ -1,24 +1,13 @@
 import { selectUser, useAppSelector } from '@/store';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
-import { Animated, Image, ScrollView, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useCustomState } from '@/hooks';
-import { AboutModal } from '@/features/home/components/_about-modal';
-import { ContactModal } from '@/features/home/components/_contact-modal';
-import { RateModal } from '@/features/home/components/_rate-modal';
 import { TypeWriterText } from '@/components/typewriter';
-import { HelloWave } from '@/components/hello-wave';
-import { ThemedText } from '@/components/text/themed-text';
-import { ThemedButton } from '@/components/button';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { THEME_COLOURS } from "@/constants";
-import { AutoScaledImage } from "@/components/image";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Rewards } from "@/features/home/components/rewards";
 import { ThemedScreen } from "@/components/layout/themed-screen";
 import { Menu } from "@/features/home/components/menu";
 import { FeaturedBeans } from "@/features/home/components/featured-beans";
+import { HomeProps } from "@/navigation/types";
 
 type HomeScreenState = {
     focused?: boolean;
@@ -28,7 +17,7 @@ type HomeScreenState = {
     wave?: boolean;
 }
 
-export default function HomeCoreScreen({ route }) {
+export default function HomeCoreScreen({ route, navigation }: HomeProps) {
     const username = useAppSelector(selectUser).toUpperCase();
     const { enterDir } = route.params;
     const {state, updateState} = useCustomState<HomeScreenState>({

@@ -11,6 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useCustomState, useTextToSpeech } from '@/hooks';
 import { Image, StyleSheet } from 'react-native';
 import ParallaxScrollView from "@/components/parallax-scroll-view";
+import { DialInProps } from "@/navigation/types";
 
 type CurrentStep =
     'landing'
@@ -27,7 +28,7 @@ interface DialInState {
     currentStep?: CurrentStep;
 }
 
-export default function DialInCoreScreen() {
+export default function DialInCoreScreen({route, navigation}: DialInProps) {
     const focused = useIsFocused();
     const tts = useTextToSpeech();
     const {state, updateState} = useCustomState<DialInState>({
